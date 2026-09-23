@@ -200,6 +200,15 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
   .tablink{font-size:.8rem;white-space:nowrap;padding:.55rem 0}
   .nav-links .btn{padding:.58rem 1.05rem;white-space:nowrap}
 }
+@media(max-width:640px){
+  nav .wrap{gap:.5rem;flex-wrap:nowrap}
+  .logo img{height:2.1rem}
+  nav .nav-right{gap:.9rem;flex-shrink:0}
+  #nav .nav-cta{display:none!important}
+  .lang-toggle{margin-left:0!important;display:inline-flex!important;flex-shrink:0}
+  .acc-item.is-open .acc-body{position:relative!important;z-index:3;opacity:1!important;transform:none!important}
+  .acc-item.is-open .acc-img{z-index:0}
+}
 
 /* ---------- HERO ---------- */
 .hero-pin{height:140vh;position:relative}
