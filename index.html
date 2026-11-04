@@ -735,12 +735,17 @@ main .eyebrow{font-family:var(--mono);font-size:.92rem;font-weight:500;letter-sp
 #contacto .ct-grid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:2rem clamp(1.6rem,3.5vw,3.2rem);margin:clamp(2.4rem,6vh,4rem) 0 0;padding-top:clamp(1.6rem,3.5vh,2.4rem);border-top:1px solid var(--line-light);text-align:left;width:100%;max-width:none}
 @media(max-width:760px){#contacto .ct-grid{flex-direction:column}}
 #contacto .ct-block{display:flex;flex-direction:column;gap:.45rem}
-#contacto .ct-block:nth-child(2){text-align:center;align-items:center}
+#contacto .ct-block:nth-child(2),#contacto .ct-block:nth-child(3){text-align:center;align-items:center}
 #contacto .ct-block:last-child{text-align:right;align-items:flex-end}
-@media(max-width:760px){#contacto .ct-block:nth-child(2),#contacto .ct-block:last-child{text-align:left;align-items:flex-start}}
+@media(max-width:760px){#contacto .ct-block:nth-child(2),#contacto .ct-block:nth-child(3),#contacto .ct-block:last-child{text-align:left;align-items:flex-start}}
 #contacto .ct-lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(222,156,99,.9);margin-bottom:.25rem}
 #contacto .ct-block a,#contacto .ct-block span:not(.ct-lbl){font-size:1.02rem;line-height:1.5;color:rgba(245,244,239,.82);text-decoration:none;transition:color .3s}
 #contacto .ct-block a:hover{color:var(--copper-hi)}
+#contacto .ct-social{display:flex;gap:.6rem}
+#contacto .ct-social a{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .85rem;border:1px solid rgba(222,156,99,.35);font-size:.9rem!important;transition:color .3s,border-color .3s,background .3s}
+#contacto .ct-social a:hover{border-color:var(--copper-hi);background:rgba(222,156,99,.08)}
+#contacto .ct-social svg{width:1.05rem;height:1.05rem;flex-shrink:0}
+#contacto .ct-social a span{font-size:inherit!important;color:inherit!important}
 
 /* ---------- legal buttons + modal ---------- */
 footer .wrap{flex-wrap:wrap;gap:.9rem 1.5rem}
@@ -1070,6 +1075,13 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           <span class="ct-lbl">Teléfonos</span>
           <a href="tel:+34687244080">+34 687 244 080</a>
           <a href="tel:+34627703355">+34 627 703 355</a>
+        </div>
+        <div class="ct-block">
+          <span class="ct-lbl">Redes</span>
+          <div class="ct-social">
+            <a href="https://www.linkedin.com/company/madcre" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.79-1.7-2.79-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg><span>LinkedIn</span></a>
+            <a href="https://www.instagram.com/madcre.team" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg><span>Instagram</span></a>
+          </div>
         </div>
       </div>
       </div>
@@ -1723,6 +1735,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   Object.assign(DICT,{
     "Inteligencia Inmobiliaria aplicada a tus activos":"Real estate intelligence|applied to your assets",
     "Inteligencia y estrategia":"Intelligence and strategy",
+    "Redes":"Social",
     "Revisión de contrato de arrendamiento":"Lease Review",
     "Entiende el contrato que vas a firmar.":"Know exactly what you're signing.",
     "Ninguna gran empresa firma un contrato sin que su equipo lo revise cláusula por cláusula. Tú tampoco deberías.":"No large company signs a lease without its team reviewing every clause. Neither should you.",
