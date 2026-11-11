@@ -409,7 +409,8 @@ h2 em{position:relative}
 }
 
 /* ---------- tipologías ---------- */
-#tipologias{background:var(--ink-deep);color:var(--paper);overflow:hidden}
+#tipologias{background:linear-gradient(to bottom,rgba(7,20,38,0) 0,rgba(7,20,38,.7) 22vh,var(--ink-deep) 40vh);color:var(--paper);overflow:hidden}
+#tipologias .tipos-bg{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 40vh);mask-image:linear-gradient(to bottom,transparent 0,#000 40vh)}
 #tipologias .tipos-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
 #tipologias .tipos-bg img{width:100%;height:100%;object-fit:cover;opacity:.13;filter:blur(22px) brightness(.7) grayscale(1);transform:scale(1.15) translateZ(0);will-change:transform}
 #tipologias .tipos-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,var(--ink-deep) 0%,rgba(90,68,42,.1) 45%,var(--ink-deep) 100%)}
@@ -1226,7 +1227,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <div class="rb-stage"><div class="wrap rb-wrap">
       <div class="rb-head">
         <p class="rb-eyebrow">Resultados recientes</p>
-        <p class="rb-note">Casos reales. <a href="mailto:team@madcre.net?subject=Ejemplo%20de%20caso%20MADCRE">Puedes solicitarnos un ejemplo.</a></p>
+        <p class="rb-note"><span>Casos reales.</span> <a href="mailto:team@madcre.net?subject=Ejemplo%20de%20caso%20MADCRE">Puedes solicitarnos un ejemplo.</a></p>
       </div>
       <div class="rg">
         <div class="rg-main">
