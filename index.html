@@ -1556,7 +1556,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const anchors={inicio:'#top',perspectivas:'#servicios',metodo:'#tipologias',nosotros:'#quienes',contacto:'#contacto'};
   const goTo=(y)=>{
     y=clamp(y,0,Math.max(document.documentElement.scrollHeight-innerHeight,0));
-    if(smoothOn){ scrollTarget=y; }
+    if(smoothOn){ lerpRate=5; scrollTarget=y; }
     else window.scrollTo({top:y,behavior:reduced?'auto':'smooth'});
   };
   document.querySelectorAll('a[data-tab], button[data-tab]').forEach(el=>{
@@ -1570,18 +1570,18 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   });
 
   /* ---------- smooth scroll (lerp) ---------- */
-  let scrollTarget=window.scrollY, scrollCurrent=window.scrollY, smoothOn=false, lastFrameT=performance.now();
+  let scrollTarget=window.scrollY, scrollCurrent=window.scrollY, smoothOn=false, lastFrameT=performance.now(), lerpRate=7.5;
   if(!reduced && matchMedia('(pointer:fine)').matches){
     smoothOn=true;
     addEventListener('wheel',e=>{
       if(e.ctrlKey||e.metaKey) return;
       /* trackpads & Magic Mouse emit small continuous pixel deltas: leave them native
          (already fluid) and only smooth discrete mouse-wheel notches */
-      if(e.deltaMode===0 && Math.abs(e.deltaY)<50){ scrollTarget=scrollCurrent=window.scrollY; return; }
+      lerpRate=(e.deltaMode===0 && Math.abs(e.deltaY)<50)? 13 : 7.5;
       if(performance.now()-lastFrameT>150){ scrollTarget=scrollCurrent=window.scrollY; return; }
       e.preventDefault();
       if(document.body.classList.contains('lock')) return;
-      const d=e.deltaMode===1? e.deltaY*16 : e.deltaY;
+      const d=e.deltaMode===1? e.deltaY*18 : e.deltaY*1.05;
       const max=document.documentElement.scrollHeight-innerHeight;
       scrollTarget=clamp(scrollTarget+d,0,max);
     },{passive:false});
@@ -1622,7 +1622,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
       scrollTarget=clamp(scrollTarget,0,max);
       const diff=scrollTarget-scrollCurrent;
       if(Math.abs(diff)>.4){
-        scrollCurrent+=diff*(1-Math.exp(-dt*14));
+        scrollCurrent+=diff*(1-Math.exp(-dt*lerpRate));
         window.scrollTo(0,scrollCurrent);
       }else if(diff!==0){
         scrollCurrent=scrollTarget;
