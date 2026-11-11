@@ -901,6 +901,13 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .lite .rb-win .rb-bar{box-shadow:none}
 .android #aurora{display:none}
 .android #auroraVeil{background:radial-gradient(120% 80% at 80% 10%,rgba(184,115,51,.16) 0%,rgba(7,20,38,0) 55%),radial-gradient(90% 70% at 10% 90%,rgba(39,75,199,.12) 0%,rgba(7,20,38,0) 60%),var(--ink-deep)}
+
+.rev-intro{margin:.4rem 0 1.4rem;font-size:.95rem;line-height:1.55;color:rgba(245,244,239,.78);text-wrap:pretty}
+@media(max-width:760px){
+  .hero-cta{margin-top:clamp(1.4rem,4vh,2.2rem)}
+  .hero-cta .hc-copy{display:none}
+  .hero-cta #revOpen.btn.frame{width:100%;justify-content:center}
+}
 /* ---------- resultados (barras) ---------- */
 .rg{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);align-items:end;padding:clamp(2rem,6vh,3.6rem) 0 clamp(1.6rem,4vh,2.6rem);border-bottom:1px solid rgba(222,156,99,.45)}
 .rg-main{display:flex;flex-direction:column;gap:.8rem}
@@ -1414,6 +1421,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <button type="button" class="legal-x" data-close="1" aria-label="Cerrar">×</button>
     <span class="legal-eyebrow">Primera revisión</span>
     <h2 id="revTitle">Solicitar revisión</h2>
+    <p class="rev-intro">Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.</p>
     <form id="revForm" name="revision" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" class="rev-form">
       <input type="hidden" name="form-name" value="revision">
       <p hidden><label>No rellenar <input name="bot-field"></label></p>
