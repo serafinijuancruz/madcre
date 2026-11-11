@@ -235,6 +235,8 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .hero h1 em{font-style:italic;color:var(--cobalt-soft)}
 .hero p.hero-sub{font-family:var(--body);font-size:clamp(1.05rem,1.35vw,1.4rem);line-height:1.55;max-width:44rem;color:var(--paper);margin:0;text-wrap:pretty;text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85);opacity:0}
 .hero p.hero-sub .hs-a{color:var(--copper-hi);font-weight:600}
+.hero p.hero-sub .hs-a + span{display:block;margin-top:.15rem}
+@media(min-width:900px){.hero p.hero-sub{max-width:none}.hero p.hero-sub .hs-a + span{white-space:nowrap}}
 .loaded .hero p.hero-sub{animation:fadeUp .9s .4s forwards}
 .hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem 2rem;margin-top:clamp(3.2rem,8.5vh,5.6rem);max-width:56rem;opacity:0}
 .loaded .hero-cta{animation:fadeUp .9s 1.6s forwards}
@@ -909,6 +911,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   .hero-cta #revOpen.btn.frame{width:100%;justify-content:center}
 }
 /* ---------- resultados (barras) ---------- */
+:where(#resultados) :where(.rb-stage){position:relative}
 .rg{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);align-items:end;padding:clamp(2rem,6vh,3.6rem) 0 clamp(1.6rem,4vh,2.6rem);border-bottom:1px solid rgba(222,156,99,.45)}
 .rg-main{display:flex;flex-direction:column;gap:.8rem}
 .rg-num{font-family:var(--mono);font-size:clamp(4rem,10vw,9.5rem);line-height:.9;letter-spacing:-.05em;color:var(--copper-hi);font-variant-numeric:tabular-nums;text-shadow:0 0 34px rgba(222,156,99,.3);white-space:nowrap}
@@ -920,7 +923,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 .rb{position:relative;padding:clamp(3.5rem,9vh,6.5rem) 0;background:transparent!important}
 .rb-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.6rem 2rem;padding-bottom:1.1rem;border-bottom:1px solid rgba(222,156,99,.45)}
-.rb-eyebrow{margin:0;font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.4vw,1.4rem);letter-spacing:.16em;text-transform:uppercase;color:var(--copper-hi)}
+#resultados .rb-eyebrow{margin:0;color:rgba(245,244,239,.55)}
 .rb-note a{color:var(--copper-hi);text-decoration:underline;text-underline-offset:3px}.rb-note a:hover{color:var(--paper)}
 .rb-note{margin:0;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,244,239,.55)}
 .rb-case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:clamp(1.2rem,4vw,4rem);align-items:center;padding:clamp(1.6rem,4vh,2.6rem) 0;border-bottom:1px solid rgba(222,156,99,.25)}
@@ -964,7 +967,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #resultados .rg.drawn .rg-draw svg .fillT{animation:fillWipe 1.2s cubic-bezier(.22,1,.36,1) .55s forwards}
 @media(prefers-reduced-motion:reduce){#resultados .rg-draw{color:var(--paper)}#resultados .rg-draw svg{display:none}}
 
-#resultados .rl{grid-column:1/-1;margin-top:clamp(1.6rem,4.5vh,3rem);padding-top:clamp(1rem,2.5vh,1.6rem);border-top:1px solid rgba(222,156,99,.3)}
+#resultados .rl{grid-column:1/-1;margin-top:clamp(1.2rem,3vh,2.2rem);padding-top:clamp(1rem,2.5vh,1.6rem);border-top:1px solid rgba(222,156,99,.3)}
 #resultados .rl-t{margin:0 0 clamp(.9rem,2.2vh,1.4rem);font-family:var(--body);font-weight:700;font-size:clamp(.78rem,.85vw,.9rem);letter-spacing:.14em;text-transform:uppercase;color:var(--copper-hi)}
 #resultados .rl-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:clamp(1.2rem,3.5vw,3.4rem)}
 #resultados .rl-i{opacity:var(--o,.12);transition:opacity .25s linear;display:flex;align-items:center;height:2.4rem}
@@ -978,7 +981,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .tile img,.acc-img img{backface-visibility:hidden}
 
 @media(max-width:760px) and (min-height:520px){
-#resultados.rb{height:290vh;padding:0;margin-bottom:-18svh}
+#resultados.rb{height:150vh;padding:0;margin-bottom:-6svh}
 #resultados .rb-stage{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;padding-top:4.8rem;contain:layout paint}
 #resultados .rb-wrap{width:100%;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;row-gap:1.4rem}
 #resultados .rb-head{grid-row:1;grid-column:1;opacity:var(--hd,0);padding-bottom:.8rem}
@@ -1004,11 +1007,24 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #resultados .rb-val:not(.rb-no){font-size:1.7rem}
 #resultados .rb-no{font-size:.72rem}
 #resultados .rb-head{padding-bottom:.6rem}
-#resultados .rb-eyebrow{font-size:1rem}
+
 }
+
+#resultados .rb-stage:not(:where(.x)){isolation:isolate}
+#resultados .rb-wrap{position:relative;z-index:1}
+#resultados .rb-bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:calc(.25 + .75 * var(--hd,0));-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%)}
+#resultados .rb-bg img{width:100%;height:100%;object-fit:cover;opacity:.3;filter:grayscale(1) contrast(1.1) brightness(.85);transform:translateZ(0)}
+#resultados .rb-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,20,38,.82) 0%,rgba(7,20,38,.55) 50%,rgba(7,20,38,.7) 100%)}
+
+/* services: scroll-stepped accordion (desktop) */
+#servicios.acc-scroll .acc-pin{height:calc(100svh + 220vh)}
+#servicios.acc-scroll .acc{position:sticky;top:calc(var(--navh,86px) + .6rem);height:calc(100svh - var(--navh,86px) - 1.8rem);display:flex;flex-direction:column}
+#servicios.acc-scroll .acc-item{max-height:none;min-height:0;flex:0 0 5rem;transition:flex-grow .75s cubic-bezier(.76,0,.24,1),flex-basis .75s cubic-bezier(.76,0,.24,1),border-color .4s}
+#servicios.acc-scroll .acc-item.is-open{flex:1 1 0}
+#servicios.acc-scroll .acc-body{transition:opacity .5s .2s,transform .6s .2s}
 /* scroll transition */
 @media(min-width:761px) and (min-height:620px){
-#resultados.rb{height:280vh;padding:0;margin-bottom:-24svh}
+#resultados.rb{height:165vh;padding:0;margin-bottom:-10svh}
 
 #resultados .rb-stage{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;padding-top:clamp(4.5rem,9vh,6rem)}
 #resultados .rb-wrap{width:100%;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;row-gap:clamp(1rem,3vh,2rem)}
@@ -1169,7 +1185,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         <p class="sv-lead">Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.</p></div>
       </div>
     </div>
-    <div class="acc" id="acc" data-default="2">
+    <div class="acc-pin"><div class="acc" id="acc" data-default="2">
       <article class="acc-item" data-i="0" tabindex="0" role="button" aria-label="Alquiler">
         <div class="acc-img"><img decoding="async" src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">01</span>
@@ -1240,18 +1256,18 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           <p class="acc-note"><span class="acc-svl">Servicio</span> <span>Estrategia de espacio</span></p>
         </div>
       </article>
-    </div>
+    </div></div>
   </section>
   <section id="resultados" class="rb">
-    <div class="rb-stage"><div class="wrap rb-wrap">
+    <div class="rb-stage"><div class="rb-bg" aria-hidden="true"><img decoding="async" loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=60" alt=""></div><div class="wrap rb-wrap">
       <div class="rb-head">
-        <p class="rb-eyebrow">Resultados recientes</p>
+        <p class="eyebrow rb-eyebrow">Resultados recientes</p>
         <p class="rb-note"><span>Casos reales.</span> <a href="mailto:team@madcre.net?subject=Ejemplo%20de%20caso%20MADCRE">Puedes solicitarnos un ejemplo.</a></p>
       </div>
       <div class="rg">
         <div class="rg-main">
-          <span class="rg-num rg-draw" data-key="renta_mejorada_anual_eur" data-fmt="eur" data-val="1000000">+1 M€</span>
-          <span class="rg-lbl">Ahorro acumulado en renta para nuestros clientes</span>
+          <span class="rg-num rg-draw" data-key="renta_mejorada_anual_eur" data-fmt="eur" data-val="376000">+376K EUR</span>
+          <span class="rg-lbl">Ahorro acumulado generado en nuestros clientes</span>
         </div>
         <div class="rg-side">
           <div class="rg-s"><span class="rg-num rg-sm" data-key="operaciones_analizadas" data-fmt="int" data-val="27">0</span><span class="rg-lbl">operaciones analizadas</span></div>
@@ -1265,30 +1281,9 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
             <li class="rl-i"><span class="rl-word">Mimeisa</span></li>
             <li class="rl-i"><span class="rl-word">Unitek Power</span></li>
             <li class="rl-i"><span class="rl-word">Royal Capital SL</span></li>
+            <li class="rl-i"><span class="rl-word">Proyectar SL</span></li>
+            <li class="rl-i"><span class="rl-word">Comar Construcciones</span></li>
           </ul>
-        </div>
-      </div>
-      <div class="rb-list">
-        <div class="rb-case">
-          <div class="rb-txt"><span class="rb-k">Arrendador · Renegociación</span><p>Renta renegociada con el inquilino actual.</p></div>
-          <div class="rb-chart">
-            <div class="rb-row"><span class="rb-l">Renta anterior</span><div class="rb-track"><span class="rb-bar" style="--w:80%"></span></div></div>
-            <div class="rb-row rb-win"><span class="rb-l">Renta con MADCRE</span><div class="rb-track"><span class="rb-bar" style="--w:100%"></span><span class="rb-val" style="--w:100%">+25 %</span></div></div>
-          </div>
-        </div>
-        <div class="rb-case">
-          <div class="rb-txt"><span class="rb-k">Arrendador · Nuevo contrato</span><p>Cláusulas mejoradas para el arrendador antes de firmar.</p></div>
-          <div class="rb-chart">
-            <div class="rb-row"><span class="rb-l">Propuesta inicial</span><div class="rb-track"><span class="rb-bar" style="--w:80%"></span></div></div>
-            <div class="rb-row rb-win"><span class="rb-l">Contrato firmado</span><div class="rb-track"><span class="rb-bar" style="--w:96%"></span><span class="rb-val" style="--w:96%">+20 %</span></div></div>
-          </div>
-        </div>
-        <div class="rb-case">
-          <div class="rb-txt"><span class="rb-k">Inversor</span><p>Rentabilidad por debajo de la media del sector. Recomendamos no comprar.</p></div>
-          <div class="rb-chart">
-            <div class="rb-row"><span class="rb-l">Media del sector</span><div class="rb-track"><span class="rb-bar" style="--w:80%"></span></div></div>
-            <div class="rb-row rb-lose"><span class="rb-l">Inmueble analizado</span><div class="rb-track"><span class="rb-bar" style="--w:58%"></span><span class="rb-gap" style="--a:58%;--b:80%"></span><span class="rb-val rb-no" style="--w:80%">No comprar</span></div></div>
-          </div>
         </div>
       </div>
     </div></div>
@@ -1604,6 +1599,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     if(smoothOn){ lerpRate=6.5; scrollTarget=y; }
     else window.scrollTo({top:y,behavior:reduced?'auto':'smooth'});
   };
+  window.__goTo=goTo;
   document.querySelectorAll('a[data-tab], button[data-tab]').forEach(el=>{
     el.addEventListener('click', e=>{
       e.preventDefault(); e.stopPropagation();
@@ -1636,7 +1632,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
   /* ---------- settle on sections: proximity snap after scroll ends ---------- */
   /* #entregables pairs with #cifras on one screen, so it is not its own stop */
-  const snapEls=[...document.querySelectorAll('main section, main .scan-auto')].filter(s=>s.id!=='entregables');
+  const snapEls=[...document.querySelectorAll('main section, main .scan-auto')].filter(s=>s.id!=='entregables'&&s.id!=='resultados');
   const retoEl=document.getElementById('servicios')||document.getElementById('radiografia')||document.getElementById('reto');
   let lastInputT=0, settleDone=true;
   ['wheel','touchstart','touchmove','keydown','mousedown'].forEach(ev=>
@@ -1644,6 +1640,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const nearestSnap=(y,vh)=>{
     const max=Math.max(document.documentElement.scrollHeight-vh,0);
     if(y>=max-6) return null;                       // resting at the very end (footer): leave it
+    if(window.__inPin&&window.__inPin(y)) return null;
     const retoTop=retoEl? retoEl.getBoundingClientRect().top+y : 0;
     if(y<retoTop-10){                               // inside the hero pin: no half-way stops
       return y<vh*0.32? 0 : retoTop;
@@ -2040,11 +2037,11 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const def=parseInt(acc.dataset.default||'0',10);
   const open=i=>items.forEach((el,k)=>el.classList.toggle('is-open',k===i));
   items.forEach((el,i)=>{
-    el.addEventListener('pointerenter',()=>open(i));
-    el.addEventListener('focus',()=>open(i));
-    el.addEventListener('click',()=>open(i));
+    el.addEventListener('pointerenter',()=>{if(!window.__accScroll)open(i);});
+    el.addEventListener('focus',()=>{if(!window.__accScroll)open(i);});
+    el.addEventListener('click',()=>{if(window.__accScroll&&window.__accGo)window.__accGo(i);else open(i);});
   });
-  acc.addEventListener('pointerleave',()=>open(def));
+  acc.addEventListener('pointerleave',()=>{if(!window.__accScroll)open(def);});
 })();
 </script>
 
@@ -2079,7 +2076,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const norm=s=>s.replace(/\s+/g,' ').trim();
   Object.assign(DICT,{
     "Inteligencia Inmobiliaria aplicada a tus activos":"Real estate intelligence|applied to your assets",
-    "Renovar un contrato, negociar una renta, comprar o vender un inmueble.":"Renewing a lease, negotiating rent, buying or selling a property.","Renovar un contrato":"Renewing a lease","Ahorro acumulado en renta para nuestros clientes":"Cumulative rent savings for our clients","Algunas de las empresas que hemos asesorado":"Some of the companies we have advised","de ahorro acumulado en renta para nuestros clientes":"in cumulative rent savings for our clients","de renta mejorada o ahorrada al año para nuestros clientes":"in rent improved or saved each year for our clients","operaciones analizadas":"transactions analysed","m² analizados":"sq m analysed","Arrendador · Renegociación":"Landlord · Renegotiation","Casos reales.":"Real cases.","Podemos enviarle un ejemplo.":"We can send you an example.","Puedes solicitarnos un ejemplo.":"Ask us for an example.","Arrendador · Nuevo contrato":"Landlord · New lease","Cláusulas mejoradas para el arrendador antes de firmar.":"Improved terms for the landlord before signing.","Resultados recientes":"Recent results","Casos reales. Clientes anónimos por confidencialidad.":"Real cases. Clients kept anonymous for confidentiality.","Propietario":"Owner","Inversor":"Investor","Renta renegociada con el inquilino actual.":"Rent renegotiated with the existing tenant.","Cláusulas mejoradas antes de firmar.":"Improved clauses before signing.","Rentabilidad por debajo de la media del sector. Recomendamos no comprar.":"Yield below the sector average. We advised against buying.","Renta anterior":"Previous rent","Renta con MADCRE":"Rent with MADCRE","Propuesta inicial":"Initial offer","Contrato firmado":"Signed lease","Media del sector":"Sector average","Inmueble analizado":"Property analysed","No comprar":"Don't buy","Eficiencia del espacio":"Space efficiency","Inmueble en propiedad":"Owned property","Nuevo contrato":"New Lease","Escríbanos":"Write to us","CP 28045, Madrid, España":"28045 Madrid, Spain","Fachada de un edificio de oficinas corporativo":"Corporate office building façade","Preguntas frecuentes":"Frequently asked questions","¿Cuánto cuesta?":"How much does it cost?","Honorarios fijos según el alcance, que conoce antes de empezar. En la mayoría de los casos, el ahorro que generan nuestras recomendaciones recupera el coste en menos de un año.":"Fixed fees based on scope, agreed before we start. In most cases, the savings from our recommendations recover the cost in under a year.","¿Sustituyen a mi agente o a mi abogado?":"Do you replace my agent or my lawyer?","No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.":"No. We give them the financial analysis, and you can work with them or with our partners.","¿Qué información necesitan?":"What information do you need?","El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.":"The lease, the property address and its floor areas, among other details. We source the rest.","¿Es confidencial?":"Is it confidential?","Sí. Firmamos un acuerdo de confidencialidad.":"Yes. We sign a non-disclosure agreement.","¿Merece la pena para una empresa pequeña?":"Is it worth it for a small company?","Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.":"Yes. A small difference in rent, multiplied by the years of the lease, usually exceeds the fees.","Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.":"Large corporations have an in-house real estate team behind every decision. We bring that same judgement to your company at five key moments.","Asesoramiento inmobiliario independiente para empresas y propietarios. Cada encargo termina en una recomendación concreta, lista para presentar a la dirección o tomar acción.":"Independent real estate advice for companies and owners. Every engagement ends in a concrete recommendation, ready to present to management or act on.","Con más de 15 años de experiencia en el sector, hemos gestionado inmuebles de empresas internacionales en más de 40 países y proyectos de arquitectura y construcción. Aplicamos ese mismo método a empresas que no tienen un equipo inmobiliario propio.":"With more than 15 years in the sector, we have managed real estate for international companies in more than 40 countries, alongside architecture and construction projects. We apply that same method to companies without an in-house real estate team.","Tipos de inmueble":"Property types","Inmuebles":"Properties","Mismo método, comparables específicos para cada tipo de inmueble.":"Same method, specific comparables for each property type.","Oficinas":"Offices","Naves logísticas e industriales":"Logistics & industrial","Locales comerciales":"Retail units","Renovaciones, reducción de superficie y cambio de sede.":"Renewals, downsizing and relocation.","Renta frente a mercado, ampliación y compra frente a alquiler.":"Rent vs. market, expansion and buy vs. lease.","Renta frente a ventas, ubicación y renegociación.":"Rent vs. sales, location and renegotiation.","Rentabilidad, reforma y venta.":"Yield, refurbishment and sale.","Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.":"Side-by-side options with total cost and a recommendation: expand, downsize or relocate.","Estrategia de espacio":"Space strategy","¿En qué situación se encuentra?":"What situation are you in?","La mayoría de empresas toma sus decisiones inmobiliarias sin nadie que la represente en exclusiva. Intervenimos en estos cinco momentos.":"Most companies make real estate decisions with no one representing them exclusively. We step in at these five moments.","Qué hacemos":"What we do","Qué recibe":"What you get","Servicio":"Service","Contrato":"Lease","Espacio":"Space","Su contrato de alquiler vence o le proponen una subida de renta.":"Your lease is expiring or you've been offered a rent increase.","Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.":"We compare your rent and terms with today's market and prepare the negotiation.","Rango de renta de mercado, puntos a negociar y alternativas.":"Market rent range, points to negotiate and alternatives.","Estrategia de alquiler":"Leasing strategy","Va a firmar un nuevo contrato de alquiler.":"You're about to sign a new lease.","Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.":"We review the financial clauses: rent, indexation, term, guarantees and exit.","Informe de riesgos por cláusula y propuesta de cambios.":"Clause-by-clause risk report and proposed changes.","Revisión de contrato":"Lease review","Está valorando comprar un inmueble, o el que ya ocupa.":"You're considering buying a property, or the one you already occupy.","Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.":"We analyse price, expected return, risks and the alternative of continuing to rent.","Recomendación de compra o no compra, con escenarios.":"A buy or don't-buy recommendation, with scenarios.","Tiene un inmueble que rinde menos de lo esperado o duda si vender.":"You own a property that underperforms, or you're unsure whether to sell.","Medimos ingresos, gastos y valor frente al mercado.":"We measure income, costs and value against the market.","Plan de acción: renegociar, reformar, alquilar o vender.":"Action plan: renegotiate, refurbish, let or sell.","Estrategia de propiedad + comparación con el mercado":"Ownership strategy + market comparison","Su empresa necesita más espacio, o le sobra.":"Your company needs more space, or has too much.","Calculamos el coste real del espacio actual y comparamos opciones.":"We calculate the true cost of your current space and compare options.","Renovación o subida de renta":"Lease renewal or rent increase","Firma de un nuevo contrato":"Signing a new lease","Compra de un inmueble":"Buying a property","Inmueble que rinde poco o posible venta":"Underperforming property or possible sale","Necesidad de más o menos espacio":"Needing more or less space","Empiece por una primera revisión.":"Start with an initial review.","Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.":"Send us your lease or your property details. Within 48 hours we'll tell you which points are worth analysing and what it would cost. No commitment.","Solicitar revisión":"Request a review","Primera revisión":"Initial review","Nombre":"Name","Empresa":"Company","Email de contacto":"Contact email","Situación":"Situation","Seleccione una opción":"Select an option","Adjunto (opcional)":"Attachment (optional)","Enviar solicitud":"Send request","Negociar una renta":"Negotiating rent","Comprar o vender un inmueble":"Buying or selling a property","Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.":"We analyse every decision with market data and deliver a clear recommendation.",
+    "Renovar un contrato, negociar una renta, comprar o vender un inmueble.":"Renewing a lease, negotiating rent, buying or selling a property.","Renovar un contrato":"Renewing a lease","Ahorro acumulado generado en nuestros clientes":"Cumulative savings generated for our clients","Ahorro acumulado en renta para nuestros clientes":"Cumulative rent savings for our clients","Algunas de las empresas que hemos asesorado":"Some of the companies we have advised","de ahorro acumulado en renta para nuestros clientes":"in cumulative rent savings for our clients","de renta mejorada o ahorrada al año para nuestros clientes":"in rent improved or saved each year for our clients","operaciones analizadas":"transactions analysed","m² analizados":"sq m analysed","Arrendador · Renegociación":"Landlord · Renegotiation","Casos reales.":"Real cases.","Podemos enviarle un ejemplo.":"We can send you an example.","Puedes solicitarnos un ejemplo.":"Ask us for an example.","Arrendador · Nuevo contrato":"Landlord · New lease","Cláusulas mejoradas para el arrendador antes de firmar.":"Improved terms for the landlord before signing.","Resultados recientes":"Recent results","Casos reales. Clientes anónimos por confidencialidad.":"Real cases. Clients kept anonymous for confidentiality.","Propietario":"Owner","Inversor":"Investor","Renta renegociada con el inquilino actual.":"Rent renegotiated with the existing tenant.","Cláusulas mejoradas antes de firmar.":"Improved clauses before signing.","Rentabilidad por debajo de la media del sector. Recomendamos no comprar.":"Yield below the sector average. We advised against buying.","Renta anterior":"Previous rent","Renta con MADCRE":"Rent with MADCRE","Propuesta inicial":"Initial offer","Contrato firmado":"Signed lease","Media del sector":"Sector average","Inmueble analizado":"Property analysed","No comprar":"Don't buy","Eficiencia del espacio":"Space efficiency","Inmueble en propiedad":"Owned property","Nuevo contrato":"New Lease","Escríbanos":"Write to us","CP 28045, Madrid, España":"28045 Madrid, Spain","Fachada de un edificio de oficinas corporativo":"Corporate office building façade","Preguntas frecuentes":"Frequently asked questions","¿Cuánto cuesta?":"How much does it cost?","Honorarios fijos según el alcance, que conoce antes de empezar. En la mayoría de los casos, el ahorro que generan nuestras recomendaciones recupera el coste en menos de un año.":"Fixed fees based on scope, agreed before we start. In most cases, the savings from our recommendations recover the cost in under a year.","¿Sustituyen a mi agente o a mi abogado?":"Do you replace my agent or my lawyer?","No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.":"No. We give them the financial analysis, and you can work with them or with our partners.","¿Qué información necesitan?":"What information do you need?","El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.":"The lease, the property address and its floor areas, among other details. We source the rest.","¿Es confidencial?":"Is it confidential?","Sí. Firmamos un acuerdo de confidencialidad.":"Yes. We sign a non-disclosure agreement.","¿Merece la pena para una empresa pequeña?":"Is it worth it for a small company?","Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.":"Yes. A small difference in rent, multiplied by the years of the lease, usually exceeds the fees.","Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.":"Large corporations have an in-house real estate team behind every decision. We bring that same judgement to your company at five key moments.","Asesoramiento inmobiliario independiente para empresas y propietarios. Cada encargo termina en una recomendación concreta, lista para presentar a la dirección o tomar acción.":"Independent real estate advice for companies and owners. Every engagement ends in a concrete recommendation, ready to present to management or act on.","Con más de 15 años de experiencia en el sector, hemos gestionado inmuebles de empresas internacionales en más de 40 países y proyectos de arquitectura y construcción. Aplicamos ese mismo método a empresas que no tienen un equipo inmobiliario propio.":"With more than 15 years in the sector, we have managed real estate for international companies in more than 40 countries, alongside architecture and construction projects. We apply that same method to companies without an in-house real estate team.","Tipos de inmueble":"Property types","Inmuebles":"Properties","Mismo método, comparables específicos para cada tipo de inmueble.":"Same method, specific comparables for each property type.","Oficinas":"Offices","Naves logísticas e industriales":"Logistics & industrial","Locales comerciales":"Retail units","Renovaciones, reducción de superficie y cambio de sede.":"Renewals, downsizing and relocation.","Renta frente a mercado, ampliación y compra frente a alquiler.":"Rent vs. market, expansion and buy vs. lease.","Renta frente a ventas, ubicación y renegociación.":"Rent vs. sales, location and renegotiation.","Rentabilidad, reforma y venta.":"Yield, refurbishment and sale.","Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.":"Side-by-side options with total cost and a recommendation: expand, downsize or relocate.","Estrategia de espacio":"Space strategy","¿En qué situación se encuentra?":"What situation are you in?","La mayoría de empresas toma sus decisiones inmobiliarias sin nadie que la represente en exclusiva. Intervenimos en estos cinco momentos.":"Most companies make real estate decisions with no one representing them exclusively. We step in at these five moments.","Qué hacemos":"What we do","Qué recibe":"What you get","Servicio":"Service","Contrato":"Lease","Espacio":"Space","Su contrato de alquiler vence o le proponen una subida de renta.":"Your lease is expiring or you've been offered a rent increase.","Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.":"We compare your rent and terms with today's market and prepare the negotiation.","Rango de renta de mercado, puntos a negociar y alternativas.":"Market rent range, points to negotiate and alternatives.","Estrategia de alquiler":"Leasing strategy","Va a firmar un nuevo contrato de alquiler.":"You're about to sign a new lease.","Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.":"We review the financial clauses: rent, indexation, term, guarantees and exit.","Informe de riesgos por cláusula y propuesta de cambios.":"Clause-by-clause risk report and proposed changes.","Revisión de contrato":"Lease review","Está valorando comprar un inmueble, o el que ya ocupa.":"You're considering buying a property, or the one you already occupy.","Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.":"We analyse price, expected return, risks and the alternative of continuing to rent.","Recomendación de compra o no compra, con escenarios.":"A buy or don't-buy recommendation, with scenarios.","Tiene un inmueble que rinde menos de lo esperado o duda si vender.":"You own a property that underperforms, or you're unsure whether to sell.","Medimos ingresos, gastos y valor frente al mercado.":"We measure income, costs and value against the market.","Plan de acción: renegociar, reformar, alquilar o vender.":"Action plan: renegotiate, refurbish, let or sell.","Estrategia de propiedad + comparación con el mercado":"Ownership strategy + market comparison","Su empresa necesita más espacio, o le sobra.":"Your company needs more space, or has too much.","Calculamos el coste real del espacio actual y comparamos opciones.":"We calculate the true cost of your current space and compare options.","Renovación o subida de renta":"Lease renewal or rent increase","Firma de un nuevo contrato":"Signing a new lease","Compra de un inmueble":"Buying a property","Inmueble que rinde poco o posible venta":"Underperforming property or possible sale","Necesidad de más o menos espacio":"Needing more or less space","Empiece por una primera revisión.":"Start with an initial review.","Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.":"Send us your lease or your property details. Within 48 hours we'll tell you which points are worth analysing and what it would cost. No commitment.","Solicitar revisión":"Request a review","Primera revisión":"Initial review","Nombre":"Name","Empresa":"Company","Email de contacto":"Contact email","Situación":"Situation","Seleccione una opción":"Select an option","Adjunto (opcional)":"Attachment (optional)","Enviar solicitud":"Send request","Negociar una renta":"Negotiating rent","Comprar o vender un inmueble":"Buying or selling a property","Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.":"We analyse every decision with market data and deliver a clear recommendation.",
     "Somos el departamento inmobiliario externo de tu empresa":"Your company's external|real estate department",
     "Inteligencia y estrategia":"Intelligence and strategy",
     "Redes":"Social",
@@ -2241,7 +2238,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const mob=matchMedia('(max-width:760px) and (min-height:520px)');
   const en=()=>document.documentElement.lang==='en';
   const fmt=(v,f)=>{const L=en()?'en-US':'es-ES';
-    if(f==='eur'){if(v>=995000){const m=(v/1e6).toLocaleString(L,{maximumFractionDigits:1});return en()?'+€'+m+'M':'+'+m+' M€';}const k=Math.round(v/1e3).toLocaleString(L);return en()?'+€'+k+'K':'+'+k+' k€';}
+    if(f==='eur'){if(v>=995000){const m=(v/1e6).toLocaleString(L,{maximumFractionDigits:1});return en()?'+€'+m+'M':'+'+m+' M€';}const k=Math.round(v/1e3).toLocaleString(L);return en()?'+€'+k+'K':'+'+k+'K EUR';}
     if(f==='m2'){if(v>=1e3)return Math.round(v/1e3).toLocaleString(L)+(en()?'K':'.000');return Math.round(v).toLocaleString(L);}
     return Math.round(v).toLocaleString(L);};
   const cl=(x,a,b)=>Math.min(1,Math.max(0,(x-a)/(b-a)));
@@ -2258,18 +2255,18 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     if(mob.matches){
       const r=sec.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/r.height));
       S('--hd',ease(cl(p,.03,.12)).toFixed(3));
-      const gin=ease(cl(p,.04,.16)),gout=cl(p,.36,.43);
+      const gin=ease(cl(p,.04,.16)),gout=0;
       S('--ga',(gin*(1-gout)).toFixed(3));S('--gy',((1-gin)*50-gout*60).toFixed(1));S('--gs',1);
-      kT=(t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2)(cl(p,.08,.34));smooth();
+      kT=(t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2)(cl(p,.1,.6));smooth();
       cases.forEach((c,i)=>{const a=.44+i*.04;const v=ease(cl(p,a,a+.08));c.style.setProperty('--ca',v.toFixed(3));c.classList.toggle('in',p>a+.02);});
       return;}
     const r=sec.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/r.height));
     S('--hd',ease(cl(p,.04,.2)).toFixed(3));
-    const gin=ease(cl(p,.06,.26)),gout=cl(p,.56,.66);
+    const gin=ease(cl(p,.06,.26)),gout=0;
     S('--ga',(gin*(1-gout)).toFixed(3));sec.querySelector('.rg').classList.toggle('drawn',gin>.55&&gout<1);
     S('--gy',((1-gin)*60-gout*80).toFixed(1));
     S('--gs',(0.92+0.08*gin-0.06*gout).toFixed(3));
-    kT=(t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2)(cl(p,.1,.5));smooth();
+    kT=(t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2)(cl(p,.12,.66));smooth();
     const lin=ease(cl(p,.63,.75));
     S('--la',lin.toFixed(3));S('--ly',((1-lin)*70).toFixed(1));
     setCases(p>.65);
@@ -2342,6 +2339,39 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     new IntersectionObserver(es=>es.forEach(e=>{heroOn=e.isIntersecting;hv.forEach(v=>{v.dataset.hold=heroOn?'':'1';heroOn?play(v):v.pause();});}),{rootMargin:'100px 0px'}).observe(hero);
   }
   document.addEventListener('visibilitychange',()=>{const hid=document.hidden;[au,...hv].forEach(v=>{if(!v)return;if(hid)v.pause();else if(v!==au?heroOn:true)play(v);});});
+})();
+</script>
+<script>
+(function(){
+  const sec=document.getElementById('servicios'),pin=sec&&sec.querySelector('.acc-pin'),acc=document.getElementById('acc');if(!pin||!acc)return;
+  const items=[...acc.querySelectorAll('.acc-item')],N=items.length;
+  const mq=matchMedia('(min-width:861px) and (min-height:780px)');
+  const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav=document.getElementById('nav');
+  let cur=-1,raf=0;
+  const open=i=>{if(i===cur)return;cur=i;items.forEach((el,k)=>el.classList.toggle('is-open',k===i));};
+  const setMode=()=>{const on=mq.matches&&!red;window.__accScroll=on;sec.classList.toggle('acc-scroll',on);if(nav)sec.style.setProperty('--navh',nav.offsetHeight+'px');cur=-1;tick();};
+  const tick=()=>{raf=0;if(!window.__accScroll)return;const r=pin.getBoundingClientRect(),span=r.height-acc.offsetHeight;const p=span>0?Math.min(1,Math.max(0,(-r.top+ (acc.offsetTop||0)*0)/span)):0;open(Math.min(N-1,Math.floor(p*N*0.999)));};
+  const stepY=i=>{const r=pin.getBoundingClientRect(),span=r.height-acc.offsetHeight;return scrollY+r.top+span*((i+.5)/N);};
+  const go=y=>{if(window.__goTo)window.__goTo(y);else window.scrollTo({top:y,behavior:'smooth'});};
+  window.__accGo=i=>go(stepY(i));
+  window.__inPin=y=>{if(!window.__accScroll)return false;const t=pin.getBoundingClientRect().top+scrollY;return y>=t-innerHeight*.6&&y<=t+pin.offsetHeight;};
+  let lockUntil=0,acc0=0;
+  document.addEventListener('wheel',e=>{
+    if(!window.__accScroll||e.ctrlKey)return;
+    const r=pin.getBoundingClientRect(),span=r.height-acc.offsetHeight;
+    if(r.top>2||-r.top>span-2)return;
+    const dir=Math.sign(e.deltaY);if(!dir)return;
+    const idx=cur<0?0:cur;
+    if((dir>0&&idx>=N-1)||(dir<0&&idx<=0))return;
+    e.preventDefault();e.stopPropagation();
+    const now=performance.now();if(now<lockUntil){lockUntil=now+260;return;}
+    acc0+=e.deltaY;if(Math.abs(acc0)<12)return;acc0=0;
+    lockUntil=now+750;go(stepY(idx+dir));
+  },{passive:false,capture:true});
+  addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(tick);},{passive:true});
+  addEventListener('resize',setMode);mq.addEventListener&&mq.addEventListener('change',setMode);
+  setMode();
 })();
 </script>
 </body>
