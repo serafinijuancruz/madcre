@@ -962,6 +962,12 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #resultados .rl-i{opacity:var(--o,.12);transition:opacity .25s linear;display:flex;align-items:center;height:2.4rem}
 #resultados .rl-word{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.5vw,1.5rem);letter-spacing:-.01em;color:var(--paper);white-space:nowrap}
 #resultados .rl-i img{height:100%;width:auto;max-width:10rem;object-fit:contain;filter:brightness(0) invert(.95) sepia(.25)}
+
+/* perf */
+#resultados .rb-stage{contain:layout paint}
+#resultados .rg-num{text-shadow:none}
+#resultados .rg-draw{text-shadow:none}
+.tile img,.acc-img img{backface-visibility:hidden}
 /* scroll transition */
 @media(min-width:761px) and (min-height:620px){
 #resultados.rb{height:280vh;padding:0;margin-bottom:-24svh}
@@ -1054,7 +1060,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 <nav id="nav">
   <div class="wrap">
-    <a class="logo" href="#" data-tab="inicio"><img src="madcre-logo-copper.png" alt="MADCRE"></a>
+    <a class="logo" href="#" data-tab="inicio"><img decoding="async" src="madcre-logo-copper.png" alt="MADCRE"></a>
     <div class="nav-right">
       <div class="nav-cta"><button type="button" class="btn frame" data-tab="contacto"><span>Contáctanos</span></button></div>
       <button type="button" class="sm-toggle" id="smToggle" aria-expanded="false" aria-controls="smPanel">
@@ -1127,7 +1133,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     </div>
     <div class="acc" id="acc" data-default="2">
       <article class="acc-item" data-i="0" tabindex="0" role="button" aria-label="Alquiler">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <div class="acc-img"><img decoding="async" src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">01</span>
         <span class="acc-vlabel">Alquiler</span>
         <span class="acc-prev">Su contrato de alquiler vence o le proponen una subida de renta.</span>
@@ -1141,7 +1147,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         </div>
       </article>
       <article class="acc-item" data-i="1" tabindex="0" role="button" aria-label="Nuevo contrato">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <div class="acc-img"><img decoding="async" src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">02</span>
         <span class="acc-vlabel">Nuevo contrato</span>
         <span class="acc-prev">Va a firmar un nuevo contrato de alquiler.</span>
@@ -1155,7 +1161,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         </div>
       </article>
       <article class="acc-item is-open" data-i="2" tabindex="0" role="button" aria-label="Pre-compra">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <div class="acc-img"><img decoding="async" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">03</span>
         <span class="acc-vlabel">Pre-compra</span>
         <span class="acc-prev">Está valorando comprar un inmueble, o el que ya ocupa.</span>
@@ -1169,7 +1175,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         </div>
       </article>
       <article class="acc-item" data-i="3" tabindex="0" role="button" aria-label="Inmueble en propiedad">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <div class="acc-img"><img decoding="async" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">04</span>
         <span class="acc-vlabel">Inmueble en propiedad</span>
         <span class="acc-prev">Tiene un inmueble que rinde menos de lo esperado o duda si vender.</span>
@@ -1183,7 +1189,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         </div>
       </article>
       <article class="acc-item" data-i="4" tabindex="0" role="button" aria-label="Eficiencia del espacio">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <div class="acc-img"><img decoding="async" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">05</span>
         <span class="acc-vlabel">Eficiencia del espacio</span>
         <span class="acc-prev">Su empresa necesita más espacio, o le sobra.</span>
@@ -1254,17 +1260,17 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 <!-- ===================== PERSPECTIVAS ===================== -->
 <div class="page" data-tab="metodo">
   <section id="tipologias">
-    <div class="tipos-bg" aria-hidden="true"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=60" alt="" loading="lazy"></div>
+    <div class="tipos-bg" aria-hidden="true"><img decoding="async" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=60" alt="" loading="lazy"></div>
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Tipos de inmueble</p>
         <h2>Mismo método, comparables específicos para cada tipo de inmueble.</h2>
       </div>
       <div class="tiles">
-        <div class="tile rv" data-d="1"><img class="tplx" data-speed="0.18" src="https://images.unsplash.com/photo-1554435493-93422e8220c8?auto=format&fit=crop&w=900&q=75" alt="Edificio de oficinas" loading="lazy"><span class="lab"><b>Oficinas</b><span class="lab-d">Renovaciones, reducción de superficie y cambio de sede.</span></span></div>
-        <div class="tile rv" data-d="2"><img class="tplx" data-speed="0.3" src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=75" alt="Nave logística" loading="lazy"><span class="lab"><b>Naves logísticas e industriales</b><span class="lab-d">Renta frente a mercado, ampliación y compra frente a alquiler.</span></span></div>
-        <div class="tile rv" data-d="3"><img class="tplx" data-speed="0.22" src="https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=900&q=75" alt="Galería comercial con locales y escaparates" loading="lazy"><span class="lab"><b>Locales comerciales</b><span class="lab-d">Renta frente a ventas, ubicación y renegociación.</span></span></div>
-        <div class="tile rv" data-d="4"><img class="tplx" data-speed="0.34" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=75" alt="Bloque residencial" loading="lazy"><span class="lab"><b>Residencial</b><span class="lab-d">Rentabilidad, reforma y venta.</span></span></div>
+        <div class="tile rv" data-d="1"><img decoding="async" class="tplx" data-speed="0.18" src="https://images.unsplash.com/photo-1554435493-93422e8220c8?auto=format&fit=crop&w=900&q=75" alt="Edificio de oficinas" loading="lazy"><span class="lab"><b>Oficinas</b><span class="lab-d">Renovaciones, reducción de superficie y cambio de sede.</span></span></div>
+        <div class="tile rv" data-d="2"><img decoding="async" class="tplx" data-speed="0.3" src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=75" alt="Nave logística" loading="lazy"><span class="lab"><b>Naves logísticas e industriales</b><span class="lab-d">Renta frente a mercado, ampliación y compra frente a alquiler.</span></span></div>
+        <div class="tile rv" data-d="3"><img decoding="async" class="tplx" data-speed="0.22" src="https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=900&q=75" alt="Galería comercial con locales y escaparates" loading="lazy"><span class="lab"><b>Locales comerciales</b><span class="lab-d">Renta frente a ventas, ubicación y renegociación.</span></span></div>
+        <div class="tile rv" data-d="4"><img decoding="async" class="tplx" data-speed="0.34" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=75" alt="Bloque residencial" loading="lazy"><span class="lab"><b>Residencial</b><span class="lab-d">Rentabilidad, reforma y venta.</span></span></div>
       </div>
     </div>
   </section>
@@ -1278,7 +1284,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 <!-- ===================== NOSOTROS ===================== -->
 <div class="page" data-tab="nosotros">
   <section id="quienes">
-    <div class="qs-bg" aria-hidden="true"><img src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1600&q=60" alt="" loading="lazy"></div>
+    <div class="qs-bg" aria-hidden="true"><img decoding="async" src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1600&q=60" alt="" loading="lazy"></div>
     <div class="wrap">
       <div class="grid2">
         <div>
@@ -1296,9 +1302,9 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           </div>
         </div>
         <div class="ph-grid">
-          <div class="ph sq"><img src="juan_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
-          <div class="ph sq"><img src="fer_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
-          <div class="ph sq wide"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&crop=faces,center&w=1200&h=1200&q=80" alt="Equipo de analistas trabajando en una reunión" loading="lazy"></div>
+          <div class="ph sq"><img decoding="async" src="juan_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
+          <div class="ph sq"><img decoding="async" src="fer_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
+          <div class="ph sq wide"><img decoding="async" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&crop=faces,center&w=1200&h=1200&q=80" alt="Equipo de analistas trabajando en una reunión" loading="lazy"></div>
         </div>
       </div>
     </div>
@@ -1311,7 +1317,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 <!-- ===================== HABLEMOS ===================== -->
 <div class="page" data-tab="contacto">
   <section id="contacto">
-    <div class="bgimg" aria-hidden="true"><img src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1800&q=70" alt="" loading="lazy"></div>
+    <div class="bgimg" aria-hidden="true"><img decoding="async" src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1800&q=70" alt="" loading="lazy"></div>
     <div class="wrap">
       <p class="eyebrow rv">Contacto</p>
       <h2 class="rv" data-d="1">Hablemos de tus activos</h2>
@@ -1361,7 +1367,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 <footer>
   <div class="wrap">
-    <a class="logo" href="#" data-tab="inicio"><img src="madcre-logo-copper.png" alt="MADCRE"></a>
+    <a class="logo" href="#" data-tab="inicio"><img decoding="async" src="madcre-logo-copper.png" alt="MADCRE"></a>
     <span>Madrid · Barcelona — © 2026 MADCRE. Todos los derechos reservados.</span>
     <div class="legal-row">
       <button type="button" class="legal-btn" data-legal="cookies">Política de cookies</button>
@@ -1612,7 +1618,9 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   };
 
   /* ---------- master frame loop ---------- */
-  let lastY=-1;
+  let lastY=-1,docH=document.documentElement.scrollHeight;
+  const updDocH=()=>{docH=document.documentElement.scrollHeight;};
+  if('ResizeObserver' in window) new ResizeObserver(updDocH).observe(document.body); addEventListener('resize',updDocH);
   const frame=()=>{
     const now=performance.now();
     const dt=Math.min((now-lastFrameT)/1000,.05);
@@ -1639,7 +1647,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     if(scrolled && nav){
       nav.classList.toggle('scrolled', y>40);
       if(navProg){
-        const max=Math.max(document.documentElement.scrollHeight-vh,1);
+        const max=Math.max(docH-vh,1);
         navProg.style.transform=`scaleX(${clamp(y/max,0,1)})`;
       }
     }
@@ -2126,23 +2134,21 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   if(lang==='en') setTimeout(apply,1700);
 })();
 
-/* video speed-up */
+/* video speed-up + iOS play guard (throttled, respects off-screen pause) */
 (()=>{
   const RATE=1.35;
-  const vids=()=>[...document.querySelectorAll('video')];
-  const bump=()=>vids().forEach(v=>{try{v.playbackRate=RATE;v.defaultPlaybackRate=RATE;}catch(e){}});
-  const kick=()=>vids().forEach(v=>{
-    v.muted=true;v.defaultMuted=true;v.controls=false;
-    v.setAttribute('webkit-playsinline','');v.setAttribute('playsinline','');
-    const p=v.play();if(p&&p.catch)p.catch(()=>{});
-  });
-  const go=()=>{kick();bump();};
+  const vids=()=>[...document.querySelectorAll('video')].filter(v=>v.querySelector('source')||v.getAttribute('src'));
+  vids().forEach(v=>{v.muted=true;v.defaultMuted=true;v.controls=false;v.setAttribute('webkit-playsinline','');v.setAttribute('playsinline','');});
+  const bump=v=>{try{if(v.playbackRate!==RATE){v.playbackRate=RATE;v.defaultPlaybackRate=RATE;}}catch(e){}};
+  let t=0;
+  const go=()=>{const now=performance.now();if(now-t<700)return;t=now;
+    vids().forEach(v=>{bump(v);if(v.dataset.hold==='1'||document.hidden)return;if(v.paused){const p=v.play();if(p&&p.catch)p.catch(()=>{});}});};
   go();
-  vids().forEach(v=>['loadedmetadata','loadeddata','canplay','play','stalled','suspend','pause'].forEach(e=>v.addEventListener(e,go)));
-  ['touchstart','pointerdown','click','scroll','keydown'].forEach(e=>addEventListener(e,go,{passive:true,once:false}));
+  vids().forEach(v=>['loadedmetadata','canplay'].forEach(ev=>v.addEventListener(ev,()=>{bump(v);go();})));
+  ['touchstart','pointerdown','keydown'].forEach(ev=>addEventListener(ev,go,{passive:true}));
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)go();});
   addEventListener('pageshow',go);
-  setTimeout(go,600);setTimeout(go,1600);setInterval(go,4000);
+  setTimeout(go,600);setTimeout(go,1600);setTimeout(go,4000);
 })();
 </script>
 <script>
@@ -2274,6 +2280,19 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 <script>
 (function(){var d=document.documentElement;if(!d.classList.contains('lite'))return;
   document.querySelectorAll('video.hero-glow'+(d.classList.contains('android')?',#aurora':'')).forEach(function(v){try{v.pause();v.removeAttribute('autoplay');v.preload='none';v.querySelectorAll('source').forEach(function(s){s.remove()});v.load();}catch(e){}});
+})();
+</script>
+<script>
+(function(){
+  const hero=document.querySelector('.hero-pin')||document.querySelector('.hero');
+  const hv=[...document.querySelectorAll('.hero video')];
+  const au=document.getElementById('aurora');
+  const play=v=>{if(v.querySelector('source')||v.src){const p=v.play();p&&p.catch&&p.catch(()=>{});}};
+  let heroOn=true;
+  if(hero&&hv.length&&'IntersectionObserver' in window){
+    new IntersectionObserver(es=>es.forEach(e=>{heroOn=e.isIntersecting;hv.forEach(v=>{v.dataset.hold=heroOn?'':'1';heroOn?play(v):v.pause();});}),{rootMargin:'100px 0px'}).observe(hero);
+  }
+  document.addEventListener('visibilitychange',()=>{const hid=document.hidden;[au,...hv].forEach(v=>{if(!v)return;if(hid)v.pause();else if(v!==au?heroOn:true)play(v);});});
 })();
 </script>
 </body>
