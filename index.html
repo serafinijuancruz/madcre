@@ -220,9 +220,9 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .loaded .hero-bg video{animation:heroVidIn 2.2s var(--ease) .05s forwards}
 @keyframes heroIn{to{transform:scale(1.02);filter:blur(0) brightness(.62) grayscale(1)}}
 @keyframes heroVidIn{to{transform:scale(1.02);filter:blur(0) brightness(.72) contrast(1.06) saturate(1.3)}}
-.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(7,20,38,.92) 0%,rgba(7,20,38,.42) 45%,rgba(7,20,38,.34) 100%)}
+.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(7,20,38,.95) 0%,rgba(7,20,38,.78) 30%,rgba(7,20,38,.45) 62%,rgba(7,20,38,.34) 100%)}
 .hero-dim{position:absolute;inset:0;z-index:1;background:var(--ink-deep);opacity:0;pointer-events:none;will-change:opacity}
-.hero-content{position:relative;z-index:3;width:100%;padding-bottom:clamp(3rem,7vh,5.5rem)}
+.hero-content{position:relative;z-index:3;width:100%;padding-bottom:clamp(2.2rem,6vh,4.8rem)}
 .hero .eyebrow{color:var(--cobalt-soft);opacity:0}
 .hero .eyebrow::before{color:var(--copper-hi)}
 .loaded .hero .eyebrow{animation:fadeUp .8s .5s forwards}
@@ -232,6 +232,33 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .hero h1 .line span .bt-w{display:inline-block}
 .bt-measure .bt-w{animation:none!important;transition:none!important;transform:none!important;opacity:1!important;filter:none!important}
 .hero h1 em{font-style:italic;color:var(--cobalt-soft)}
+.hero p.hero-sub{font-family:var(--body);font-size:clamp(1.05rem,1.35vw,1.4rem);line-height:1.55;max-width:44rem;color:var(--paper);margin:0;text-wrap:pretty;text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85);opacity:0}
+.hero p.hero-sub .hs-a{color:var(--copper-hi);font-weight:600}
+.loaded .hero p.hero-sub{animation:fadeUp .9s .4s forwards}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem 2rem;margin-top:clamp(3.2rem,8.5vh,5.6rem);max-width:56rem;opacity:0}
+.loaded .hero-cta{animation:fadeUp .9s 1.6s forwards}
+.hc-copy{display:flex;flex-direction:column;gap:.35rem;flex:1 1 22rem;min-width:0}
+.hc-t{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.3vw,1.3rem);letter-spacing:-.01em;color:var(--paper);text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85)}
+.hc-d{font-size:clamp(.9rem,1vw,1.02rem);line-height:1.55;color:rgba(245,244,239,.86);text-wrap:pretty;text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85)}
+.hero-cta .btn.frame{font-size:.82rem;letter-spacing:.18em;padding:.92rem 2.2rem;flex:none}
+.hero-cta .btn.frame{position:relative;display:inline-block;background:transparent;border:0;color:var(--paper);box-shadow:none;text-shadow:none;filter:none;overflow:visible;cursor:pointer;transition:color .3s ease}
+.hero-cta .btn.frame::before,.hero-cta .btn.frame::after{content:'';position:absolute;inset:0;border:2px solid var(--copper);background:none;transform:none;z-index:2;pointer-events:none;transition:clip-path .3s ease-out,opacity .3s ease}
+.hero-cta .btn.frame::before{clip-path:inset(45% 0 45% 0);opacity:.45}
+.hero-cta .btn.frame::after{clip-path:inset(0 45% 0 45%);opacity:.45;transition-delay:.15s}
+.hero-cta .btn.frame:hover::before,.hero-cta .btn.frame:focus-visible::before,.hero-cta .btn.frame:hover::after,.hero-cta .btn.frame:focus-visible::after{clip-path:inset(0 0 0 0);opacity:1}
+.hero-cta .btn.frame:hover,.hero-cta .btn.frame:focus-visible{color:var(--copper-hi);filter:none;transform:none;box-shadow:none}
+.hero-cta .btn.frame:active{transform:scale(.98)}
+.hero-cta .btn.frame span{position:relative;z-index:3}
+.rev-form{display:flex;flex-direction:column;gap:1rem}
+.rf{display:flex;flex-direction:column;gap:.4rem}
+.rf span{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,244,239,.6)}
+.rf input,.rf select{font:inherit;font-size:1rem;color:var(--paper);background:rgba(245,244,239,.05);border:1px solid rgba(222,156,99,.3);padding:.8rem .9rem;border-radius:0;outline:none;transition:border-color .3s}
+.rf select option{color:#0B1F3A}
+.rf input:focus,.rf select:focus{border-color:var(--copper-hi)}
+.rf input[type=file]{padding:.6rem;font-size:.85rem}
+.rev-send{align-self:flex-start;margin-top:.4rem;cursor:pointer}
+.rev-msg{margin:0;font-size:.9rem;color:var(--copper-hi);min-height:1.2em}
+
 .hero p.lead{font-size:clamp(1.02rem,1.35vw,1.35rem);max-width:41rem;color:rgba(245,244,239,.82);opacity:0;line-height:1.6}
 .loaded .hero p.lead{animation:fadeUp .9s 1.05s forwards}
 .hero .cta-row{display:flex;gap:1rem;margin-top:2.1rem;opacity:0;flex-wrap:wrap}
@@ -395,7 +422,10 @@ h2 em{position:relative}
   .tiles .tile{aspect-ratio:auto;height:clamp(260px,46svh,540px)}
   .tiles .tile .lab{left:1.25rem;bottom:1.15rem}
   .tiles .tile .lab b{font-size:1.45rem}
-  .tiles .tile .lab small{font-size:.62rem}
+  .tiles .tile .lab{right:1rem}
+.tile .lab-d{display:block;margin-top:.4rem;font-size:clamp(.85rem,.95vw,1rem);line-height:1.45;color:rgba(245,244,239,.9);text-wrap:pretty}
+.tile::after{background:linear-gradient(to top,rgba(7,20,38,.92) 0%,rgba(7,20,38,.55) 38%,transparent 65%)}
+.tile .lab small{font-size:.62rem}
 }
 .tile{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer}
 .tile img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;filter:grayscale(1) brightness(.85);transition:filter .6s,transform .8s var(--ease);will-change:transform}
@@ -403,11 +433,31 @@ h2 em{position:relative}
 .tile::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(7,20,38,.82),transparent 55%)}
 .tile .lab{position:absolute;left:1rem;bottom:.95rem;z-index:2;color:var(--paper)}
 .tile .lab b{font-family:var(--display);font-size:1.15rem;font-weight:400;display:block}
+.tile .lab{right:1rem}
+.tile .lab-d{display:block;margin-top:.4rem;font-size:clamp(.85rem,.95vw,1rem);line-height:1.45;color:rgba(245,244,239,.9);text-wrap:pretty}
+.tile::after{background:linear-gradient(to top,rgba(7,20,38,.92) 0%,rgba(7,20,38,.55) 38%,transparent 65%)}
 .tile .lab small{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
 .tile .arrow{position:absolute;top:.85rem;right:.85rem;z-index:2;width:1.8rem;height:1.8rem;border:1px solid rgba(245,244,239,.5);display:grid;place-items:center;color:var(--paper);transform:translateY(-8px);opacity:0;transition:opacity .4s,transform .4s}
 .tile:hover .arrow{opacity:1;transform:none}
 @media(max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.tiles{gap:.8rem}.tile .lab b{font-size:1rem}}
+#tipologias .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,clamp(220px,30svh,340px));gap:clamp(.7rem,1.2vw,1.1rem)}
+#tipologias .tiles .tile{height:auto;aspect-ratio:auto}
+#tipologias .tiles .tile:nth-child(1){grid-column:1/3;grid-row:1/3}
+#tipologias .tiles .tile:nth-child(2){grid-column:3/5;grid-row:1}
+#tipologias .tiles .tile:nth-child(3){grid-column:3;grid-row:2}
+#tipologias .tiles .tile:nth-child(4){grid-column:4;grid-row:2}
+#tipologias .tiles .tile .lab{left:clamp(1rem,1.6vw,1.6rem);right:clamp(1rem,1.6vw,1.6rem);bottom:clamp(1rem,1.6vw,1.5rem)}
+#tipologias .tiles .tile:nth-child(1) .lab b{font-size:clamp(2rem,3.4vw,3.4rem);line-height:1}
+#tipologias .tiles .tile:nth-child(1) .lab-d{font-size:clamp(1rem,1.2vw,1.25rem);max-width:28rem}
+#tipologias .tiles .tile:nth-child(2) .lab b{font-size:clamp(1.5rem,2.2vw,2.2rem);line-height:1.05}
+#tipologias .tiles .tile:nth-child(n+3) .lab b{font-size:clamp(1.2rem,1.5vw,1.55rem);line-height:1.1}
+@media(max-width:900px){#tipologias .tiles{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:clamp(260px,44svh,380px) repeat(2,clamp(180px,26svh,260px))}
+#tipologias .tiles .tile:nth-child(1){grid-column:1/3;grid-row:1}
+#tipologias .tiles .tile:nth-child(2){grid-column:1/3;grid-row:2}
+#tipologias .tiles .tile:nth-child(3){grid-column:1;grid-row:3}
+#tipologias .tiles .tile:nth-child(4){grid-column:2;grid-row:3}}
+@media(max-width:480px){#tipologias .tiles{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:clamp(200px,34svh,280px)}#tipologias .tiles .tile:nth-child(n){grid-column:1;grid-row:auto}}
 
 /* ---------- split ---------- */
 #lados{background:var(--ink-deep);color:var(--paper);overflow:hidden}
@@ -630,14 +680,14 @@ footer{background:none;background-image:linear-gradient(to bottom,rgba(7,20,38,.
 /* hero headline — left-aligned, editorial */
 .hero-content{text-align:left;align-items:flex-start}
 .hero .eyebrow{justify-content:flex-start}
-.hero h1{font-family:var(--body);margin-left:0;margin-right:0;max-width:18ch;font-size:clamp(3.2rem,8vw,8.4rem);font-weight:700;line-height:.96;letter-spacing:-.04em}
+.hero h1{font-family:var(--body);margin-left:0;margin-right:0;max-width:18ch;font-size:clamp(2.2rem,5vw,6rem);font-weight:700;line-height:.96;letter-spacing:-.04em}
 .hero h1 .line{justify-content:flex-start}
 .hero h1 em{font-family:var(--body);font-style:normal;font-weight:700;color:inherit}
 .hero p.lead{margin-left:0;margin-right:0;max-width:34rem}
 .hero .cta-row{justify-content:flex-start}
 .hero h1::after{content:'';display:block;width:min(100%,26ch);height:1px;margin:clamp(1.3rem,3vh,2.1rem) 0 0;background:linear-gradient(90deg,var(--copper-hi) 0%,var(--copper-hi) 82%,transparent 100%);transform-origin:left;animation:heroRule 1.4s cubic-bezier(.22,1,.36,1) 1.2s both}
 @keyframes heroRule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media (min-width:900px){.hero h1{max-width:none}.hero h1 .line>span{white-space:nowrap}}
+@media (min-width:900px){.hero h1{max-width:none}}
 
 /* stroke-draw headline */
 .stroked .bt-w{color:transparent;opacity:1;filter:none;transform:none;animation:none}
@@ -714,13 +764,45 @@ main .eyebrow{font-family:var(--mono);font-size:.92rem;font-weight:500;letter-sp
 .acc-item.is-open .acc-num{left:clamp(1.3rem,2.2vw,2.2rem);transform:none}
 .acc-vlabel{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;z-index:3;font-family:var(--body);font-weight:500;font-size:1rem;letter-spacing:-.01em;white-space:nowrap;color:rgba(245,244,239,.82);transition:opacity .35s}
 .acc-item.is-open .acc-vlabel{opacity:0}
+.acc-prev{display:none}
 .acc-body{position:absolute;left:0;right:0;bottom:0;z-index:3;box-sizing:border-box;padding:clamp(1.4rem,3vh,2.4rem) clamp(1.3rem,2.2vw,2.2rem);max-height:calc(100% - 3.4rem);overflow:hidden;opacity:0;transform:translateY(26px);transition:opacity .45s .18s,transform .6s .18s cubic-bezier(.76,0,.24,1);pointer-events:none}
 .acc-item.is-open .acc-body{opacity:1;transform:none}
 .acc-body h3{font-family:var(--body);font-weight:700;font-size:clamp(1.3rem,1.9vw,2rem);letter-spacing:-.03em;line-height:1.05;color:var(--paper);margin:0}
 .acc-body .acc-hook{margin:.55rem 0 0;font-family:var(--body);font-weight:500;font-size:clamp(.88rem,.96vw,1.02rem);line-height:1.35;color:var(--copper-hi,#de9c63);max-width:30rem}
 .acc-body .acc-note{margin:.75rem 0 0;padding-top:.65rem;border-top:1px solid rgba(222,156,99,.28);max-width:30rem;font-size:clamp(.78rem,.84vw,.9rem);line-height:1.45;color:rgba(245,244,239,.62)}
+.acc-body .acc-k{margin:1rem 0 0;font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,244,239,.55)}
+.acc-body .acc-k + p{margin-top:.3rem}
+.acc-body .acc-svl{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi);margin-right:.5rem}
 .acc-body p{margin:.5rem 0 0;max-width:32rem;font-size:clamp(.92rem,1.02vw,1.08rem);line-height:1.55;color:rgba(245,244,239,.76);text-wrap:pretty}
-@media(max-width:860px){.acc{flex-direction:column;height:auto;min-height:0;gap:.45rem}.acc-item{flex:0 1 auto;min-height:4.4rem;transition:min-height .6s cubic-bezier(.76,0,.24,1)}.acc-item.is-open{min-height:auto}.acc-item.is-open .acc-body{position:static;max-height:none;overflow:visible;padding-top:3.4rem}.acc-item.is-open .acc-vlabel{display:none}.acc-vlabel{writing-mode:horizontal-tb;transform:none;left:1.3rem;bottom:1.2rem}.acc-num{left:auto;right:1.3rem;transform:none;top:1.3rem}}
+@media(max-width:860px){.acc{flex-direction:column;height:auto;min-height:0;gap:.45rem}.acc-item{flex:0 1 auto;min-height:4.4rem;transition:min-height .6s cubic-bezier(.76,0,.24,1)}.acc-item.is-open{min-height:auto}.acc-item.is-open .acc-body{position:static;max-height:none;overflow:visible;padding-top:3.4rem}.acc-item.is-open .acc-vlabel{display:none}.acc-vlabel{writing-mode:horizontal-tb;transform:none;left:1.3rem;bottom:1.2rem}.acc-num{left:auto;right:1.3rem;transform:none;top:1.3rem}.acc-item{min-height:6.2rem}.acc-vlabel{bottom:auto;top:1.2rem}.acc-prev{display:block;position:absolute;z-index:3;left:1.3rem;right:1.3rem;top:2.75rem;font-size:.9rem;line-height:1.4;color:var(--copper-hi);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.acc-item.is-open .acc-prev{display:none}}
+@media(min-width:861px){
+.acc{flex-direction:column;height:auto;min-height:0;gap:.5rem;max-width:1380px;margin:0 auto}
+.acc-item{flex:none;min-width:0;max-height:5rem;min-height:5rem;transition:max-height .7s cubic-bezier(.76,0,.24,1),border-color .4s}
+.acc-item.is-open{max-height:32rem}
+.acc-img img{object-position:center 40%}
+.acc-item::after{background:linear-gradient(90deg,rgba(7,20,38,.94) 0%,rgba(7,20,38,.72) 55%,rgba(7,20,38,.45) 100%)}
+.acc-num,.acc-item.is-open .acc-num{top:1.85rem;left:clamp(1.3rem,2.2vw,2.2rem);transform:none}
+.acc-vlabel,.acc-item.is-open .acc-vlabel{writing-mode:horizontal-tb;transform:none;top:1.55rem;bottom:auto;left:calc(clamp(1.3rem,2.2vw,2.2rem) + 3rem);font-size:1.15rem;opacity:1}
+.acc-item.is-open .acc-vlabel{color:var(--copper-hi)}
+.acc-prev{display:block;position:absolute;z-index:3;top:1.6rem;left:var(--prev-l,calc(clamp(1.3rem,2.2vw,2.2rem) + 18rem));right:clamp(1.3rem,2.2vw,2.2rem);font-size:clamp(.95rem,1.05vw,1.1rem);line-height:1.4;color:var(--copper-hi);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .35s}
+.acc-item.is-open .acc-prev{opacity:0}
+.acc-body{position:relative;max-height:none;padding:5rem clamp(1.3rem,2.2vw,2.2rem) clamp(1.6rem,3vh,2.4rem);display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr);column-gap:clamp(1.5rem,3vw,3.5rem);align-content:start}
+.acc-body h3{grid-column:1;grid-row:1/4;font-size:clamp(1.4rem,2vw,2.1rem);max-width:22ch}
+.acc-body>p:nth-of-type(1){grid-column:2;grid-row:1;margin-top:0}
+.acc-body>p:nth-of-type(2){grid-column:2;grid-row:2}
+.acc-body>p:nth-of-type(3){grid-column:3;grid-row:1;margin-top:0}
+.acc-body>p:nth-of-type(4){grid-column:3;grid-row:2}
+.acc-body>p.acc-note{grid-column:2/4;grid-row:3;max-width:none;margin-top:1.2rem}
+.acc-body p,.acc-body .acc-hook{max-width:none}
+.acc-item.is-open .acc-img img{opacity:.38;filter:grayscale(.6) contrast(1) brightness(.75)}
+.acc-item.is-open::after{background:linear-gradient(90deg,rgba(7,20,38,.9) 0%,rgba(7,20,38,.86) 100%)}
+.acc-body .acc-k{font-size:.72rem;color:var(--copper-hi);margin-bottom:.15rem}
+.acc-body>p:not(.acc-k):not(.acc-note){font-size:clamp(1rem,1.1vw,1.15rem);line-height:1.5;color:rgba(245,244,239,.94)}
+.acc-body .acc-hook{font-weight:600;color:var(--paper)!important}
+.acc-body .acc-note{font-size:1rem;color:var(--paper);display:flex;align-items:baseline;gap:.4rem;border-top-color:rgba(222,156,99,.4);padding-top:1rem}
+.acc-body .acc-note span:last-child{font-weight:600}
+.acc-body .acc-svl{font-size:.72rem}
+}
 
 /* ---------- contacto: closing page ---------- */
 #contacto .ct-lead{max-width:min(100%,62rem);margin-top:1.1rem;color:rgba(245,244,239,.75);font-size:clamp(1rem,1.1vw,1.2rem)}
@@ -801,6 +883,38 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-bg video#heroImg{transform:none!important;animation:none!important;filter:contrast(1.34) saturate(1.5) brightness(.66)}
 .hero-bg video.hero-glow{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.42;filter:saturate(3.2) contrast(1.55) brightness(1.06);transform:none!important;animation:none!important}
 
+/* ---------- contacto: faq ---------- */
+.faq{margin-top:clamp(.6rem,1.6vh,1.2rem);margin-bottom:clamp(2.2rem,5vh,3.4rem);text-align:left;max-width:44rem;width:100%;margin-left:0;margin-right:auto;align-self:flex-start}
+.faq-i{border-top:1px solid rgba(222,156,99,.25)}
+.faq-i:last-child{border-bottom:1px solid rgba(222,156,99,.25)}
+.faq-i summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.75rem 0;font-family:var(--body);font-weight:600;font-size:clamp(.9rem,1vw,1rem);color:var(--paper);transition:color .3s}
+.faq-i summary::-webkit-details-marker{display:none}
+.faq-i summary::after{content:'+';font-family:var(--mono);font-size:1rem;color:var(--copper-hi);transition:transform .35s var(--ease)}
+.faq-i[open] summary::after{transform:rotate(45deg)}
+.faq-i summary:hover{color:var(--copper-hi)}
+.faq-i p{margin:0 0 1.1rem;max-width:44rem;font-size:clamp(.86rem,.92vw,.95rem);line-height:1.6;color:rgba(245,244,239,.8);text-wrap:pretty}
+#contacto .faq .rv-lbl{margin:0 0 .9rem;max-width:none;font-family:var(--body);font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--copper-hi)}
+#contacto .faq-i p{margin:0 0 .9rem;max-width:40rem}
+#contacto .ct-leadrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(1.5rem,5vw,5rem)}
+#contacto .ct-leadrow .ct-lead{margin-left:0;margin-right:0}
+#contacto .ct-leadrow .btn.frame{font-size:.82rem;letter-spacing:.18em;padding:.92rem 2.2rem;flex:none}
+#contacto .ct-leadrow .btn.frame{position:relative;display:inline-block;background:transparent;border:0;color:var(--paper);box-shadow:none;text-shadow:none;filter:none;overflow:visible;cursor:pointer;transition:color .3s ease}
+#contacto .ct-leadrow .btn.frame::before,#contacto .ct-leadrow .btn.frame::after{content:'';position:absolute;inset:0;border:2px solid var(--copper);background:none;transform:none;z-index:2;pointer-events:none;transition:clip-path .3s ease-out,opacity .3s ease}
+#contacto .ct-leadrow .btn.frame::before{clip-path:inset(45% 0 45% 0);opacity:.45}
+#contacto .ct-leadrow .btn.frame::after{clip-path:inset(0 45% 0 45%);opacity:.45;transition-delay:.15s}
+#contacto .ct-leadrow .btn.frame:hover::before,#contacto .ct-leadrow .btn.frame:focus-visible::before,#contacto .ct-leadrow .btn.frame:hover::after,#contacto .ct-leadrow .btn.frame:focus-visible::after{clip-path:inset(0 0 0 0);opacity:1}
+#contacto .ct-leadrow .btn.frame:hover,#contacto .ct-leadrow .btn.frame:focus-visible{color:var(--copper-hi);filter:none;transform:none;box-shadow:none}
+#contacto .ct-leadrow .btn.frame:active{transform:scale(.98)}
+#contacto .ct-leadrow .btn.frame span{position:relative;z-index:3}
+#contacto .ct-leadrow .btn.frame{text-decoration:none;justify-self:end}
+.hero-cta #revOpen.btn.frame,.hero-cta #revOpen.btn.frame:hover,#contacto .ct-leadrow a.btn.frame.ct-mail,#contacto .ct-leadrow a.btn.frame.ct-mail:hover{background:linear-gradient(100deg,var(--copper) 0%,var(--copper-hi) 35%,#FFE3C4 50%,var(--copper-hi) 65%,var(--copper) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--copper-hi);animation:ctShine 3.2s linear infinite}
+#contacto .ct-leadrow a.btn.frame.ct-mail span,.hero-cta #revOpen.btn.frame span{-webkit-text-fill-color:transparent}
+.hero-cta #revOpen.btn.frame,#contacto .ct-leadrow a.btn.frame.ct-mail{border-radius:0;outline:none;-webkit-tap-highlight-color:transparent;transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s ease,letter-spacing .35s ease}
+.hero-cta #revOpen.btn.frame:hover,.hero-cta #revOpen.btn.frame:focus-visible,#contacto .ct-leadrow a.btn.frame.ct-mail:hover,#contacto .ct-leadrow a.btn.frame.ct-mail:focus-visible{transform:translateY(-4px) scale(1.04);letter-spacing:.24em;box-shadow:0 0 18px rgba(222,156,99,.55),0 0 42px rgba(222,156,99,.25),0 14px 30px -10px rgba(0,0,0,.6);animation-duration:1.1s}
+.hero-cta #revOpen.btn.frame:active,#contacto .ct-leadrow a.btn.frame.ct-mail:active{transform:translateY(-1px) scale(.98)}
+@keyframes ctShine{from{background-position:150% 0}to{background-position:-100% 0}}
+@media(prefers-reduced-motion:reduce){#contacto .ct-leadrow a.btn.frame.ct-mail,.hero-cta #revOpen.btn.frame{animation:none}}
+@media(max-width:760px){#contacto .ct-leadrow{grid-template-columns:1fr}#contacto .ct-leadrow .btn.frame{justify-self:start}}
 /* ---------- contacto: reviews marquee ---------- */
 .rv-marquee{margin-top:clamp(1.6rem,3.5vh,2.6rem);position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .rv-lbl{margin:0 0 .9rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(222,156,99,.9);text-align:left}
@@ -819,16 +933,6 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 </style>
 </head>
 <body class="lock">
-<template id="__bundler_thumbnail" data-bg-color="#071426">
-  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <rect width="1200" height="800" fill="#071426"/>
-    <g fill="none" stroke="#DE9C63" stroke-width="7">
-      <path d="M300 560 L300 380 L390 380 L390 300 L470 300 L470 430 L560 430 L560 340 L650 340 L650 470 L740 470 L740 360 L830 360 L830 560"/>
-      <path d="M240 560 L960 560" stroke-width="4" stroke-opacity=".5"/>
-    </g>
-    <text x="600" y="690" fill="#F5F4EF" font-family="Georgia,serif" font-size="88" letter-spacing="16" text-anchor="middle">MAD<tspan fill="#DE9C63">CRE</tspan></text>
-  </svg>
-</template>
 
 <div id="loader" aria-hidden="true">
   <div class="loader-inner">
@@ -873,7 +977,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   <ul class="sm-list">
     <li class="sm-itemWrap"><button type="button" class="sm-item tablink" data-tab="inicio"><span class="sm-label">Inicio</span></button></li>
     <li class="sm-itemWrap"><button type="button" class="sm-item tablink" data-tab="perspectivas"><span class="sm-label">Servicios</span></button></li>
-    <li class="sm-itemWrap"><button type="button" class="sm-item tablink" data-tab="metodo"><span class="sm-label">Sectores</span></button></li>
+    <li class="sm-itemWrap"><button type="button" class="sm-item tablink" data-tab="metodo"><span class="sm-label">Inmuebles</span></button></li>
     <li class="sm-itemWrap"><button type="button" class="sm-item tablink" data-tab="nosotros"><span class="sm-label">Equipo</span></button></li>
     <li class="sm-itemWrap"><button type="button" class="sm-item tablink" data-tab="contacto"><span class="sm-label">Contactanos</span></button></li>
   </ul>
@@ -895,10 +999,19 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
       <div class="hero-shade" id="heroShade"></div>
       <div class="hero-dim" id="heroDim" aria-hidden="true"></div>
       <div class="hero-content wrap" id="heroContent">
+        
         <h1>
-          <span class="line"><span>Inteligencia <em>Inmobiliaria</em></span></span>
-          <span class="line"><span>aplicada a tus activos</span></span>
+          <span class="line"><span>Somos el departamento <em>inmobiliario</em></span></span>
+          <span class="line"><span>externo de tu empresa</span></span>
         </h1>
+        <p class="hero-sub"><span class="hs-a">Renovar un contrato, negociar una renta, comprar o vender un inmueble.</span> <span>Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.</span></p>
+        <div class="hero-cta">
+          <div class="hc-copy">
+            <strong class="hc-t">Empiece por una primera revisión.</strong>
+            <span class="hc-d">Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.</span>
+          </div>
+          <button type="button" class="btn frame" id="revOpen"><span>Solicitar revisión</span></button>
+        </div>
       </div>
     </header>
   </div>
@@ -912,64 +1025,79 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Servicios</p>
-        <div class="sec-body"><h2>El análisis de tu activo</h2>
-        <p class="sv-lead">Ofrecemos servicios adaptados a cada situación: desde el diagnóstico de una cartera completa hasta la negociación de un solo contrato. Elegimos el alcance según lo que tu activo necesite hoy.</p></div>
+        <div class="sec-body"><h2>¿En qué situación se encuentra?</h2>
+        <p class="sv-lead">Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.</p></div>
       </div>
     </div>
     <div class="acc" id="acc" data-default="2">
-      <article class="acc-item" data-i="0" tabindex="0" role="button" aria-label="Revisión de contrato de arrendamiento">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
-        <span class="acc-num">01</span>
-        <span class="acc-vlabel">Contratos</span>
-        <div class="acc-body">
-          <h3>Revisión de contrato de arrendamiento</h3>
-          <p class="acc-hook">Entiende el contrato que vas a firmar.</p>
-          <p>Analizamos las cláusulas clave —renta, plazos, garantías y actualizaciones— para que sepas dónde están tus riesgos y tus oportunidades.</p>
-          <p class="acc-note">Ninguna gran empresa firma un contrato sin que su equipo lo revise cláusula por cláusula. Tú tampoco deberías.</p>
-        </div>
-      </article>
-      <article class="acc-item" data-i="1" tabindex="0" role="button" aria-label="Benchmark de activo">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
-        <span class="acc-num">02</span>
-        <span class="acc-vlabel">Benchmark</span>
-        <div class="acc-body">
-          <h3>Benchmark de activo</h3>
-          <p class="acc-hook">Compara tu inmueble en todos sus frentes.</p>
-          <p>Comparamos tu activo con inmuebles similares en renta, ocupación, gastos operativos (OPEX) y valor, para saber cómo está posicionado frente al mercado. Sabrás si tus condiciones y tu rendimiento están por encima, por debajo o en línea con la referencia real del sector.</p>
-          <p class="acc-note">Los fondos comparan cada inmueble con el mercado antes de mover un euro. Ahora tú puedes hacer lo mismo.</p>
-        </div>
-      </article>
-      <article class="acc-item is-open" data-i="2" tabindex="0" role="button" aria-label="Estrategia integral de alquiler">
+      <article class="acc-item" data-i="0" tabindex="0" role="button" aria-label="Alquiler">
         <div class="acc-img"><img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
-        <span class="acc-num">03</span>
+        <span class="acc-num">01</span>
         <span class="acc-vlabel">Alquiler</span>
+        <span class="acc-prev">Su contrato de alquiler vence o le proponen una subida de renta.</span>
         <div class="acc-body">
-          <h3>Estrategia integral de alquiler</h3>
-          <p class="acc-hook">Eres el inquilino o gestionas alquileres: tu contrato y tu posición, a fondo.</p>
-          <p>Si alquilas o vas a alquilar un inmueble, medimos la eficiencia de tu alquiler —coste por m², cargas, servicios y condiciones de contrato— y lo comparamos con el mercado. Con eso construimos una estrategia para que optimices a lo que realmente necesitas y aproveches cada euro del espacio.</p>
-          <p class="acc-note">Las multinacionales tienen equipos dedicados solo a optimizar lo que pagan por su espacio. Nosotros somos ese equipo para ti.</p>
+          <h3>Su contrato de alquiler vence o le proponen una subida de renta.</h3>
+          <p class="acc-k">Qué hacemos</p>
+          <p>Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.</p>
+          <p class="acc-k">Qué recibe</p>
+          <p class="acc-hook">Rango de renta de mercado, puntos a negociar y alternativas.</p>
+          <p class="acc-note"><span class="acc-svl">Servicio</span> <span>Estrategia de alquiler</span></p>
         </div>
       </article>
-      <article class="acc-item" data-i="3" tabindex="0" role="button" aria-label="Estrategia integral de propiedad">
+      <article class="acc-item" data-i="1" tabindex="0" role="button" aria-label="Nuevo contrato">
+        <div class="acc-img"><img src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <span class="acc-num">02</span>
+        <span class="acc-vlabel">Nuevo contrato</span>
+        <span class="acc-prev">Va a firmar un nuevo contrato de alquiler.</span>
+        <div class="acc-body">
+          <h3>Va a firmar un nuevo contrato de alquiler.</h3>
+          <p class="acc-k">Qué hacemos</p>
+          <p>Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.</p>
+          <p class="acc-k">Qué recibe</p>
+          <p class="acc-hook">Informe de riesgos por cláusula y propuesta de cambios.</p>
+          <p class="acc-note"><span class="acc-svl">Servicio</span> <span>Revisión de contrato</span></p>
+        </div>
+      </article>
+      <article class="acc-item is-open" data-i="2" tabindex="0" role="button" aria-label="Pre-compra">
+        <div class="acc-img"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+        <span class="acc-num">03</span>
+        <span class="acc-vlabel">Pre-compra</span>
+        <span class="acc-prev">Está valorando comprar un inmueble, o el que ya ocupa.</span>
+        <div class="acc-body">
+          <h3>Está valorando comprar un inmueble, o el que ya ocupa.</h3>
+          <p class="acc-k">Qué hacemos</p>
+          <p>Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.</p>
+          <p class="acc-k">Qué recibe</p>
+          <p class="acc-hook">Recomendación de compra o no compra, con escenarios.</p>
+          <p class="acc-note"><span class="acc-svl">Servicio</span> <span>Análisis pre-compra</span></p>
+        </div>
+      </article>
+      <article class="acc-item" data-i="3" tabindex="0" role="button" aria-label="Inmueble en propiedad">
         <div class="acc-img"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">04</span>
-        <span class="acc-vlabel">Propiedad</span>
+        <span class="acc-vlabel">Inmueble en propiedad</span>
+        <span class="acc-prev">Tiene un inmueble que rinde menos de lo esperado o duda si vender.</span>
         <div class="acc-body">
-          <h3>Estrategia integral de propiedad</h3>
-          <p class="acc-hook">Eres el propietario o gestionas propiedades: que tu inmueble rinda al máximo.</p>
-          <p>Si eres dueño del inmueble, medimos su eficiencia —rentas frente a potencial, ocupación, OPEX y valor— para ver dónde se puede mejorar el rendimiento. Con ese diagnóstico construimos una estrategia clara para reducir gastos, mejorar ingresos y elevar el valor del inmueble.</p>
-          <p class="acc-note">Las socimis y los fondos tienen gestores de activos exprimiendo cada punto de rentabilidad. Tu inmueble merece lo mismo.</p>
+          <h3>Tiene un inmueble que rinde menos de lo esperado o duda si vender.</h3>
+          <p class="acc-k">Qué hacemos</p>
+          <p>Medimos ingresos, gastos y valor frente al mercado.</p>
+          <p class="acc-k">Qué recibe</p>
+          <p class="acc-hook">Plan de acción: renegociar, reformar, alquilar o vender.</p>
+          <p class="acc-note"><span class="acc-svl">Servicio</span> <span>Estrategia de propiedad + comparación con el mercado</span></p>
         </div>
       </article>
-      <article class="acc-item" data-i="4" tabindex="0" role="button" aria-label="Análisis pre-compra">
-        <div class="acc-img"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
+      <article class="acc-item" data-i="4" tabindex="0" role="button" aria-label="Eficiencia del espacio">
+        <div class="acc-img"><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&h=1200&q=70" alt="" loading="lazy"></div>
         <span class="acc-num">05</span>
-        <span class="acc-vlabel">Pre-compra</span>
+        <span class="acc-vlabel">Eficiencia del espacio</span>
+        <span class="acc-prev">Su empresa necesita más espacio, o le sobra.</span>
         <div class="acc-body">
-          <h3>Análisis pre-compra</h3>
-          <p class="acc-hook">Decide con todos los datos.</p>
-          <p>Antes de invertir, analizamos riesgos y rentabilidad esperada para que tomes tu decisión con la información completa.</p>
-          <p class="acc-note">Ningún inversor profesional compra sin analizar el inmueble a fondo. Te damos esa misma mirada antes de que firmes.</p>
+          <h3>Su empresa necesita más espacio, o le sobra.</h3>
+          <p class="acc-k">Qué hacemos</p>
+          <p>Calculamos el coste real del espacio actual y comparamos opciones.</p>
+          <p class="acc-k">Qué recibe</p>
+          <p class="acc-hook">Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.</p>
+          <p class="acc-note"><span class="acc-svl">Servicio</span> <span>Estrategia de espacio</span></p>
         </div>
       </article>
     </div>
@@ -982,15 +1110,14 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <div class="tipos-bg" aria-hidden="true"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=60" alt="" loading="lazy"></div>
     <div class="wrap">
       <div class="sec-head rv">
-        <p class="eyebrow">Sectores</p>
-        <h2>Cuatro tipologías</h2>
-        <p>Aplicamos la misma metodología a cada clase de activo, con los comparables de mercado propios de cada una.</p>
+        <p class="eyebrow">Tipos de inmueble</p>
+        <h2>Mismo método, comparables específicos para cada tipo de inmueble.</h2>
       </div>
       <div class="tiles">
-        <div class="tile rv" data-d="1"><img class="tplx" data-speed="0.18" src="https://images.unsplash.com/photo-1554435493-93422e8220c8?auto=format&fit=crop&w=900&q=75" alt="Edificio de oficinas" loading="lazy"><span class="lab"><b>Oficinas</b></span></div>
-        <div class="tile rv" data-d="2"><img class="tplx" data-speed="0.3" src="https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=900&q=75" alt="Galería comercial con locales y escaparates" loading="lazy"><span class="lab"><b>Retail</b></span></div>
-        <div class="tile rv" data-d="3"><img class="tplx" data-speed="0.22" src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=75" alt="Nave logística" loading="lazy"><span class="lab"><b>Logístico</b></span></div>
-        <div class="tile rv" data-d="4"><img class="tplx" data-speed="0.34" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=75" alt="Bloque residencial" loading="lazy"><span class="lab"><b>Residencial</b></span></div>
+        <div class="tile rv" data-d="1"><img class="tplx" data-speed="0.18" src="https://images.unsplash.com/photo-1554435493-93422e8220c8?auto=format&fit=crop&w=900&q=75" alt="Edificio de oficinas" loading="lazy"><span class="lab"><b>Oficinas</b><span class="lab-d">Renovaciones, reducción de superficie y cambio de sede.</span></span></div>
+        <div class="tile rv" data-d="2"><img class="tplx" data-speed="0.3" src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=75" alt="Nave logística" loading="lazy"><span class="lab"><b>Naves logísticas e industriales</b><span class="lab-d">Renta frente a mercado, ampliación y compra frente a alquiler.</span></span></div>
+        <div class="tile rv" data-d="3"><img class="tplx" data-speed="0.22" src="https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=900&q=75" alt="Galería comercial con locales y escaparates" loading="lazy"><span class="lab"><b>Locales comerciales</b><span class="lab-d">Renta frente a ventas, ubicación y renegociación.</span></span></div>
+        <div class="tile rv" data-d="4"><img class="tplx" data-speed="0.34" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=75" alt="Bloque residencial" loading="lazy"><span class="lab"><b>Residencial</b><span class="lab-d">Rentabilidad, reforma y venta.</span></span></div>
       </div>
     </div>
   </section>
@@ -1012,7 +1139,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           <h2 class="rv" data-d="1" style="margin-top:1.3rem">Inteligencia y estrategia</h2>
           <div class="txt rv" data-d="2">
             <p>En MADCRE ponemos el departamento de real estate al alcance de tus manos. Aportamos estrategia y asesoramiento inmobiliario que ayuda a propietarios y empresas a entender, proteger y rentabilizar su patrimonio.</p>
-            <p>Con más de 15 años de experiencia en el sector, trabajamos en España y Estados Unidos combinando diagnóstico patrimonial, análisis riguroso y visión estratégica para convertir cada activo en una decisión clara y bien fundamentada.</p>
+            <p>Con más de 15 años de experiencia en el sector, hemos gestionado inmuebles de empresas internacionales en más de 40 países y proyectos de arquitectura y construcción. Aplicamos ese mismo método a empresas que no tienen un equipo inmobiliario propio.</p>
             <p>Unimos la solidez técnica de la construcción y la gestión de proyectos con un conocimiento profundo del mercado, para acompañarte en cada paso hacia la maximización del valor de tus activos.</p>
           </div>
           <div class="creds rv" data-d="3">
@@ -1041,31 +1168,25 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <div class="wrap">
       <p class="eyebrow rv">Contacto</p>
       <h2 class="rv" data-d="1">Hablemos de tus activos</h2>
+      <div class="ct-leadrow">
       <p class="ct-lead rv" data-d="2">Diez minutos para entender tu situación. Te diremos, sin compromiso, si podemos aportar valor, por dónde conviene empezar y qué esperar de un primer análisis de tus activos.</p>
-      <a class="btn ct-btn rv" data-d="3" href="mailto:team@madcre.net?subject=Consulta%20MADCRE">Enviarnos un correo</a>
-      <div class="rv-marquee rv" data-d="5">
-        <p class="rv-lbl">Empresas con las que hemos trabajado</p>
-        <div class="rv-row"><div class="rv-track">
-        <figure class="rv-card"><blockquote>Nos dieron una lectura de la cartera que ningún bróker nos había dado. Renegociamos tres contratos con cifras en la mano.</blockquote><figcaption><b>Grupo Arenal</b><small>Dirección financiera</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Independientes de verdad: cobran por el análisis, no por la operación. Se nota en las recomendaciones.</blockquote><figcaption><b>Patrimonio Lumar</b><small>Family office</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Entendieron el negocio antes de hablar de metros. El informe llegó listo para el consejo.</blockquote><figcaption><b>Vertex Logística</b><small>Dirección de operaciones</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Nos dieron una lectura de la cartera que ningún bróker nos había dado. Renegociamos tres contratos con cifras en la mano.</blockquote><figcaption><b>Grupo Arenal</b><small>Dirección financiera</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Independientes de verdad: cobran por el análisis, no por la operación. Se nota en las recomendaciones.</blockquote><figcaption><b>Patrimonio Lumar</b><small>Family office</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Entendieron el negocio antes de hablar de metros. El informe llegó listo para el consejo.</blockquote><figcaption><b>Vertex Logística</b><small>Dirección de operaciones</small></figcaption></figure>
-        </div></div>
-        <div class="rv-row"><div class="rv-track rev">
-        <figure class="rv-card"><blockquote>Nos ahorraron una renovación que no tocaba. El diagnóstico se pagó solo.</blockquote><figcaption><b>Sarrià Retail</b><small>Gestión de activos</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Rigor de comité de inversión aplicado a nuestra propia cartera. Poco habitual.</blockquote><figcaption><b>Ibérica Offices</b><small>Dirección general</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Claridad: escenarios, cifras y una decisión. Sin adjetivos ni humo.</blockquote><figcaption><b>Costa Dorada SL</b><small>Propiedad</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Nos ahorraron una renovación que no tocaba. El diagnóstico se pagó solo.</blockquote><figcaption><b>Sarrià Retail</b><small>Gestión de activos</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Rigor de comité de inversión aplicado a nuestra propia cartera. Poco habitual.</blockquote><figcaption><b>Ibérica Offices</b><small>Dirección general</small></figcaption></figure>
-        <figure class="rv-card"><blockquote>Claridad: escenarios, cifras y una decisión. Sin adjetivos ni humo.</blockquote><figcaption><b>Costa Dorada SL</b><small>Propiedad</small></figcaption></figure>
-        </div></div>
+      <a class="btn frame ct-mail rv" data-d="3" href="mailto:team@madcre.net?subject=Consulta%20MADCRE"><span>Enviarnos un correo</span></a>
       </div>
+      
+      <div class="faq rv" data-d="5">
+        <p class="rv-lbl">Preguntas frecuentes</p>
+        <details class="faq-i"><summary><span>¿Cuánto cuesta?</span></summary><p>Honorarios fijos según el alcance. Los conoce antes de empezar.</p></details>
+        <details class="faq-i"><summary><span>¿Sustituyen a mi agente o a mi abogado?</span></summary><p>No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.</p></details>
+        <details class="faq-i"><summary><span>¿Qué información necesitan?</span></summary><p>El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.</p></details>
+        <details class="faq-i"><summary><span>¿Es confidencial?</span></summary><p>Sí. Firmamos un acuerdo de confidencialidad.</p></details>
+        <details class="faq-i"><summary><span>¿Merece la pena para una empresa pequeña?</span></summary><p>Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.</p></details>
+      </div>
+      
+      
       <div class="ct-grid rv" data-d="4">
         <div class="ct-block">
           <span class="ct-lbl">Dirección</span>
-          <span>Calle Méndez Álvaro 43<br>CP 28045, Madrid, España</span>
+          <span>Calle Méndez Álvaro 43<br><span>CP 28045, Madrid, España</span></span>
         </div>
         <div class="ct-block">
           <span class="ct-lbl">Email</span>
@@ -1102,6 +1223,35 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     </div>
   </div>
 </footer>
+
+<div class="legal-modal rev-modal" id="revModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="revTitle">
+  <div class="legal-scrim" data-close="1"></div>
+  <div class="legal-card">
+    <button type="button" class="legal-x" data-close="1" aria-label="Cerrar">×</button>
+    <span class="legal-eyebrow">Primera revisión</span>
+    <h2 id="revTitle">Solicitar revisión</h2>
+    <form id="revForm" name="revision" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" class="rev-form">
+      <input type="hidden" name="form-name" value="revision">
+      <p hidden><label>No rellenar <input name="bot-field"></label></p>
+      <label class="rf"><span>Nombre</span><input name="nombre" required autocomplete="name"></label>
+      <label class="rf"><span>Empresa</span><input name="empresa" required autocomplete="organization"></label>
+      <label class="rf"><span>Email de contacto</span><input type="email" name="email" required autocomplete="email"></label>
+      <label class="rf"><span>Situación</span>
+        <select name="situacion" required>
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option>Renovación o subida de renta</option>
+          <option>Firma de un nuevo contrato</option>
+          <option>Compra de un inmueble</option>
+          <option>Inmueble que rinde poco o posible venta</option>
+          <option>Necesidad de más o menos espacio</option>
+        </select>
+      </label>
+      <label class="rf"><span>Adjunto (opcional)</span><input type="file" name="adjunto" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"></label>
+      <button type="submit" class="btn rev-send"><span>Enviar solicitud</span></button>
+      <p class="rev-msg" id="revMsg" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
 
 <div class="legal-modal" id="legalModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
   <div class="legal-scrim" data-close="1"></div>
@@ -1734,6 +1884,8 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const norm=s=>s.replace(/\s+/g,' ').trim();
   Object.assign(DICT,{
     "Inteligencia Inmobiliaria aplicada a tus activos":"Real estate intelligence|applied to your assets",
+    "Renovar un contrato, negociar una renta, comprar o vender un inmueble.":"Renewing a lease, negotiating rent, buying or selling a property.","Renovar un contrato":"Renewing a lease","Eficiencia del espacio":"Space efficiency","Inmueble en propiedad":"Owned property","Nuevo contrato":"New Lease","Escríbanos":"Write to us","CP 28045, Madrid, España":"28045 Madrid, Spain","Fachada de un edificio de oficinas corporativo":"Corporate office building façade","Preguntas frecuentes":"Frequently asked questions","¿Cuánto cuesta?":"How much does it cost?","Honorarios fijos según el alcance. Los conoce antes de empezar.":"Fixed fees based on scope. You know them before we start.","¿Sustituyen a mi agente o a mi abogado?":"Do you replace my agent or my lawyer?","No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.":"No. We give them the financial analysis, and you can work with them or with our partners.","¿Qué información necesitan?":"What information do you need?","El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.":"The lease, the property address and its floor areas, among other details. We source the rest.","¿Es confidencial?":"Is it confidential?","Sí. Firmamos un acuerdo de confidencialidad.":"Yes. We sign a non-disclosure agreement.","¿Merece la pena para una empresa pequeña?":"Is it worth it for a small company?","Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.":"Yes. A small difference in rent, multiplied by the years of the lease, usually exceeds the fees.","Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.":"Large corporations have an in-house real estate team behind every decision. We bring that same judgement to your company at five key moments.","Asesoramiento inmobiliario independiente para empresas y propietarios. Cada encargo termina en una recomendación concreta, lista para presentar a la dirección o tomar acción.":"Independent real estate advice for companies and owners. Every engagement ends in a concrete recommendation, ready to present to management or act on.","Con más de 15 años de experiencia en el sector, hemos gestionado inmuebles de empresas internacionales en más de 40 países y proyectos de arquitectura y construcción. Aplicamos ese mismo método a empresas que no tienen un equipo inmobiliario propio.":"With more than 15 years in the sector, we have managed real estate for international companies in more than 40 countries, alongside architecture and construction projects. We apply that same method to companies without an in-house real estate team.","Tipos de inmueble":"Property types","Inmuebles":"Properties","Mismo método, comparables específicos para cada tipo de inmueble.":"Same method, specific comparables for each property type.","Oficinas":"Offices","Naves logísticas e industriales":"Logistics & industrial","Locales comerciales":"Retail units","Renovaciones, reducción de superficie y cambio de sede.":"Renewals, downsizing and relocation.","Renta frente a mercado, ampliación y compra frente a alquiler.":"Rent vs. market, expansion and buy vs. lease.","Renta frente a ventas, ubicación y renegociación.":"Rent vs. sales, location and renegotiation.","Rentabilidad, reforma y venta.":"Yield, refurbishment and sale.","Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.":"Side-by-side options with total cost and a recommendation: expand, downsize or relocate.","Estrategia de espacio":"Space strategy","¿En qué situación se encuentra?":"What situation are you in?","La mayoría de empresas toma sus decisiones inmobiliarias sin nadie que la represente en exclusiva. Intervenimos en estos cinco momentos.":"Most companies make real estate decisions with no one representing them exclusively. We step in at these five moments.","Qué hacemos":"What we do","Qué recibe":"What you get","Servicio":"Service","Contrato":"Lease","Espacio":"Space","Su contrato de alquiler vence o le proponen una subida de renta.":"Your lease is expiring or you've been offered a rent increase.","Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.":"We compare your rent and terms with today's market and prepare the negotiation.","Rango de renta de mercado, puntos a negociar y alternativas.":"Market rent range, points to negotiate and alternatives.","Estrategia de alquiler":"Leasing strategy","Va a firmar un nuevo contrato de alquiler.":"You're about to sign a new lease.","Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.":"We review the financial clauses: rent, indexation, term, guarantees and exit.","Informe de riesgos por cláusula y propuesta de cambios.":"Clause-by-clause risk report and proposed changes.","Revisión de contrato":"Lease review","Está valorando comprar un inmueble, o el que ya ocupa.":"You're considering buying a property, or the one you already occupy.","Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.":"We analyse price, expected return, risks and the alternative of continuing to rent.","Recomendación de compra o no compra, con escenarios.":"A buy or don't-buy recommendation, with scenarios.","Tiene un inmueble que rinde menos de lo esperado o duda si vender.":"You own a property that underperforms, or you're unsure whether to sell.","Medimos ingresos, gastos y valor frente al mercado.":"We measure income, costs and value against the market.","Plan de acción: renegociar, reformar, alquilar o vender.":"Action plan: renegotiate, refurbish, let or sell.","Estrategia de propiedad + comparación con el mercado":"Ownership strategy + market comparison","Su empresa necesita más espacio, o le sobra.":"Your company needs more space, or has too much.","Calculamos el coste real del espacio actual y comparamos opciones.":"We calculate the true cost of your current space and compare options.","Renovación o subida de renta":"Lease renewal or rent increase","Firma de un nuevo contrato":"Signing a new lease","Compra de un inmueble":"Buying a property","Inmueble que rinde poco o posible venta":"Underperforming property or possible sale","Necesidad de más o menos espacio":"Needing more or less space","Empiece por una primera revisión.":"Start with an initial review.","Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.":"Send us your lease or your property details. Within 48 hours we'll tell you which points are worth analysing and what it would cost. No commitment.","Solicitar revisión":"Request a review","Primera revisión":"Initial review","Nombre":"Name","Empresa":"Company","Email de contacto":"Contact email","Situación":"Situation","Seleccione una opción":"Select an option","Adjunto (opcional)":"Attachment (optional)","Enviar solicitud":"Send request","Negociar una renta":"Negotiating rent","Comprar o vender un inmueble":"Buying or selling a property","Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.":"We analyse every decision with market data and deliver a clear recommendation.",
+    "Somos el departamento inmobiliario externo de tu empresa":"Your company's external|real estate department",
     "Inteligencia y estrategia":"Intelligence and strategy",
     "Redes":"Social",
     "Revisión de contrato de arrendamiento":"Lease Review",
@@ -1778,7 +1930,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const skip=new Set(['SCRIPT','STYLE','CANVAS','SVG','NOSCRIPT','VIDEO','IMG','BR']);
   const headEls=new Set([...document.querySelectorAll('.hero h1, .sec-head h2, #contacto h2, #quienes h2, .scan-title h2')]);
   const items=[];
-  document.querySelectorAll('main *, footer *, #smPanel *, #nav *').forEach(el=>{
+  document.querySelectorAll('main *, footer *, #smPanel *, #nav *, #revModal *').forEach(el=>{
     if(skip.has(el.tagName)||el.id==='langToggle'||el.closest('#langToggle')) return;
     const isHead=headEls.has(el);
     if(!isHead&&el.children.length&&!el.matches('em,strong,b,small,span,a,button,p,h3')) return;
@@ -1843,6 +1995,47 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)go();});
   addEventListener('pageshow',go);
   setTimeout(go,600);setTimeout(go,1600);setInterval(go,4000);
+})();
+</script>
+<script>
+(function(){
+  const m=document.getElementById('revModal'),f=document.getElementById('revForm'),msg=document.getElementById('revMsg');
+  if(!m||!f) return;
+  const en=()=>document.documentElement.lang==='en'||document.body.classList.contains('en');
+  const open=()=>{m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';};
+  const close=()=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';};
+  document.getElementById('revOpen').addEventListener('click',open);
+  m.addEventListener('click',e=>{if(e.target.dataset.close)close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('open'))close();});
+  const mailto=fd=>{
+    const body=['Nombre: '+fd.get('nombre'),'Empresa: '+fd.get('empresa'),'Email: '+fd.get('email'),'Situación: '+fd.get('situacion'),'','(Adjuntaré el documento a este correo.)'].join('\n');
+    location.href='mailto:team@madcre.net?subject='+encodeURIComponent('Solicitud de revisión — '+fd.get('empresa'))+'&body='+encodeURIComponent(body);
+  };
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const fd=new FormData(f);
+    msg.textContent=en()?'Sending…':'Enviando…';
+    try{
+      const r=await fetch('/',{method:'POST',body:fd});
+      if(!r.ok) throw 0;
+      f.reset();
+      msg.textContent=en()?'Thank you. We will reply within 48 hours.':'Gracias. Le responderemos en un plazo de 48 horas.';
+    }catch(_){
+      msg.textContent=en()?'Opening your email client…':'Abriendo su correo…';
+      mailto(fd);
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  const acc=document.getElementById('acc');if(!acc)return;
+  const fit=()=>{if(innerWidth<=860){acc.style.removeProperty('--prev-l');return;}
+    let max=0;acc.querySelectorAll('.acc-item').forEach(it=>{const l=it.querySelector('.acc-vlabel');if(!l)return;const r=l.getBoundingClientRect(),ir=it.getBoundingClientRect();max=Math.max(max,r.right-ir.left);});
+    if(max>0)acc.style.setProperty('--prev-l',Math.ceil(max+28)+'px');};
+  addEventListener('resize',fit);addEventListener('load',fit);document.fonts&&document.fonts.ready.then(fit);
+  new MutationObserver(()=>requestAnimationFrame(fit)).observe(acc,{subtree:true,characterData:true,childList:true});
+  setTimeout(fit,300);
 })();
 </script>
 </body>
