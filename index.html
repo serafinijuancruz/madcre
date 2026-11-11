@@ -2387,19 +2387,23 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const go=y=>{if(window.__goTo)window.__goTo(y,12);else window.scrollTo({top:y,behavior:'smooth'});};
   window.__accGo=i=>go(stepY(i));
   window.__inPin=y=>{if(!window.__accScroll)return false;const t=pin.getBoundingClientRect().top+scrollY;return y>=t-innerHeight*.6&&y<=t+pin.offsetHeight;};
-  // native scroll drives the steps; when scrolling pauses inside the pin, glide to the current step's centre
-  let st=0,lastSnap=0;
+  // native scroll drives the steps; when scrolling pauses inside the pin, glide to the next step in the scroll direction
+  let st=0,startY=null,snapping=false;
   addEventListener('scroll',()=>{
     if(!window.__accScroll)return;
+    if(startY===null&&!snapping)startY=scrollY;
     clearTimeout(st);
     st=setTimeout(()=>{
+      const sy=startY;startY=null;
+      if(snapping){snapping=false;return;}
       const r=pin.getBoundingClientRect(),span=r.height-acc.offsetHeight;
       if(r.top>0||-r.top>span)return;
-      const p=-r.top/span,i=Math.min(N-1,Math.floor(p*N*0.999)),c=(i+.5)/N;
-      if(Math.abs(p-c)*span<8)return;
-      if(performance.now()-lastSnap<200)return;lastSnap=performance.now();
-      go(stepY(i));
-    },160);
+      const pos=(-r.top/span)*N-.5,d=sy===null?0:scrollY-sy;
+      let i=Math.abs(d)<30?Math.round(pos):(d>0?Math.ceil(pos-.02):Math.floor(pos+.02));
+      if(i<0||i>N-1)return;
+      const ty=stepY(i);if(Math.abs(ty-scrollY)<6)return;
+      snapping=true;go(ty);
+    },140);
   },{passive:true});
   addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(tick);},{passive:true});
   let lw=innerWidth;addEventListener('resize',()=>{if(innerWidth!==lw){lw=innerWidth;setMode();}else tick();});mq.addEventListener&&mq.addEventListener('change',setMode);mqM.addEventListener&&mqM.addEventListener('change',setMode);
