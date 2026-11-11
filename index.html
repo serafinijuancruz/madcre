@@ -971,7 +971,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .tile img,.acc-img img{backface-visibility:hidden}
 
 @media(max-width:760px) and (min-height:520px){
-#resultados.rb{height:460vh;padding:0;margin-bottom:-18svh}
+#resultados.rb{height:290vh;padding:0;margin-bottom:-18svh}
 #resultados .rb-stage{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;padding-top:4.8rem;contain:layout paint}
 #resultados .rb-wrap{width:100%;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;row-gap:1.4rem}
 #resultados .rb-head{grid-row:1;grid-column:1;opacity:var(--hd,0);padding-bottom:.8rem}
@@ -982,10 +982,22 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #resultados .rl{margin-top:.4rem}
 #resultados .rl-list{gap:.7rem 1.4rem}
 #resultados .rl-word{font-size:1rem}
-#resultados .rb-list{display:grid}
-#resultados .rb-case{grid-area:1/1;border-bottom:0;padding:0;gap:1.2rem;opacity:var(--ca,0);transform:translateY(calc((1 - var(--ca,0)) * 36px))}
-#resultados .rb-chart{padding-right:6.8rem}
-#resultados .rb-txt p{font-size:1.05rem}
+#resultados .rb-list{display:flex;flex-direction:column}
+#resultados .rb-case{grid-template-columns:1fr;border-bottom:1px solid rgba(222,156,99,.22);padding:.85rem 0;gap:.55rem;opacity:var(--ca,0);transform:translateY(calc((1 - var(--ca,0)) * 28px))}
+#resultados .rb-case:last-child{border-bottom:0}
+#resultados .rb-txt{gap:.25rem}
+#resultados .rb-k{font-size:.72rem}
+#resultados .rb-txt p{font-size:.9rem;line-height:1.4}
+#resultados .rb-chart{gap:.35rem;padding-right:4.8rem}
+#resultados .rb-row{grid-template-columns:6.4rem minmax(0,1fr);gap:.6rem}
+#resultados .rb-l{font-size:.52rem;letter-spacing:.1em}
+#resultados .rb-track{height:10px}
+#resultados .rb-bar{top:3px;height:4px}
+#resultados .rb-gap{height:10px}
+#resultados .rb-val:not(.rb-no){font-size:1.7rem}
+#resultados .rb-no{font-size:.72rem}
+#resultados .rb-head{padding-bottom:.6rem}
+#resultados .rb-eyebrow{font-size:1rem}
 }
 /* scroll transition */
 @media(min-width:761px) and (min-height:620px){
@@ -2238,11 +2250,10 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     if(mob.matches){
       const r=sec.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/r.height));
       S('--hd',ease(cl(p,.03,.12)).toFixed(3));
-      const gin=ease(cl(p,.04,.16)),gout=cl(p,.38,.43);
+      const gin=ease(cl(p,.04,.16)),gout=cl(p,.36,.43);
       S('--ga',(gin*(1-gout)).toFixed(3));S('--gy',((1-gin)*50-gout*60).toFixed(1));S('--gs',1);
       kT=(t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2)(cl(p,.08,.34));smooth();
-      const w=[[.43,.48,.56,.6],[.6,.65,.73,.77],[.77,.82,2,2]];
-      cases.forEach((c,i)=>{const [a,b,cc,d]=w[i]||w[2];const v=ease(cl(p,a,b))*(1-cl(p,cc,d));c.style.setProperty('--ca',v.toFixed(3));c.classList.toggle('in',p>a+.01&&p<d);});
+      cases.forEach((c,i)=>{const a=.44+i*.04;const v=ease(cl(p,a,a+.08));c.style.setProperty('--ca',v.toFixed(3));c.classList.toggle('in',p>a+.02);});
       return;}
     const r=sec.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight-r.top)/r.height));
     S('--hd',ease(cl(p,.04,.2)).toFixed(3));
