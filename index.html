@@ -916,7 +916,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .hero-cta #revOpen.btn.frame:active,#contacto .ct-leadrow a.btn.frame.ct-mail:active{transform:translateY(-1px) scale(.98)}
 @keyframes ctShine{from{background-position:150% 0}to{background-position:-100% 0}}
 @media(prefers-reduced-motion:reduce){#contacto .ct-leadrow a.btn.frame.ct-mail span,.hero-cta #revOpen.btn.frame span{animation:none}}
-@media(max-width:760px){#contacto .ct-leadrow{grid-template-columns:1fr}#contacto .ct-leadrow .btn.frame{justify-self:start}}
+@media(max-width:760px){#contacto .ct-leadrow{grid-template-columns:1fr;gap:1.6rem}#contacto .ct-leadrow .btn.frame{justify-self:stretch;justify-content:center;text-align:center}#contacto .faq{margin-top:clamp(2.6rem,7vh,3.6rem)!important}}
 /* ---------- contacto: reviews marquee ---------- */
 .rv-marquee{margin-top:clamp(1.6rem,3.5vh,2.6rem);position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .rv-lbl{margin:0 0 .9rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(222,156,99,.9);text-align:left}
