@@ -1022,6 +1022,8 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #servicios.acc-scroll .acc-item{max-height:none;min-height:0;flex:0 0 5rem;transition:flex-grow .75s cubic-bezier(.76,0,.24,1),flex-basis .75s cubic-bezier(.76,0,.24,1),border-color .4s}
 #servicios.acc-scroll .acc-item.is-open{flex:1 1 0}
 #servicios.acc-scroll .acc-body{transition:opacity .5s .2s,transform .6s .2s}
+#servicios.acc-scroll .acc.stepping{pointer-events:none}
+#servicios.acc-scroll .acc-item{contain:layout paint}
 /* scroll transition */
 @media(min-width:761px) and (min-height:620px){
 #resultados.rb{height:165vh;padding:0;margin-bottom:-10svh}
@@ -1934,6 +1936,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
   addEventListener('pointermove', e=>{
     if(e.pointerType === 'touch') return;
+    if(performance.now()-(window.__lastScrollT||0)<320) return;
     if(mx < -100){ RIBBONS.forEach(r=>r.pts.forEach(p=>{p.x=e.clientX;p.y=e.clientY;})); }
     mx = e.clientX; my = e.clientY;
     active = true; lastMove = performance.now(); ensure();
@@ -2370,12 +2373,16 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     if(stepped||now<lockUntil)return;
     if(Math.abs(e.deltaY)<4)return;
     stepped=true;lockUntil=now+420;
+    acc.classList.add('stepping');clearTimeout(window.__stepT);window.__stepT=setTimeout(()=>acc.classList.remove('stepping'),850);
     go(stepY(idx+dir));
   },{passive:false,capture:true});
   addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(tick);},{passive:true});
   addEventListener('resize',setMode);mq.addEventListener&&mq.addEventListener('change',setMode);
   setMode();
 })();
+</script>
+<script>
+(function(){const t=()=>{window.__lastScrollT=performance.now();};addEventListener('wheel',t,{passive:true,capture:true});addEventListener('scroll',t,{passive:true});})();
 </script>
 </body>
 </html>
