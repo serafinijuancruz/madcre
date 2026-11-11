@@ -1025,7 +1025,6 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #servicios.acc-scroll .acc-item{max-height:none;min-height:0;flex:0 0 5rem;transition:flex-grow .75s cubic-bezier(.76,0,.24,1),flex-basis .75s cubic-bezier(.76,0,.24,1),border-color .4s}
 #servicios.acc-scroll .acc-item.is-open{flex:1 1 0}
 #servicios.acc-scroll .acc-body{transition:opacity .5s .2s,transform .6s .2s}
-#servicios.acc-scroll .acc.stepping{pointer-events:none}
 #servicios.acc-scroll .acc-item{contain:layout paint}
 
 /* services: scroll-stepped accordion (mobile) */
@@ -1041,6 +1040,16 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #servicios.acc-scroll-m .acc-body p{font-size:.86rem!important;line-height:1.45;margin-top:.3rem}
 #servicios.acc-scroll-m .acc-body .acc-k{margin-top:.7rem;font-size:.62rem!important}
 #servicios.acc-scroll-m .acc-body .acc-note{margin-top:.7rem;padding-top:.6rem;font-size:.82rem!important}
+
+@media(max-width:860px){
+#servicios .acc-item.is-open .acc-img img{opacity:.32!important;filter:grayscale(.7) brightness(.7) contrast(1.05)!important}
+#servicios .acc-item.is-open::after{background:linear-gradient(to bottom,rgba(7,20,38,.78) 0%,rgba(7,20,38,.88) 45%,rgba(7,20,38,.94) 100%)!important}
+#servicios .acc-body .acc-k{color:var(--copper-hi)!important;opacity:1}
+#servicios .acc-item.is-open .acc-body>p:not(.acc-k):not(.acc-note):not(.acc-hook){color:rgba(245,244,239,.96)!important}
+#servicios .acc-body .acc-hook{color:var(--copper-hi)!important;font-weight:600}
+#servicios .acc-body .acc-note span:last-child{color:var(--paper)!important;font-weight:600}
+#servicios .acc-item.is-open .acc-body{text-shadow:0 1px 2px rgba(7,20,38,.8)}
+}
 /* scroll transition */
 @media(min-width:761px) and (min-height:620px){
 #resultados.rb{height:165vh;padding:0;margin-bottom:-10svh}
@@ -1354,8 +1363,8 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           </div>
         </div>
         <div class="ph-grid">
-          <div class="ph sq"><img decoding="async" src="juan_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
           <div class="ph sq"><img decoding="async" src="fer_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
+          <div class="ph sq"><img decoding="async" src="juan_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
           <div class="ph sq wide"><img decoding="async" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&crop=faces,center&w=1200&h=1200&q=80" alt="Equipo de analistas trabajando en una reunión" loading="lazy"></div>
         </div>
       </div>
@@ -2378,7 +2387,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   const go=y=>{if(window.__goTo)window.__goTo(y,12);else window.scrollTo({top:y,behavior:'smooth'});};
   window.__accGo=i=>go(stepY(i));
   window.__inPin=y=>{if(!window.__accScroll)return false;const t=pin.getBoundingClientRect().top+scrollY;return y>=t-innerHeight*.6&&y<=t+pin.offsetHeight;};
-  let lockUntil=0,lastEvt=0,stepped=false;
+  let lockUntil=0,lastEvt=0,stepped=false,lastAbs=0,trough=1e9,decaying=false;
   document.addEventListener('wheel',e=>{
     if(!window.__accScroll||e.ctrlKey)return;
     const r=pin.getBoundingClientRect(),span=r.height-acc.offsetHeight;
@@ -2387,12 +2396,14 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     const idx=cur<0?0:cur;
     if((dir>0&&idx>=N-1)||(dir<0&&idx<=0))return;
     e.preventDefault();e.stopPropagation();
-    const now=performance.now();const fresh=now-lastEvt>140;lastEvt=now;
-    if(fresh)stepped=false;
+    const now=performance.now(),a=Math.abs(e.deltaY*(e.deltaMode===1?16:1));
+    let fresh=now-lastEvt>140;
+    if(!fresh){ if(a<lastAbs){decaying=true;trough=Math.min(trough,a);} else if(decaying&&a>trough*1.8+6){fresh=true;} }
+    if(fresh){stepped=false;decaying=false;trough=1e9;}
+    lastEvt=now;lastAbs=a;
     if(stepped||now<lockUntil)return;
-    if(Math.abs(e.deltaY)<4)return;
-    stepped=true;lockUntil=now+380;
-    acc.classList.add('stepping');clearTimeout(window.__stepT);window.__stepT=setTimeout(()=>acc.classList.remove('stepping'),850);
+    if(a<3)return;
+    stepped=true;lockUntil=now+280;
     go(stepY(idx+dir));
   },{passive:false,capture:true});
   addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(tick);},{passive:true});
