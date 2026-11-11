@@ -907,13 +907,15 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #contacto .ct-leadrow .btn.frame:active{transform:scale(.98)}
 #contacto .ct-leadrow .btn.frame span{position:relative;z-index:3}
 #contacto .ct-leadrow .btn.frame{text-decoration:none;justify-self:end}
-.hero-cta #revOpen.btn.frame,.hero-cta #revOpen.btn.frame:hover,#contacto .ct-leadrow a.btn.frame.ct-mail,#contacto .ct-leadrow a.btn.frame.ct-mail:hover{background:linear-gradient(100deg,var(--copper) 0%,var(--copper-hi) 35%,#FFE3C4 50%,var(--copper-hi) 65%,var(--copper) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--copper-hi);animation:ctShine 3.2s linear infinite}
-#contacto .ct-leadrow a.btn.frame.ct-mail span,.hero-cta #revOpen.btn.frame span{-webkit-text-fill-color:transparent}
+.hero-cta #revOpen.btn.frame,#contacto .ct-leadrow a.btn.frame.ct-mail{color:var(--copper-hi)}
+.hero-cta #revOpen.btn.frame span,#contacto .ct-leadrow a.btn.frame.ct-mail span{display:inline-block;color:var(--copper-hi);background:linear-gradient(100deg,var(--copper-hi) 0%,var(--copper-hi) 38%,#FFE3C4 50%,var(--copper-hi) 62%,var(--copper-hi) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:ctShine 3.2s linear infinite}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){.hero-cta #revOpen.btn.frame span,#contacto .ct-leadrow a.btn.frame.ct-mail span{-webkit-text-fill-color:currentColor;background:none}}
 .hero-cta #revOpen.btn.frame,#contacto .ct-leadrow a.btn.frame.ct-mail{border-radius:0;outline:none;-webkit-tap-highlight-color:transparent;transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s ease,letter-spacing .35s ease}
-.hero-cta #revOpen.btn.frame:hover,.hero-cta #revOpen.btn.frame:focus-visible,#contacto .ct-leadrow a.btn.frame.ct-mail:hover,#contacto .ct-leadrow a.btn.frame.ct-mail:focus-visible{transform:translateY(-4px) scale(1.04);letter-spacing:.24em;box-shadow:0 0 18px rgba(222,156,99,.55),0 0 42px rgba(222,156,99,.25),0 14px 30px -10px rgba(0,0,0,.6);animation-duration:1.1s}
+.hero-cta #revOpen.btn.frame:hover,.hero-cta #revOpen.btn.frame:focus-visible,#contacto .ct-leadrow a.btn.frame.ct-mail:hover,#contacto .ct-leadrow a.btn.frame.ct-mail:focus-visible{transform:translateY(-4px) scale(1.04);letter-spacing:.24em;box-shadow:0 0 18px rgba(222,156,99,.55),0 0 42px rgba(222,156,99,.25),0 14px 30px -10px rgba(0,0,0,.6);}
+.hero-cta #revOpen.btn.frame:hover span,#contacto .ct-leadrow a.btn.frame.ct-mail:hover span{animation-duration:1.1s}
 .hero-cta #revOpen.btn.frame:active,#contacto .ct-leadrow a.btn.frame.ct-mail:active{transform:translateY(-1px) scale(.98)}
 @keyframes ctShine{from{background-position:150% 0}to{background-position:-100% 0}}
-@media(prefers-reduced-motion:reduce){#contacto .ct-leadrow a.btn.frame.ct-mail,.hero-cta #revOpen.btn.frame{animation:none}}
+@media(prefers-reduced-motion:reduce){#contacto .ct-leadrow a.btn.frame.ct-mail span,.hero-cta #revOpen.btn.frame span{animation:none}}
 @media(max-width:760px){#contacto .ct-leadrow{grid-template-columns:1fr}#contacto .ct-leadrow .btn.frame{justify-self:start}}
 /* ---------- contacto: reviews marquee ---------- */
 .rv-marquee{margin-top:clamp(1.6rem,3.5vh,2.6rem);position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
