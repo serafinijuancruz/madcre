@@ -7,14 +7,16 @@
 <title>MADCRE — Inteligencia inmobiliaria corporativa (v5)</title>
 <meta name="description" content="La capa de análisis que faltaba entre los datos de su cartera inmobiliaria y su comité de dirección. Analizamos cada activo desde la perspectiva del ocupante y del propietario.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous" defer></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous" defer></script>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin="">
-<link rel="preload" as="image" href="madcre-logo-copper.png">
+<link rel="preload" as="image" href="assets/madcre-logo-copper.png">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0B1F3A;
-  --ink-deep:#071426;
+  --ink:#06111F;
+  --ink-deep:#03080F;
   --paper:#F5F4EF;
   --paper-2:#ECEAE2;
   --copper:#B87333;
@@ -23,7 +25,7 @@
   --cobalt-soft:#D3DCF5;
   --bronze:#8F6C3D;
   --bronze-soft:#EFE3D2;
-  --line:rgba(11,31,58,.12);
+  --line:rgba(6,17,31,.12);
   --line-light:rgba(245,244,239,.14);
   --display:'Instrument Serif',Georgia,serif;
   --body:'Instrument Sans',sans-serif;
@@ -35,8 +37,8 @@
 body{font-family:var(--body);background:var(--ink-deep);color:var(--ink);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
 main{background:transparent;position:relative;z-index:1}
-#aurora{position:fixed;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;opacity:.6}
-#auroraVeil{position:fixed;inset:0;z-index:0;pointer-events:none;background:rgba(7,20,38,.42)}
+#aurora{position:fixed;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;display:block;opacity:.45}
+#auroraVeil{position:fixed;inset:0;z-index:0;pointer-events:none;background:rgba(3,8,15,.42)}
 ::selection{background:var(--cobalt);color:#fff}
 img{display:block;max-width:100%}
 a{color:var(--cobalt);text-decoration:none}
@@ -44,7 +46,7 @@ a:hover{color:var(--ink)}
 
 h1,h2{font-family:var(--display);font-weight:400;line-height:1.02;letter-spacing:-.01em}
 h3{font-family:var(--body);font-weight:600;line-height:1.2;letter-spacing:-.005em}
-.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;gap:.8rem;color:rgba(11,31,58,.55)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;gap:.8rem;color:rgba(6,17,31,.55)}
 .eyebrow::before{content:'◆';font-size:.62em;color:var(--copper);line-height:1;transform:translateY(-.05em)}
 .wrap{max-width:1380px;margin:0 auto;padding:0 clamp(1.35rem,4vw,3.25rem)}
 
@@ -91,7 +93,7 @@ h3{font-family:var(--body);font-weight:600;line-height:1.2;letter-spacing:-.005e
 .sm-prelayer:nth-child(2){background:#B87333}
 .sm-open .sm-prelayer:nth-child(1){transform:translateX(0);transition-duration:.5s;transition-delay:0s}
 .sm-open .sm-prelayer:nth-child(2){transform:translateX(0);transition-delay:.07s}
-.sm-panel{position:fixed;top:0;right:0;bottom:0;width:clamp(300px,40vw,460px);z-index:300;background:radial-gradient(120% 70% at 100% 0%,rgba(222,156,99,.26) 0%,rgba(184,115,51,.12) 40%,rgba(7,20,38,0) 72%),linear-gradient(200deg,rgba(140,78,32,.22) 0%,rgba(90,55,34,.1) 45%,rgba(7,20,38,0) 70%),linear-gradient(180deg,rgba(9,24,46,.62),rgba(7,20,38,.72));-webkit-backdrop-filter:blur(22px) saturate(1.2);backdrop-filter:blur(22px) saturate(1.2);border-left:1px solid rgba(222,156,99,.3);box-shadow:inset 1px 0 0 rgba(247,210,174,.12),-24px 0 60px rgba(4,11,22,.5);display:flex;flex-direction:column;padding:clamp(5.5rem,11vh,7.5rem) clamp(1.6rem,3vw,2.6rem) 2.2rem;transform:translateX(100%);transition:transform .65s var(--ease);transition-delay:.08s;overflow-y:auto}
+.sm-panel{position:fixed;top:0;right:0;bottom:0;width:clamp(300px,40vw,460px);z-index:300;background:radial-gradient(120% 70% at 100% 0%,rgba(222,156,99,.26) 0%,rgba(184,115,51,.12) 40%,rgba(3,8,15,0) 72%),linear-gradient(200deg,rgba(140,78,32,.22) 0%,rgba(90,55,34,.1) 45%,rgba(3,8,15,0) 70%),linear-gradient(180deg,rgba(9,24,46,.62),rgba(3,8,15,.72));-webkit-backdrop-filter:blur(22px) saturate(1.2);backdrop-filter:blur(22px) saturate(1.2);border-left:1px solid rgba(222,156,99,.3);box-shadow:inset 1px 0 0 rgba(247,210,174,.12),-24px 0 60px rgba(4,11,22,.5);display:flex;flex-direction:column;padding:clamp(5.5rem,11vh,7.5rem) clamp(1.6rem,3vw,2.6rem) 2.2rem;transform:translateX(100%);transition:transform .65s var(--ease);transition-delay:.08s;overflow-y:auto}
 .sm-open .sm-panel{transform:translateX(0)}
 .sm-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35rem;counter-reset:smItem}
 .sm-itemWrap{position:relative;overflow:hidden;line-height:1}
@@ -174,7 +176,7 @@ body.sm-open #nav .nav-cta{opacity:0;pointer-events:none;transition:opacity .3s 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .45s,box-shadow .45s,padding .45s;padding:1.5rem 0}
 .nav-prog{position:absolute;left:0;bottom:-1px;width:100%;height:1.5px;background:linear-gradient(90deg,var(--copper),var(--copper-hi));transform:scaleX(0);transform-origin:left;opacity:0;transition:opacity .4s}
 nav.scrolled .nav-prog{opacity:1}
-nav.scrolled{background:rgba(7,20,38,.8);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;padding:.85rem 0}
+nav.scrolled{background:rgba(3,8,15,.8);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;padding:.85rem 0}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .logo{font-family:var(--body);font-weight:600;font-size:1rem;letter-spacing:.06em;text-decoration:none;color:var(--paper);display:flex;align-items:center;gap:.6rem;cursor:pointer}
@@ -212,7 +214,7 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 }
 
 /* ---------- HERO ---------- */
-.hero-pin{height:140vh;position:relative}
+.hero-pin{height:115vh;position:relative}
 .hero{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:flex-end;color:var(--paper);background:var(--ink-deep)}
 .hero-bg{position:absolute;inset:-2%;z-index:0}
 .hero-bg img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.35);filter:blur(14px) brightness(.6) grayscale(1);will-change:transform}
@@ -221,19 +223,19 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .loaded .hero-bg video{animation:heroVidIn 2.2s var(--ease) .05s forwards}
 @keyframes heroIn{to{transform:scale(1.02);filter:blur(0) brightness(.62) grayscale(1)}}
 @keyframes heroVidIn{to{transform:scale(1.02);filter:blur(0) brightness(.72) contrast(1.06) saturate(1.3)}}
-.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(7,20,38,.95) 0%,rgba(7,20,38,.78) 30%,rgba(7,20,38,.45) 62%,rgba(7,20,38,.34) 100%)}
+.hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(3,8,15,.95) 0%,rgba(3,8,15,.78) 30%,rgba(3,8,15,.45) 62%,rgba(3,8,15,.34) 100%)}
 .hero-dim{position:absolute;inset:0;z-index:1;background:var(--ink-deep);opacity:0;pointer-events:none;will-change:opacity}
 .hero-content{position:relative;z-index:3;width:100%;padding-bottom:clamp(2.2rem,6vh,4.8rem)}
 .hero .eyebrow{color:var(--cobalt-soft);opacity:0}
 .hero .eyebrow::before{color:var(--copper-hi)}
 .loaded .hero .eyebrow{animation:fadeUp .8s .5s forwards}
-.hero h1{font-size:clamp(2.6rem,6.4vw,6rem);font-weight:400;margin:1.4rem 0 1.5rem;text-shadow:0 2px 30px rgba(7,20,38,.4)}
+.hero h1{font-size:clamp(2.6rem,6.4vw,6rem);font-weight:400;margin:1.4rem 0 1.5rem;text-shadow:0 2px 30px rgba(3,8,15,.4)}
 .hero h1 .line{display:block}
 .hero h1 .line span{display:block}
 .hero h1 .line span .bt-w{display:inline-block}
 .bt-measure .bt-w{animation:none!important;transition:none!important;transform:none!important;opacity:1!important;filter:none!important}
 .hero h1 em{font-style:italic;color:var(--cobalt-soft)}
-.hero p.hero-sub{font-family:var(--body);font-size:clamp(1.05rem,1.35vw,1.4rem);line-height:1.55;max-width:44rem;color:var(--paper);margin:0;text-wrap:pretty;text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85);opacity:0}
+.hero p.hero-sub{font-family:var(--body);font-size:clamp(1.05rem,1.35vw,1.4rem);line-height:1.55;max-width:44rem;color:var(--paper);margin:0;text-wrap:pretty;text-shadow:0 1px 2px rgba(3,8,15,.9),0 2px 18px rgba(3,8,15,.85);opacity:0}
 .hero p.hero-sub .hs-a{color:var(--copper-hi);font-weight:600}
 .hero p.hero-sub .hs-a + span{display:block;margin-top:.15rem}
 @media(min-width:900px){.hero p.hero-sub{max-width:none}.hero p.hero-sub .hs-a + span{white-space:nowrap}}
@@ -241,8 +243,8 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1.1rem 2rem;margin-top:clamp(3.2rem,8.5vh,5.6rem);max-width:56rem;opacity:0}
 .loaded .hero-cta{animation:fadeUp .9s 1.6s forwards}
 .hc-copy{display:flex;flex-direction:column;gap:.35rem;flex:1 1 22rem;min-width:0}
-.hc-t{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.3vw,1.3rem);letter-spacing:-.01em;color:var(--paper);text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85)}
-.hc-d{font-size:clamp(.9rem,1vw,1.02rem);line-height:1.55;color:rgba(245,244,239,.86);text-wrap:pretty;text-shadow:0 1px 2px rgba(7,20,38,.9),0 2px 18px rgba(7,20,38,.85)}
+.hc-t{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.3vw,1.3rem);letter-spacing:-.01em;color:var(--paper);text-shadow:0 1px 2px rgba(3,8,15,.9),0 2px 18px rgba(3,8,15,.85)}
+.hc-d{font-size:clamp(.9rem,1vw,1.02rem);line-height:1.55;color:rgba(245,244,239,.86);text-wrap:pretty;text-shadow:0 1px 2px rgba(3,8,15,.9),0 2px 18px rgba(3,8,15,.85)}
 .hero-cta .btn.frame{font-size:.82rem;letter-spacing:.18em;padding:.92rem 2.2rem;flex:none}
 .hero-cta .btn.frame{position:relative;display:inline-block;background:transparent;border:0;color:var(--paper);box-shadow:none;text-shadow:none;filter:none;overflow:visible;cursor:pointer;transition:color .3s ease}
 .hero-cta .btn.frame::before,.hero-cta .btn.frame::after{content:'';position:absolute;inset:0;border:2px solid var(--copper);background:none;transform:none;z-index:2;pointer-events:none;transition:clip-path .3s ease-out,opacity .3s ease}
@@ -256,7 +258,7 @@ nav .nav-right{display:flex;align-items:center;gap:clamp(1.2rem,2.6vw,2.4rem)}
 .rf{display:flex;flex-direction:column;gap:.4rem}
 .rf span{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,244,239,.6)}
 .rf input,.rf select{font:inherit;font-size:1rem;color:var(--paper);background:rgba(245,244,239,.05);border:1px solid rgba(222,156,99,.3);padding:.8rem .9rem;border-radius:0;outline:none;transition:border-color .3s}
-.rf select option{color:#0B1F3A}
+.rf select option{color:#06111F}
 .rf input:focus,.rf select:focus{border-color:var(--copper-hi)}
 .rf input[type=file]{padding:.6rem;font-size:.85rem}
 .rev-send{align-self:flex-start;margin-top:.4rem;cursor:pointer}
@@ -301,7 +303,7 @@ section{padding:clamp(3.2rem,6vw,5rem) 0;position:relative;background:var(--ink-
 #reto>.wrap,#solucion>.wrap,#tipologias>.wrap,#lados>.wrap,#quienes>.wrap{width:100%}
 .sec-head{max-width:56rem;margin-bottom:clamp(2.4rem,4.5vh,3.4rem)}
 .sec-head h2{font-size:clamp(2.2rem,4.1vw,4.1rem);font-weight:400;margin-top:1.3rem}
-.sec-head p{margin-top:1.15rem;color:rgba(11,31,58,.7);font-size:clamp(1.06rem,1.15vw,1.32rem);max-width:50rem}
+.sec-head p{margin-top:1.15rem;color:rgba(6,17,31,.7);font-size:clamp(1.06rem,1.15vw,1.32rem);max-width:50rem}
 .sec-head h2 em{font-style:italic;color:var(--cobalt)}
 
 /* ---------- EL RETO ---------- */
@@ -314,7 +316,7 @@ section{padding:clamp(3.2rem,6vw,5rem) 0;position:relative;background:var(--ink-
 #reto .sec-head h2 em{color:var(--cobalt-soft)}
 #reto .sec-head p{color:rgba(245,244,239,.7)}
 .probs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-light);border:1px solid var(--line-light)}
-.prob{position:relative;background:rgba(7,20,38,.38);padding:clamp(2.4rem,4.5vh,3.2rem) clamp(1.9rem,2vw,2.6rem);transition:background .35s,transform .4s var(--ease);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transform:translateY(22px)}
+.prob{position:relative;background:rgba(3,8,15,.38);padding:clamp(2.4rem,4.5vh,3.2rem) clamp(1.9rem,2vw,2.6rem);transition:background .35s,transform .4s var(--ease);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transform:translateY(22px)}
 .probs.in .prob{opacity:1;transform:none;transition:background .35s,transform .8s var(--ease),opacity .8s var(--ease)}
 .probs.in .prob:nth-child(2){transition-delay:0s,.15s,.15s}
 .probs.in .prob:nth-child(3){transition-delay:0s,.3s,.3s}
@@ -356,9 +358,9 @@ h2 em{position:relative}
 .scan-city img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) brightness(.72) saturate(.9)}
 .scan-pre{position:absolute;inset:0;z-index:1;overflow:hidden;will-change:clip-path}
 .scan-pre img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.5) saturate(1.7) hue-rotate(-12deg) brightness(.74) contrast(1.15)}
-.scan-pre::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(to bottom,rgba(7,20,38,.28) 0 1px,transparent 1px 5px),linear-gradient(to bottom,rgba(7,20,38,.4),rgba(7,20,38,.12) 42%,rgba(7,20,38,.42))}
+.scan-pre::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(to bottom,rgba(3,8,15,.28) 0 1px,transparent 1px 5px),linear-gradient(to bottom,rgba(3,8,15,.4),rgba(3,8,15,.12) 42%,rgba(3,8,15,.42))}
 .scan-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(217,183,127,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(217,183,127,.14) 1px,transparent 1px);background-size:46px 46px;will-change:clip-path}
-.scan-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,20,38,.88) 0%,rgba(7,20,38,.25) 38%,rgba(7,20,38,.34) 62%,rgba(7,20,38,.78) 82%,rgba(7,20,38,.95) 100%)}
+.scan-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,8,15,.88) 0%,rgba(3,8,15,.25) 38%,rgba(3,8,15,.34) 62%,rgba(3,8,15,.78) 82%,rgba(3,8,15,.95) 100%)}
 .scan-line{position:absolute;top:0;bottom:0;left:0;width:2px;background:var(--copper-hi);box-shadow:0 0 12px 1px rgba(217,183,127,.6);z-index:3;will-change:transform}
 .scan-line::after{content:'';position:absolute;top:0;bottom:0;right:2px;width:70px;background:linear-gradient(270deg,rgba(176,141,87,.22),transparent)}
 /* reticle frame + telemetry */
@@ -372,7 +374,7 @@ h2 em{position:relative}
 .scan-meta b{font-weight:400;color:rgba(211,220,245,.75)}
 .scan-title{position:absolute;top:calc(66px + clamp(1.2rem,3vh,2.4rem));left:0;right:0;text-align:center;z-index:4;padding:0 1rem}
 .scan-title .eyebrow{justify-content:center;color:var(--cobalt-soft)}
-.scan-title h2{font-size:clamp(1.6rem,3.6vw,3.3rem);margin-top:.85rem;text-shadow:0 2px 24px rgba(7,20,38,.6)}
+.scan-title h2{font-size:clamp(1.6rem,3.6vw,3.3rem);margin-top:.85rem;text-shadow:0 2px 24px rgba(3,8,15,.6)}
 .scan-progress{position:absolute;bottom:clamp(1.2rem,4vh,2.5rem);left:50%;transform:translateX(-50%);z-index:4;font-family:var(--mono);font-size:.63rem;letter-spacing:.2em;color:rgba(245,244,239,.6);text-transform:uppercase;display:flex;align-items:center;gap:1rem}
 .scan-progress .bar{width:120px;height:2px;background:rgba(245,244,239,.2);position:relative;overflow:hidden}
 .scan-progress .bar i{position:absolute;inset:0;background:var(--copper-hi);transform:scaleX(0);transform-origin:left}
@@ -411,7 +413,7 @@ h2 em{position:relative}
 }
 
 /* ---------- tipologías ---------- */
-#tipologias{background:linear-gradient(to bottom,rgba(7,20,38,0) 0,rgba(7,20,38,.7) 22vh,var(--ink-deep) 40vh);color:var(--paper);overflow:hidden}
+#tipologias{background:linear-gradient(to bottom,rgba(3,8,15,0) 0,rgba(3,8,15,.7) 22vh,var(--ink-deep) 40vh);color:var(--paper);overflow:hidden}
 #tipologias .tipos-bg{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 40vh);mask-image:linear-gradient(to bottom,transparent 0,#000 40vh)}
 #tipologias .tipos-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
 #tipologias .tipos-bg img{width:100%;height:100%;object-fit:cover;opacity:.13;filter:blur(22px) brightness(.7) grayscale(1);transform:scale(1.15) translateZ(0);will-change:transform}
@@ -429,18 +431,18 @@ h2 em{position:relative}
   .tiles .tile .lab b{font-size:1.45rem}
   .tiles .tile .lab{right:1rem}
 .tile .lab-d{display:block;margin-top:.4rem;font-size:clamp(.85rem,.95vw,1rem);line-height:1.45;color:rgba(245,244,239,.9);text-wrap:pretty}
-.tile::after{background:linear-gradient(to top,rgba(7,20,38,.92) 0%,rgba(7,20,38,.55) 38%,transparent 65%)}
+.tile::after{background:linear-gradient(to top,rgba(3,8,15,.92) 0%,rgba(3,8,15,.55) 38%,transparent 65%)}
 .tile .lab small{font-size:.62rem}
 }
 .tile{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;contain:paint;isolation:isolate}
 .tile img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;filter:grayscale(1) brightness(.85);transition:filter .6s,transform .8s var(--ease);will-change:transform}
 .tile:hover img{filter:grayscale(0) brightness(1)}
-.tile::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(7,20,38,.82),transparent 55%)}
+.tile::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(3,8,15,.82),transparent 55%)}
 .tile .lab{position:absolute;left:1rem;bottom:.95rem;z-index:2;color:var(--paper)}
 .tile .lab b{font-family:var(--display);font-size:1.15rem;font-weight:400;display:block}
 .tile .lab{right:1rem}
 .tile .lab-d{display:block;margin-top:.4rem;font-size:clamp(.85rem,.95vw,1rem);line-height:1.45;color:rgba(245,244,239,.9);text-wrap:pretty}
-.tile::after{background:linear-gradient(to top,rgba(7,20,38,.92) 0%,rgba(7,20,38,.55) 38%,transparent 65%)}
+.tile::after{background:linear-gradient(to top,rgba(3,8,15,.92) 0%,rgba(3,8,15,.55) 38%,transparent 65%)}
 .tile .lab small{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
 .tile .arrow{position:absolute;top:.85rem;right:.85rem;z-index:2;width:1.8rem;height:1.8rem;border:1px solid rgba(245,244,239,.5);display:grid;place-items:center;color:var(--paper);transform:translateY(-8px);opacity:0;transition:opacity .4s,transform .4s}
 .tile:hover .arrow{opacity:1;transform:none}
@@ -473,7 +475,7 @@ h2 em{position:relative}
 #lados .eyebrow{color:rgba(245,244,239,.55)}
 #lados .sec-head h2 em{color:var(--cobalt-soft)}
 #lados .sec-head p{color:rgba(245,244,239,.7)}
-.split{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(217,183,127,.22);background:rgba(7,20,38,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--paper);user-select:none;overflow:hidden}
+.split{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(217,183,127,.22);background:rgba(3,8,15,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--paper);user-select:none;overflow:hidden}
 .split::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--copper-hi),rgba(217,183,127,0) 70%);z-index:2}
 .side{transition:background .4s;display:flex;flex-direction:column}
 .side .ph{height:clamp(190px,26svh,300px);flex:none}
@@ -529,7 +531,7 @@ h2 em{position:relative}
 .mstep h3{font-family:var(--display);font-weight:400;font-size:clamp(1.7rem,3vw,2.4rem);margin:1.1rem 0 .8rem;letter-spacing:-.01em}
 .mstep p{font-size:.98rem;color:rgba(245,244,239,.68);max-width:52ch}
 .mstep .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;list-style:none}
-.mstep .chips li{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem .75rem;border:1px solid rgba(217,183,127,.25);color:rgba(245,244,239,.75);background:rgba(7,20,38,.4);transition:border-color .3s,color .3s}
+.mstep .chips li{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem .75rem;border:1px solid rgba(217,183,127,.25);color:rgba(245,244,239,.75);background:rgba(3,8,15,.4);transition:border-color .3s,color .3s}
 .mstep:hover .chips li{border-color:rgba(217,183,127,.5)}
 .mstep-mini{display:none;font-family:var(--display);font-size:3rem;color:var(--copper-hi);line-height:1;margin-bottom:.6rem}
 @media(max-width:860px){
@@ -572,7 +574,7 @@ h2 em{position:relative}
 #entregables .wrap{position:relative;z-index:1}
 #entregables .eyebrow{color:rgba(245,244,239,.55)}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.8rem,1.6vw,1.3rem)}
-.card{border:1px solid rgba(217,183,127,.22);padding:clamp(1.2rem,2.6vh,1.9rem) clamp(1.1rem,1.7vw,1.6rem);background:rgba(7,20,38,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);position:relative;transition:transform .35s var(--ease),box-shadow .35s,border-color .35s}
+.card{border:1px solid rgba(217,183,127,.22);padding:clamp(1.2rem,2.6vh,1.9rem) clamp(1.1rem,1.7vw,1.6rem);background:rgba(3,8,15,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);position:relative;transition:transform .35s var(--ease),box-shadow .35s,border-color .35s}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--copper-hi),rgba(217,183,127,0) 70%)}
 .card:hover{transform:translateY(-6px);box-shadow:0 16px 38px rgba(4,11,22,.4);border-color:rgba(217,183,127,.45)}
 .card .ic{width:2.2rem;height:2.2rem;border:1.5px solid var(--copper-hi);border-radius:50%;display:grid;place-items:center;margin-bottom:clamp(.8rem,2vh,1.2rem);transition:background .3s;box-shadow:0 0 14px rgba(217,183,127,.18)}
@@ -655,7 +657,7 @@ h2 em{position:relative}
 .mail a:hover{color:var(--cobalt-soft)}
 
 /* ---------- footer ---------- */
-footer{background:linear-gradient(to bottom,rgba(90,68,42,.12),rgba(7,20,38,.9)),var(--ink-deep);color:rgba(245,244,239,.62);padding:2.4rem 0;font-size:.8rem;position:relative;z-index:5;border-top:1px solid rgba(222,156,99,.18)}
+footer{background:linear-gradient(to bottom,rgba(90,68,42,.12),rgba(3,8,15,.9)),var(--ink-deep);color:rgba(245,244,239,.62);padding:2.4rem 0;font-size:.8rem;position:relative;z-index:5;border-top:1px solid rgba(222,156,99,.18)}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
 footer .logo{font-size:.9rem;color:var(--paper)}
 footer a{color:rgba(245,244,239,.55)}
@@ -680,7 +682,7 @@ footer a:hover{color:var(--paper)}
 
 
 .ticker,#reto,#solucion,#tipologias,#quienes,#contacto{background:transparent !important}
-footer{background:none;background-image:linear-gradient(to bottom,rgba(7,20,38,.2),rgba(7,20,38,.9))}
+footer{background:none;background-image:linear-gradient(to bottom,rgba(3,8,15,.2),rgba(3,8,15,.9))}
 
 /* hero headline — left-aligned, editorial */
 .hero-content{text-align:left;align-items:flex-start}
@@ -690,7 +692,7 @@ footer{background:none;background-image:linear-gradient(to bottom,rgba(7,20,38,.
 .hero h1 em{font-family:var(--body);font-style:normal;font-weight:700;color:inherit}
 .hero p.lead{margin-left:0;margin-right:0;max-width:34rem}
 .hero .cta-row{justify-content:flex-start}
-.hero h1::after{content:'';display:block;width:min(100%,26ch);height:1px;margin:clamp(1.3rem,3vh,2.1rem) 0 0;background:linear-gradient(90deg,var(--copper-hi) 0%,var(--copper-hi) 82%,transparent 100%);transform-origin:left;animation:heroRule 1.4s cubic-bezier(.22,1,.36,1) 1.2s both}
+.hero h1::after{content:'';display:block;width:min(100%,30ch);height:5px;margin:clamp(1.3rem,3vh,2.1rem) 0 0;background:linear-gradient(90deg,rgba(222,156,99,.35) 0%,#F2C08F 6%,var(--copper-hi) 30%,rgba(222,156,99,.75) 65%,rgba(222,156,99,0) 100%);clip-path:polygon(0 0,100% 46%,100% 54%,0 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 70%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 70%,transparent 100%);filter:blur(.35px) drop-shadow(0 0 6px rgba(222,156,99,.55));transform-origin:left;animation:heroRule 1.4s cubic-bezier(.22,1,.36,1) 1.2s both}
 @keyframes heroRule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media (min-width:900px){.hero h1{max-width:none}}
 
@@ -766,7 +768,7 @@ main .eyebrow{font-family:var(--mono);font-size:.92rem;font-weight:500;letter-sp
 .acc-img{position:absolute;inset:0}
 .acc-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.06);opacity:.42;transform:scale(1.04);transition:opacity .6s,filter .6s,transform .9s cubic-bezier(.76,0,.24,1)}
 .acc-item.is-open .acc-img img{opacity:.7;filter:grayscale(.32) saturate(1.12) contrast(1.04) brightness(.98);transform:scale(1)}
-.acc-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(7,20,38,.94) 22%,rgba(7,20,38,.45) 62%,rgba(7,20,38,.25));pointer-events:none}
+.acc-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(3,8,15,.94) 22%,rgba(3,8,15,.45) 62%,rgba(3,8,15,.25));pointer-events:none}
 .acc-num{position:absolute;top:1.1rem;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:rgba(222,156,99,.9);transition:left .5s,transform .5s}
 .acc-item.is-open .acc-num{left:clamp(1.3rem,2.2vw,2.2rem);transform:none}
 .acc-vlabel{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;z-index:3;font-family:var(--body);font-weight:500;font-size:1rem;letter-spacing:-.01em;white-space:nowrap;color:rgba(245,244,239,.82);transition:opacity .35s}
@@ -787,7 +789,7 @@ main .eyebrow{font-family:var(--mono);font-size:.92rem;font-weight:500;letter-sp
 .acc-item{flex:none;min-width:0;max-height:5rem;min-height:5rem;transition:max-height .7s cubic-bezier(.76,0,.24,1),border-color .4s}
 .acc-item.is-open{max-height:32rem}
 .acc-img img{object-position:center 40%}
-.acc-item::after{background:linear-gradient(90deg,rgba(7,20,38,.94) 0%,rgba(7,20,38,.72) 55%,rgba(7,20,38,.45) 100%)}
+.acc-item::after{background:linear-gradient(90deg,rgba(3,8,15,.94) 0%,rgba(3,8,15,.72) 55%,rgba(3,8,15,.45) 100%)}
 .acc-num,.acc-item.is-open .acc-num{top:1.85rem;left:clamp(1.3rem,2.2vw,2.2rem);transform:none}
 .acc-vlabel,.acc-item.is-open .acc-vlabel{writing-mode:horizontal-tb;transform:none;top:1.55rem;bottom:auto;left:calc(clamp(1.3rem,2.2vw,2.2rem) + 3rem);font-size:1.15rem;opacity:1}
 .acc-item.is-open .acc-vlabel{color:var(--copper-hi)}
@@ -802,7 +804,7 @@ main .eyebrow{font-family:var(--mono);font-size:.92rem;font-weight:500;letter-sp
 .acc-body>p.acc-note{grid-column:2/4;grid-row:3;max-width:none;margin-top:1.2rem}
 .acc-body p,.acc-body .acc-hook{max-width:none}
 .acc-item.is-open .acc-img img{opacity:.38;filter:grayscale(.6) contrast(1) brightness(.75)}
-.acc-item.is-open::after{background:linear-gradient(90deg,rgba(7,20,38,.9) 0%,rgba(7,20,38,.86) 100%)}
+.acc-item.is-open::after{background:linear-gradient(90deg,rgba(3,8,15,.9) 0%,rgba(3,8,15,.86) 100%)}
 .acc-body .acc-k{font-size:.72rem;color:var(--copper-hi);margin-bottom:.15rem}
 .acc-body>p:not(.acc-k):not(.acc-note){font-size:clamp(1rem,1.1vw,1.15rem);line-height:1.5;color:rgba(245,244,239,.94)}
 .acc-body .acc-hook{font-weight:600;color:var(--paper)!important}
@@ -894,10 +896,10 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 /* ---------- performance: touch / Android ---------- */
 .lite .grain{display:none}
-.lite .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18vh;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(7,20,38,0),var(--ink-deep))}
+.lite .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18vh;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(3,8,15,0),var(--ink-deep))}
 .lite .hero-bg video.hero-glow{display:none}
 .lite .hero-bg video#heroImg{filter:brightness(.7) saturate(1.3)}
-.lite nav.scrolled{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(7,20,38,.94)}
+.lite nav.scrolled{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(3,8,15,.94)}
 .lite .prob,.lite .sstep,.lite .split,.lite .card,.lite .rv-card,.lite .sm-scrim,.lite .legal-scrim{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .lite .tplx,.lite .tipos-bg img,.lite .qs-bg img,.lite .reto-bg img,.lite .sol-bg img,.lite .lados-bg img{transform:none!important}
 .lite .bt-w{filter:none!important}
@@ -905,7 +907,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .lite #resultados .rb-val svg .out{filter:none}
 .lite .rb-win .rb-bar{box-shadow:none}
 .android #aurora{display:none}
-.android #auroraVeil{background:radial-gradient(120% 80% at 80% 10%,rgba(184,115,51,.16) 0%,rgba(7,20,38,0) 55%),radial-gradient(90% 70% at 10% 90%,rgba(39,75,199,.12) 0%,rgba(7,20,38,0) 60%),var(--ink-deep)}
+.android #auroraVeil{background:radial-gradient(120% 80% at 80% 10%,rgba(184,115,51,.16) 0%,rgba(3,8,15,0) 55%),radial-gradient(90% 70% at 10% 90%,rgba(39,75,199,.12) 0%,rgba(3,8,15,0) 60%),var(--ink-deep)}
 
 .rev-intro{margin:.4rem 0 1.4rem;font-size:.95rem;line-height:1.55;color:rgba(245,244,239,.78);text-wrap:pretty}
 @media(max-width:760px){
@@ -978,6 +980,87 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #resultados .rl-word{font-family:var(--body);font-weight:700;font-size:clamp(1.05rem,1.5vw,1.5rem);letter-spacing:-.01em;color:var(--paper);white-space:nowrap}
 #resultados .rl-i img{height:100%;width:auto;max-width:10rem;object-fit:contain;filter:brightness(0) invert(.95) sepia(.25)}
 
+/* mapa global */
+#mapa{position:relative;z-index:6;background:transparent;padding:clamp(2rem,5vh,3.5rem) 0 clamp(1.5rem,4vh,2.5rem)}
+@media(min-width:761px) and (min-height:620px){#mapa{padding-top:calc(10svh - 4rem)}}
+@media(max-width:760px) and (min-height:520px){#mapa{padding-top:calc(6svh - 2rem)}}
+.gm{padding-top:clamp(1rem,2.5vh,1.6rem);border-top:1px solid rgba(222,156,99,.3)}
+.gm-t{margin:0 0 clamp(.9rem,2.2vh,1.4rem);font-family:var(--body);font-weight:700;font-size:clamp(.78rem,.85vw,.9rem);letter-spacing:.14em;text-transform:uppercase;color:var(--copper-hi)}
+.gm-map{position:relative;width:100%;aspect-ratio:2.7/1}
+.gm-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.gm .sph{fill:rgba(245,244,239,.015);stroke:none}
+.gm .gl{fill:none;stroke:rgba(245,244,239,.07);stroke-width:.6;vector-effect:non-scaling-stroke}
+.gm .gl2{fill:none;stroke:rgba(222,156,99,.16);stroke-width:.7;stroke-dasharray:2 4;vector-effect:non-scaling-stroke}
+.gm .land{fill:rgba(245,244,239,.07);stroke:rgba(245,244,239,.16);stroke-width:.5;vector-effect:non-scaling-stroke}
+.gm .hit{fill:rgba(140,160,196,.06);stroke:rgba(211,220,245,.3);stroke-width:.8;vector-effect:non-scaling-stroke;transition:fill 1.2s cubic-bezier(.16,1,.3,1),stroke 1.2s cubic-bezier(.16,1,.3,1)}
+.gm.in .hit{fill:rgba(140,160,196,.2);stroke:rgba(211,220,245,.45)}
+.gm .pin{fill:var(--paper);opacity:0;transition:opacity .8s ease}
+.gm.in .pin{opacity:1}
+.gm .ring{fill:none;stroke:var(--copper-hi);stroke-width:1;vector-effect:non-scaling-stroke;opacity:0;transform-box:fill-box;transform-origin:center}
+.gm.in .ring{animation:gmRing 3.2s cubic-bezier(.16,1,.3,1) infinite}
+@keyframes gmRing{0%{transform:scale(.3);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.gm-list{list-style:none;margin:clamp(.8rem,2vh,1.2rem) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem 1.8rem}
+.gm-list li{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,244,239,.75);display:flex;align-items:center;gap:.55rem}
+.gm-list li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--copper-hi)}
+@media(min-width:761px){#servicios{padding-bottom:clamp(.5rem,2vh,1.2rem)!important;min-height:0!important}#resultados.rb{padding-top:clamp(1.2rem,4vh,2.6rem)!important}}
+@media(prefers-reduced-motion:reduce){.gm .ring{animation:none}}
+@media(max-width:760px){.gm-map{aspect-ratio:2.2/1}.gm-list{gap:.4rem 1.1rem}.gm-list li{font-size:.62rem}}
+#resultados .gm-bg{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;pointer-events:none;border:0;padding:0;margin:0;opacity:.55}
+#resultados .gm-bg .gm-map{width:min(100%,1500px)}
+#resultados .rb-bg img{opacity:.1!important}
+#resultados .gm-bg{opacity:.75!important}
+#resultados .rb-stage > .rb-wrap{z-index:2!important}
+/* liquid glass test */
+html body .hero-cta #revOpen.btn.frame,html body .ct-leadrow a.btn.frame,html body .zs .zs-cta.btn.frame{position:relative;isolation:isolate;border-radius:999px!important;padding:1.1rem 2.8rem!important;min-height:3.5rem;border:0!important;overflow:hidden!important;filter:none!important;
+background:linear-gradient(180deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,.04) 48%,rgba(222,156,99,.08) 100%)!important;
+-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(222,156,99,.25),0 10px 30px -12px rgba(0,0,0,.6)!important;
+transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s ease,background .5s ease!important}
+html body .hero-cta #revOpen.btn.frame::before,html body .ct-leadrow a.btn.frame::before,html body .zs .zs-cta.btn.frame::before{content:''!important;position:absolute!important;inset:0!important;z-index:0!important;border-radius:inherit;padding:1px;clip-path:none!important;opacity:1!important;transform:none!important;border:0!important;
+background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,.08) 40%,rgba(222,156,99,.5) 100%)!important;
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:none!important;pointer-events:none}
+html body .hero-cta #revOpen.btn.frame::after,html body .ct-leadrow a.btn.frame::after,html body .zs .zs-cta.btn.frame::after{content:''!important;display:block!important;position:absolute!important;right:auto!important;bottom:auto!important;top:0!important;left:-60%!important;width:45%!important;height:100%!important;border:0!important;clip-path:none!important;opacity:1!important;z-index:0!important;
+background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent)!important;transform:skewX(-20deg)!important;transition:left .9s cubic-bezier(.16,1,.3,1)!important;pointer-events:none}
+html body .hero-cta #revOpen.btn.frame:hover::after,html body .ct-leadrow a.btn.frame:hover::after,html body .zs .zs-cta.btn.frame:hover::after,html body .hero-cta #revOpen.btn.frame:focus-visible::after,html body .ct-leadrow a.btn.frame:focus-visible::after,html body .zs .zs-cta.btn.frame:focus-visible::after{left:120%!important}
+html body .hero-cta #revOpen.btn.frame:hover,html body .ct-leadrow a.btn.frame:hover,html body .zs .zs-cta.btn.frame:hover,html body .hero-cta #revOpen.btn.frame:focus-visible,html body .ct-leadrow a.btn.frame:focus-visible,html body .zs .zs-cta.btn.frame:focus-visible{transform:translateY(-2px)!important;letter-spacing:inherit!important;background:linear-gradient(180deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,.06) 48%,rgba(222,156,99,.14) 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(222,156,99,.4),0 14px 36px -12px rgba(222,156,99,.35)!important}
+html body .hero-cta #revOpen.btn.frame:active,html body .ct-leadrow a.btn.frame:active,html body .zs .zs-cta.btn.frame:active{transform:translateY(0) scale(.98)!important}
+html body .hero-cta #revOpen.btn.frame span,html body .ct-leadrow a.btn.frame span,html body .zs .zs-cta.btn.frame span{position:relative;z-index:1}
+html body .zs .zs-cta.btn.frame{margin-top:0!important;color:var(--copper-hi)!important}
+html body .ct-leadrow a.btn.frame{display:inline-flex;align-items:center;justify-content:center;color:var(--copper-hi)!important;text-decoration:none}
+@media(min-width:761px) and (min-height:620px){
+#resultados .rb-stage{padding-top:clamp(4.8rem,9vh,5.6rem)!important;align-items:flex-start!important}
+#resultados .rb-wrap{align-content:start!important;row-gap:clamp(.6rem,2vh,1.2rem)!important;padding-top:clamp(.5rem,3vh,2rem)}
+#resultados .rg{padding-top:clamp(1rem,3vh,2rem)!important}
+#resultados .rl{margin-top:clamp(2.6rem,7vh,4.4rem)!important}
+}
+@media(max-width:760px) and (min-height:520px){#resultados .rl{margin-top:1.2rem!important}}
+#contacto .ct-leadrow{align-items:center!important}
+#contacto .ct-leadrow .ct-lead{margin-top:0!important;margin-bottom:0!important}
+#contacto .ct-leadrow a.btn.frame{align-self:center!important;margin:0!important}
+#contacto .ct-social a{border:0!important;background:none!important;box-shadow:none!important;padding-left:0!important;padding-right:0!important;color:var(--copper-hi)!important}
+#contacto .ct-social a span,#contacto .ct-social a svg{color:var(--copper-hi)!important;fill:currentColor}
+#contacto .ct-social a:hover,#contacto .ct-social a:hover span{color:var(--paper)!important}
+#resultados .rl .rl-t{color:rgba(245,244,239,.55)!important}
+#contacto .ct-lbl{color:rgba(245,244,239,.55)!important;font-weight:700!important}
+footer .legal-btn{border:0!important;background:none!important;box-shadow:none!important;padding-left:0!important;padding-right:0!important;font-style:normal!important}
+footer .legal-row{column-gap:0!important}
+footer .legal-btn + .legal-btn{position:relative;margin-left:1.4rem!important}
+footer .legal-btn + .legal-btn::before{content:'|'!important;display:inline!important;position:absolute!important;right:auto!important;bottom:auto!important;left:-.95rem!important;top:50%!important;transform:translateY(-50%)!important;color:rgba(245,244,239,.4);font-style:normal;border:0!important;background:none!important;clip-path:none!important;opacity:1!important;width:auto!important;height:auto!important}
+footer .legal-btn::after{display:none!important}
+footer .legal-btn:first-child::before{display:none!important}
+#resultados .rg-main .rg-lbl{color:var(--copper-hi)!important}
+#nav .nav-cta .btn.frame,#nav .nav-cta .btn.frame span{color:var(--copper-hi)!important}
+#nav .nav-cta .btn.frame:hover span{color:var(--paper)!important}
+.zp-net .zrt{stroke:rgba(222,156,99,.55);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;fill:none}
+.zp.on .zp-net .zrt{animation:zDraw 1.2s cubic-bezier(.45,.05,.25,1) var(--d) forwards}
+.zp-net .zdot{fill:#F5F4EF}
+.zp-net .zdot.hub{fill:#DE9C63}
+.zp-net .zrt.hot{stroke:rgba(222,156,99,.55);stroke-width:1.2}
+.zp-net .zdot-h{fill:none;stroke:rgba(222,156,99,.45);stroke-width:1;vector-effect:non-scaling-stroke}
+.zp-net .zdot,.zp-net .zdot-h{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.zp.on .zp-net .zdot,.zp.on .zp-net .zdot-h{animation:zDotIn .7s cubic-bezier(.2,1.4,.4,1) var(--d) forwards}
+@keyframes zDotIn{to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.zp-net .zrt{stroke-dashoffset:0}.zp-net .zdot,.zp-net .zdot-h{opacity:1;transform:none}}
 /* perf */
 #resultados .rb-stage{contain:layout paint}
 #resultados .rg-num{text-shadow:none}
@@ -1018,7 +1101,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 #resultados .rb-wrap{position:relative;z-index:1}
 #resultados .rb-bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:calc(.25 + .75 * var(--hd,0));-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 78%,transparent 100%)}
 #resultados .rb-bg img{width:100%;height:100%;object-fit:cover;opacity:.3;filter:grayscale(1) contrast(1.1) brightness(.85);transform:translateZ(0)}
-#resultados .rb-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,20,38,.82) 0%,rgba(7,20,38,.55) 50%,rgba(7,20,38,.7) 100%)}
+#resultados .rb-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,15,.82) 0%,rgba(3,8,15,.55) 50%,rgba(3,8,15,.7) 100%)}
 
 /* services: scroll-stepped accordion (desktop) */
 #servicios.acc-scroll .acc-pin{height:calc(100svh + 220vh)}
@@ -1044,12 +1127,12 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 @media(max-width:860px){
 #servicios .acc-item.is-open .acc-img img{opacity:.32!important;filter:grayscale(.7) brightness(.7) contrast(1.05)!important}
-#servicios .acc-item.is-open::after{background:linear-gradient(to bottom,rgba(7,20,38,.78) 0%,rgba(7,20,38,.88) 45%,rgba(7,20,38,.94) 100%)!important}
+#servicios .acc-item.is-open::after{background:linear-gradient(to bottom,rgba(3,8,15,.78) 0%,rgba(3,8,15,.88) 45%,rgba(3,8,15,.94) 100%)!important}
 #servicios .acc-body .acc-k{color:var(--copper-hi)!important;opacity:1}
 #servicios .acc-item.is-open .acc-body>p:not(.acc-k):not(.acc-note):not(.acc-hook){color:rgba(245,244,239,.96)!important}
 #servicios .acc-body .acc-hook{color:var(--copper-hi)!important;font-weight:600}
 #servicios .acc-body .acc-note span:last-child{color:var(--paper)!important;font-weight:600}
-#servicios .acc-item.is-open .acc-body{text-shadow:0 1px 2px rgba(7,20,38,.8)}
+#servicios .acc-item.is-open .acc-body{text-shadow:0 1px 2px rgba(3,8,15,.8)}
 }
 
 /* ---------- servicios: situation selector ---------- */
@@ -1059,7 +1142,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .sx-btn{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:3rem minmax(0,1fr);align-items:start;gap:.2rem 1rem;padding:clamp(1rem,2.3vh,1.5rem) 0;cursor:pointer;position:relative}
 .sx-n{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;color:rgba(222,156,99,.55);padding-top:.35rem;transition:color .35s}
 .sx-txt{display:flex;flex-direction:column;gap:.35rem}
-.sx-lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,244,239,.45);transition:color .35s}
+.sx-lbl{font-family:var(--mono);font-size:.84rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,244,239,.55);font-weight:700;transition:color .35s}
 .sx-sit{font-family:var(--body);font-weight:600;font-size:clamp(1.05rem,1.55vw,1.55rem);line-height:1.25;letter-spacing:-.015em;color:rgba(245,244,239,.42);text-wrap:pretty;transition:color .35s,transform .45s cubic-bezier(.22,1,.36,1)}
 .sx-bar{position:absolute;left:0;right:0;bottom:-1px;height:1px;overflow:hidden}
 .sx-bar i{position:absolute;inset:0;background:var(--copper-hi);transform:scaleX(0);transform-origin:left}
@@ -1072,20 +1155,21 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .sx-item.on .sx-sit{color:var(--paper)}
 .sx-inline{display:none}
 .sx-panel{position:relative;min-height:clamp(26rem,62vh,36rem);border:1px solid rgba(222,156,99,.3);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.6rem,3vw,2.6rem)}
+.sx-panel{border-radius:18px;clip-path:inset(0 round 18px);justify-content:center}
 .sx-imgs{position:absolute;inset:0;z-index:0}
 .sx-imgs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.75);opacity:0;transform:scale(1.06);transition:opacity .8s ease,transform 1.6s cubic-bezier(.22,1,.36,1)}
 .sx-imgs img.on{opacity:.55;transform:scale(1)}
-.sx-imgs::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(7,20,38,.97) 0%,rgba(7,20,38,.88) 45%,rgba(7,20,38,.45) 100%)}
+.sx-imgs::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(3,8,15,.97) 0%,rgba(3,8,15,.88) 45%,rgba(3,8,15,.45) 100%)}
 .sx-card{position:relative;z-index:1;display:none}
 .sx-card.on{display:block;animation:sxIn .6s cubic-bezier(.22,1,.36,1) both}
 @keyframes sxIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.sx-cn{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi);margin-bottom:.8rem}
+.sx-cn{display:block;font-family:var(--mono);font-size:.86rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi);font-weight:700;margin-bottom:.8rem}
 .sx-ct{margin:0 0 .4rem;font-family:var(--body);font-weight:700;font-size:clamp(1.4rem,2.1vw,2.1rem);line-height:1.12;letter-spacing:-.03em;color:var(--paper);text-wrap:pretty}
-.sx-k{margin:1.1rem 0 .3rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi)}
+.sx-k{margin:1.1rem 0 .3rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi);font-weight:400}
 .sx-p{margin:0;font-size:clamp(.98rem,1.08vw,1.12rem);line-height:1.5;color:rgba(245,244,239,.92);max-width:36rem;text-wrap:pretty}
 .sx-rec{color:var(--paper);font-weight:600}
 .sx-svc{margin:1.2rem 0 0;padding-top:1rem;border-top:1px solid rgba(222,156,99,.35);display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;color:var(--paper);font-weight:600}
-.sx-svl{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi);font-weight:400}
+.sx-svl{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi);font-weight:700}
 .sx .sx-cta.btn.frame{font-size:.82rem;letter-spacing:.18em;padding:.92rem 2.2rem;flex:none}
 .sx .sx-cta.btn.frame{position:relative;display:inline-block;background:transparent;border:0;color:var(--paper);box-shadow:none;text-shadow:none;filter:none;overflow:visible;cursor:pointer;transition:color .3s ease}
 .sx .sx-cta.btn.frame::before,.sx .sx-cta.btn.frame::after{content:'';position:absolute;inset:0;border:2px solid var(--copper);background:none;transform:none;z-index:2;pointer-events:none;transition:clip-path .3s ease-out,opacity .3s ease}
@@ -1095,7 +1179,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 .sx .sx-cta.btn.frame:hover,.sx .sx-cta.btn.frame:focus-visible{color:var(--copper-hi);filter:none;transform:none;box-shadow:none}
 .sx .sx-cta.btn.frame:active{transform:scale(.98)}
 .sx .sx-cta.btn.frame span{position:relative;z-index:3}
-.sx .sx-cta{position:relative;z-index:1;align-self:flex-start;margin-top:1.4rem}
+.sx .sx-cta{position:relative;z-index:1;align-self:center;margin-top:1.4rem}
 @media(max-width:860px){
   .sx{grid-template-columns:1fr}
   .sx-panel{display:none}
@@ -1109,6 +1193,168 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   .sx-bar{display:none}
 }
 @media(prefers-reduced-motion:reduce){.sx-item.on .sx-bar i{animation:none;transform:scaleX(1)}.sx-card.on{animation:none}}
+/* ---------- servicios: Evaluar · Optimizar · Impulsar (tabs) ---------- */
+.zs{max-width:1380px;margin:0 auto;padding:0 clamp(1.35rem,4vw,3.25rem);width:100%;box-sizing:border-box}
+.zs-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(222,156,99,.25);border-bottom:1px solid rgba(222,156,99,.25)}
+.zt{all:unset;box-sizing:border-box;position:relative;cursor:pointer;display:grid;grid-template-columns:auto 1fr;align-items:baseline;column-gap:1rem;row-gap:.3rem;padding:clamp(1rem,2.4vh,1.6rem) clamp(.8rem,2vw,1.6rem) clamp(1.1rem,2.6vh,1.7rem) 0}
+.zt + .zt{padding-left:clamp(.8rem,2vw,1.6rem);border-left:1px solid rgba(222,156,99,.18)}
+.zt-n{font-family:var(--mono);font-size:.78rem;letter-spacing:.18em;color:rgba(222,156,99,.55);transition:color .35s}
+.zt-w{font-family:var(--body);font-weight:700;font-size:clamp(1.5rem,3.6vw,3.4rem);line-height:1;letter-spacing:-.035em;color:rgba(245,244,239,.38);transition:color .35s}
+.zt-s{grid-column:2;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,244,239,.45);transition:color .35s}
+.zt-bar{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden}
+.zt + .zt .zt-bar{left:0}
+.zt-bar i{position:absolute;inset:0;background:var(--copper-hi);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.zt:hover .zt-w,.zt:focus-visible .zt-w{color:rgba(245,244,239,.75)}
+.zt.on .zt-n,.zt.on .zt-s{color:var(--copper-hi)}
+.zt.on .zt-w{color:var(--paper)}
+.zt.on .zt-bar i{transform:scaleX(1)}
+.zt:focus-visible{outline:1px solid var(--copper-hi);outline-offset:-1px}
+.zt-g{grid-row:1;grid-column:1;align-self:center;width:2.4rem;height:2.4rem;display:flex;align-items:center;justify-content:center;transform:scale(1.35);color:rgba(222,156,99,.45);transition:color .35s}
+.zt{align-items:center}
+.zt.on .zt-g{color:var(--copper-hi)}
+.zg{display:block}
+.zg-dot{width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px var(--ink-deep),0 0 0 5px currentColor}
+.zg-bld{width:16px;height:20px;box-sizing:border-box;border:1.5px solid currentColor;border-bottom-width:3px;display:grid;grid-template-columns:repeat(2,3px);gap:3px;justify-content:center;align-content:start;padding-top:3px}
+.zg-bld i{width:3px;height:3px;background:currentColor}
+.zg-map{position:relative;width:22px;height:22px}
+.zg-map i{position:absolute;width:4px;height:4px;border-radius:50%;background:currentColor}
+.zg-map i:nth-child(1){left:1px;top:3px}.zg-map i:nth-child(2){left:9px;top:0}.zg-map i:nth-child(3){left:17px;top:5px}.zg-map i:nth-child(4){left:5px;top:11px}.zg-map i:nth-child(5){left:14px;top:13px}.zg-map i:nth-child(6){left:0;top:18px}.zg-map i:nth-child(7){left:10px;top:18px}
+@media(max-width:860px){.zt-g{transform:none;justify-content:flex-start;width:auto;height:1.6rem}}
+.zs-panels{display:grid;margin-top:clamp(1.4rem,3.2vh,2.4rem)}
+.zp{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(1.5rem,4vw,4rem);align-items:stretch}
+.zp[hidden]{display:grid!important;visibility:hidden;opacity:0;pointer-events:none}
+.zp.on{animation:sxIn .6s cubic-bezier(.22,1,.36,1) both}
+.zp-claim{margin:0 0 .8rem;font-family:var(--body);font-weight:700;font-size:clamp(1.4rem,2.1vw,2.1rem);line-height:1.12;letter-spacing:-.03em;color:var(--paper);text-wrap:balance}
+.zp-txt{margin:0;font-size:clamp(.98rem,1.08vw,1.12rem);line-height:1.55;color:rgba(245,244,239,.82);max-width:38rem;text-wrap:pretty}
+.zp-k{margin:1.5rem 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--copper-hi)}
+.zp-list{list-style:none;margin:0;padding:0;max-width:38rem;counter-reset:zl;border-top:1px solid rgba(245,244,239,.12)}
+.zp-list li{counter-increment:zl;display:grid;grid-template-columns:2.2rem minmax(0,1fr);padding:.6rem 0;border-bottom:1px solid rgba(245,244,239,.12);font-size:clamp(.94rem,1vw,1.04rem);line-height:1.45;color:rgba(245,244,239,.92)}
+.zp-list li::before{content:counter(zl,decimal-leading-zero);font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:rgba(222,156,99,.75);padding-top:.2rem}
+.zp-r{position:relative;border:1px solid rgba(222,156,99,.3);border-radius:18px;clip-path:inset(0 round 18px);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:clamp(22rem,52vh,30rem)}
+.zp-r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.75);opacity:.5}
+.zp-r::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(3,8,15,.97) 0%,rgba(3,8,15,.9) 50%,rgba(3,8,15,.5) 100%)}
+.zp-card{position:relative;z-index:1;padding:clamp(1.4rem,2.6vw,2.4rem)}
+.zp-card .zp-k:first-child{margin-top:0}
+.zp-rec{margin:0;font-size:clamp(1rem,1.15vw,1.2rem);line-height:1.5;font-weight:600;color:var(--paper);max-width:34rem;text-wrap:pretty}
+.zp-verdict{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.3rem}
+.zp-verdict span{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;padding:.55rem .9rem;border:1px solid rgba(245,244,239,.25);color:rgba(245,244,239,.75)}
+.zp-verdict span.on{border-color:var(--copper-hi);color:var(--copper-hi)}
+.zp-hook{margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid rgba(222,156,99,.35);display:grid;grid-template-columns:auto minmax(0,1fr);gap:1.2rem;align-items:center}
+.zp-hook b{font-family:var(--body);font-weight:700;font-size:clamp(1.8rem,2.6vw,2.5rem);letter-spacing:-.035em;color:var(--copper-hi);line-height:1;white-space:nowrap}
+.zp-hook p{margin:0;font-size:.92rem;line-height:1.5;color:rgba(245,244,239,.85);text-wrap:pretty}
+.zp-note{margin:.9rem 0 0;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,244,239,.5)}
+.zp-tbl{margin-top:1.1rem;border-top:1px solid rgba(222,156,99,.35)}
+.zp-th,.zp-tr{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid rgba(245,244,239,.12)}
+.zp-th{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,244,239,.6)}
+.zp-tr b{font-weight:600;font-size:.94rem;line-height:1.35;color:var(--paper)}
+.zp-tr span{font-size:.9rem;line-height:1.4;color:rgba(245,244,239,.8)}
+.zp-quad{display:grid;grid-template-columns:1fr 1fr;margin-top:1.3rem;border:1px solid rgba(222,156,99,.35)}
+.zp-quad span{padding:.85rem 1rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--paper)}
+.zp-quad span:nth-child(odd){border-right:1px solid rgba(222,156,99,.35)}
+.zp-quad span:nth-child(-n+2){border-bottom:1px solid rgba(222,156,99,.35)}
+.zp-opt{margin:1rem 0 0;font-size:.92rem;color:rgba(245,244,239,.75)}
+.zs .zs-cta.btn.frame{position:relative;display:inline-flex;align-items:center;justify-content:center;margin-top:1.6rem;font-size:.82rem;letter-spacing:.18em;padding:.92rem 2.2rem;background:transparent;border:0;color:var(--paper);box-shadow:none;text-shadow:none;filter:none;overflow:visible;cursor:pointer;transition:color .3s ease}
+.zs .zs-cta.btn.frame::before,.zs .zs-cta.btn.frame::after{content:'';position:absolute;inset:0;border:2px solid var(--copper);background:none;transform:none;z-index:2;pointer-events:none;transition:clip-path .3s ease-out,opacity .3s ease}
+.zs .zs-cta.btn.frame::before{clip-path:inset(45% 0 45% 0);opacity:.45}
+.zs .zs-cta.btn.frame::after{clip-path:inset(0 45% 0 45%);opacity:.45;transition-delay:.15s}
+.zs .zs-cta.btn.frame:hover::before,.zs .zs-cta.btn.frame:focus-visible::before,.zs .zs-cta.btn.frame:hover::after,.zs .zs-cta.btn.frame:focus-visible::after{clip-path:inset(0 0 0 0);opacity:1}
+.zs .zs-cta.btn.frame:hover,.zs .zs-cta.btn.frame:focus-visible{color:var(--copper-hi);filter:none;transform:none;box-shadow:none}
+.zs .zs-cta.btn.frame:active{transform:scale(.98)}
+.zs .zs-cta.btn.frame span{position:relative;z-index:3}
+@media(max-width:860px){
+  .zt{grid-template-columns:1fr;padding:.9rem .5rem 1rem 0;row-gap:.35rem}
+  .zt + .zt{padding-left:.7rem}
+  .zt-s{grid-column:1;font-size:.56rem;letter-spacing:.14em}
+  .zt-n{font-size:.66rem}
+  .zt-w{font-size:clamp(1.15rem,5.4vw,1.6rem);letter-spacing:-.03em}
+  .zp{grid-template-columns:1fr}
+  .zp-r{min-height:0}
+  .zp-hook{grid-template-columns:1fr;gap:.5rem}
+  .zp-th,.zp-tr{grid-template-columns:1fr;gap:.15rem}
+  .zp-th span:last-child{display:none}
+  .zs .zs-cta.btn.frame{width:100%}
+}
+.zp-r{background:radial-gradient(ellipse 70% 55% at 50% 34%,rgba(222,156,99,.13),transparent 70%),rgba(245,244,239,.02);justify-content:flex-start!important;min-height:0!important;align-self:start}
+.zp-r::after{display:none!important}
+.zp-stage{position:relative;flex:0 0 auto;height:clamp(15rem,34vh,20rem);display:flex;align-items:center;justify-content:center;padding:clamp(1rem,2.4vw,2rem) clamp(1rem,2.4vw,2rem) 0}
+.zp-art{width:100%;height:100%;overflow:visible}
+.zp-card{border-top:1px solid rgba(222,156,99,.22);background:linear-gradient(to top,rgba(3,8,15,.6),transparent)}
+.zp-art .zr{transform-box:fill-box;transform-origin:center;transform:scale(.07);opacity:0}
+.zp.on .zp-art .zr{animation:zRing 4.8s cubic-bezier(.16,1,.3,1) infinite}
+.zp-art .zr-s{transform:scale(.2)}
+.zp.on .zp-art .zr-s{animation:zRingS 3.6s cubic-bezier(.16,1,.3,1) infinite}
+@keyframes zRing{0%{transform:scale(.07);opacity:.9}100%{transform:scale(1);opacity:0}}
+@keyframes zRingS{0%{transform:scale(.2);opacity:.8}100%{transform:scale(1);opacity:0}}
+.zp.on .zp-art .zc{animation:zBeat 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes zBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.zp-art .zw{fill:rgba(245,244,239,.07);stroke:rgba(245,244,239,.16);stroke-width:.6}
+.zp-art .zw.on{fill:rgba(222,156,99,.75);stroke:none}
+.zp.on .zp-art .zw{animation:zWin 5s ease-in-out infinite}
+@keyframes zWin{0%,100%{opacity:1}45%{opacity:.35}55%{opacity:1}}
+.zp.on .zp-art .zscan{animation:zScan 5.5s cubic-bezier(.65,0,.35,1) infinite}
+.zp-art .zscan{transform:translateY(40px);opacity:0}
+@keyframes zScan{0%{transform:translateY(40px);opacity:0}12%{opacity:.8}88%{opacity:.8}100%{transform:translateY(222px);opacity:0}}
+.zp.on .zp-art .zd{animation:zTw 4s ease-in-out infinite}
+@keyframes zTw{0%,100%{opacity:.85}50%{opacity:.25}}
+.zp.on .zp-art .zln{animation:zLn 1.2s cubic-bezier(.16,1,.3,1) both}
+@keyframes zLn{from{opacity:0}to{opacity:1}}
+.zp-hand .zhs{fill:none;stroke:#F5F4EF;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:var(--o)}
+.zp-hand .zhs.c{stroke:#DE9C63;stroke-width:1.2}
+.zp-hand .zhf{fill:none;stroke:#DE9C63;stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transform:rotate(-90deg);transform-origin:150px 150px}
+.zp-hand .zhd{fill:#DE9C63;opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.zp-hand .zhg{transform-origin:150px 150px}
+.zp.on .zp-hand .zhs{animation:zDraw 2.6s cubic-bezier(.45,.05,.25,1) var(--d) forwards}
+.zp.on .zp-hand .zhf{animation:zDraw 2.4s cubic-bezier(.65,0,.35,1) 5.4s forwards}
+.zp.on .zp-hand .zhd{animation:zDot .9s cubic-bezier(.16,1,.3,1) 7.3s forwards}
+.zp.on .zp-hand .zhg{animation:zSpin 90s linear infinite}
+@keyframes zDraw{to{stroke-dashoffset:0}}
+@keyframes zDot{to{opacity:1;transform:scale(1)}}
+@keyframes zSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.zp-hand .zhs,.zp-hand .zhf{stroke-dashoffset:0}.zp-hand .zhd{opacity:1;transform:none}}
+.zp-r{border:0!important;border-radius:0!important;clip-path:none!important;background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(222,156,99,.08),transparent 70%)!important}
+.zp-card{background:none!important;padding-left:0!important;padding-right:0!important}
+.zt{grid-template-columns:auto auto;justify-content:start}
+.zt-w{justify-self:center}
+.zt-s{justify-self:center;text-align:center}
+@media(max-width:860px){.zt{grid-template-columns:auto;justify-items:center;justify-content:center}.zt-g{justify-content:center!important}}
+.zp-l .zp-card{padding:0!important;border-top:0!important;margin-top:1.6rem}
+.zp-l .zp-card .zp-k{margin-top:0}
+.zp-act{display:flex;justify-content:center;padding-top:.6rem}
+.zp-act .zs-cta.btn.frame{margin-top:0!important}
+.zs .zs-cta.btn.frame{color:var(--copper-hi);border-radius:0;outline:none;-webkit-tap-highlight-color:transparent;transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s ease,letter-spacing .35s ease}
+.zs .zs-cta.btn.frame span{display:inline-block;color:var(--copper-hi);background:linear-gradient(100deg,var(--copper-hi) 0%,var(--copper-hi) 38%,#FFE3C4 50%,var(--copper-hi) 62%,var(--copper-hi) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:ctShine 3.2s linear infinite}
+.zs .zs-cta.btn.frame:hover,.zs .zs-cta.btn.frame:focus-visible{transform:translateY(-4px) scale(1.04);letter-spacing:.24em;box-shadow:0 0 18px rgba(222,156,99,.55),0 0 42px rgba(222,156,99,.25),0 14px 30px -10px rgba(0,0,0,.6)}
+.zs .zs-cta.btn.frame:hover span{animation-duration:1.1s}
+.zs .zs-cta.btn.frame:active{transform:translateY(-1px) scale(.98)}
+@media(prefers-reduced-motion:reduce){.zs .zs-cta.btn.frame span{animation:none}}
+.zs-tabs{border-top:0!important;border-bottom:1px solid rgba(245,244,239,.1)!important;gap:clamp(.5rem,2vw,2rem)}
+.zt + .zt{border-left:0!important}
+.zt{border-radius:0;transition:background .4s ease}
+.zt-bar{height:2px!important;bottom:-1px!important}
+.zt-bar i{background:linear-gradient(90deg,var(--copper),var(--copper-hi))!important}
+.zt:not(.on):hover .zt-bar i,.zt:not(.on):focus-visible .zt-bar i{transform:scaleX(.35);opacity:.6}
+.zt:not(.on):hover .zt-w{color:var(--paper)!important;transform:translateY(-2px)}
+.zt-w{transition:color .35s,transform .45s cubic-bezier(.16,1,.3,1)!important}
+.zt:not(.on):hover .zt-g{color:var(--copper-hi)}
+.zt-s::after{content:'';display:inline-block;width:.42em;height:.42em;margin-left:.6em;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-.2em) rotate(45deg);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.zt.on .zt-s::after{transform:translateY(.05em) rotate(225deg)}
+.zt:not(.on):hover .zt-s{color:var(--copper-hi)}
+.zt:not(.on):hover .zt-s::after{transform:translateY(0) rotate(45deg)}
+.zt:not(.on) .zt-g{animation:zNudge 3.2s ease-in-out infinite}
+.zt:not(.on):nth-child(3) .zt-g{animation-delay:1.6s}
+@keyframes zNudge{0%,70%,100%{color:rgba(222,156,99,.45)}35%{color:var(--copper-hi)}}
+@media(prefers-reduced-motion:reduce){.zt-g{animation:none!important}}
+.zs-tabs{align-items:start}
+.zt-s{white-space:nowrap}
+@media(max-width:1100px){.zt-s{letter-spacing:.12em;font-size:.62rem}}
+.zp-hand .zhx{fill:none;stroke:#F5F4EF;stroke-width:.9;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:.35}
+.zp-hand .zhx.c{stroke:#DE9C63;opacity:.6}
+.zp.on .zp-hand .zhx{animation:zCross 5.4s cubic-bezier(.45,.05,.25,1) var(--d) infinite}
+@keyframes zCross{0%{stroke-dashoffset:1}45%{stroke-dashoffset:0}60%{stroke-dashoffset:0}100%{stroke-dashoffset:-1}}
+@media(prefers-reduced-motion:reduce){.zp-hand .zhx{stroke-dashoffset:0}}
+@media(max-width:860px){.zp-stage{min-height:10rem}}
+@media(prefers-reduced-motion:reduce){.zp-art *{animation:none!important}.zp-art .zr{opacity:.25;transform:scale(.6)}}
+@media(prefers-reduced-motion:reduce){.zp.on{animation:none}.zt-bar i{transition:none}}
 /* scroll transition */
 @media(min-width:761px) and (min-height:620px){
 #resultados.rb{height:165vh;padding:0;margin-bottom:-10svh}
@@ -1182,6 +1428,16 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 </style>
 </head>
 <body class="lock">
+<template id="__bundler_thumbnail" data-bg-color="#03080F">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#03080F"/>
+    <g fill="none" stroke="#DE9C63" stroke-width="7">
+      <path d="M300 560 L300 380 L390 380 L390 300 L470 300 L470 430 L560 430 L560 340 L650 340 L650 470 L740 470 L740 360 L830 360 L830 560"/>
+      <path d="M240 560 L960 560" stroke-width="4" stroke-opacity=".5"/>
+    </g>
+    <text x="600" y="690" fill="#F5F4EF" font-family="Georgia,serif" font-size="88" letter-spacing="16" text-anchor="middle">MAD<tspan fill="#DE9C63">CRE</tspan></text>
+  </svg>
+</template>
 
 <div id="loader" aria-hidden="true">
   <div class="loader-inner">
@@ -1207,7 +1463,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 <nav id="nav">
   <div class="wrap">
-    <a class="logo" href="#" data-tab="inicio"><img decoding="async" src="madcre-logo-copper.png" alt="MADCRE"></a>
+    <a class="logo" href="#" data-tab="inicio"><img decoding="async" src="assets/madcre-logo-copper.png" alt="MADCRE"></a>
     <div class="nav-right">
       <div class="nav-cta"><button type="button" class="btn frame" data-tab="contacto"><span>Contáctanos</span></button></div>
       <button type="button" class="sm-toggle" id="smToggle" aria-expanded="false" aria-controls="smPanel">
@@ -1236,7 +1492,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   </div>
 </aside>
 
-<video id="aurora" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="aurora.webm" type="video/webm"></video>
+<video id="aurora" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="assets/aurora.webm" type="video/webm"></video>
 <div id="auroraVeil" aria-hidden="true"></div>
 <main id="app">
 
@@ -1244,22 +1500,21 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 <div class="page" data-tab="inicio">
   <div class="hero-pin" id="top">
     <header class="hero">
-      <div class="hero-bg"><div class="hero-media" id="heroMedia"><video id="heroGlow" class="hero-glow" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video><video id="heroImg" src="hero-video.mp4" autoplay muted loop playsinline preload="auto" aria-label="Fachada de un edificio de oficinas corporativo"></video></div></div>
+      <div class="hero-bg"><div class="hero-media" id="heroMedia"><video id="heroGlow" class="hero-glow" src="assets/hero-video.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video><video id="heroImg" src="assets/hero-video.mp4" autoplay muted loop playsinline preload="auto" aria-label="Fachada de un edificio de oficinas corporativo"></video></div></div>
       <div class="hero-shade" id="heroShade"></div>
       <div class="hero-dim" id="heroDim" aria-hidden="true"></div>
       <div class="hero-content wrap" id="heroContent">
         
         <h1>
-          <span class="line"><span>Somos el departamento <em>inmobiliario</em></span></span>
-          <span class="line"><span>externo de tu empresa</span></span>
+          <span class="line"><span>Somos tu Equipo <em>Inmobiliario</em></span></span>
         </h1>
-        <p class="hero-sub"><span class="hs-a">Renovar un contrato, negociar una renta, comprar o vender un inmueble.</span> <span>Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.</span></p>
+        <p class="hero-sub"><span class="hs-a">Renovar un contrato, negociar una renta, comprar o vender un inmueble.</span> <span>Datos de mercado y criterio profesional para recomendarte la mejor decisión.</span></p>
         <div class="hero-cta">
           <div class="hc-copy">
-            <strong class="hc-t">Empiece por una primera revisión.</strong>
-            <span class="hc-d">Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.</span>
+            <strong class="hc-t">Empieza por un primer análisis.</strong>
+            <span class="hc-d">En 48 horas te diremos qué puntos merece la pena analizar de tu inmueble y cuánto costaría hacerlo. Sin compromiso.</span>
           </div>
-          <button type="button" class="btn frame" id="revOpen"><span>Solicitar revisión</span></button>
+          <button type="button" class="btn frame" id="revOpen"><span>Solicitar análisis</span></button>
         </div>
       </div>
     </header>
@@ -1274,125 +1529,87 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Servicios</p>
-        <div class="sec-body"><h2>¿En qué situación se encuentra?</h2>
-        <p class="sv-lead">Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.</p></div>
+        <div class="sec-body"><h2>¿Cómo podemos ayudarte?</h2>
+        <p class="sv-lead"><span style="display:block">Las grandes corporaciones cuentan con un equipo inmobiliario propio para cada decisión.</span><span style="display:block">Ponemos ese mismo criterio a tu disposición en momentos clave.</span></p></div>
       </div>
     </div>
-    <div class="sx" id="sx">
-      <ol class="sx-list" role="tablist">
-        <li class="sx-item on" data-i="0">
-          <button type="button" class="sx-btn" role="tab" aria-selected="true"><span class="sx-n">01</span><span class="sx-txt"><span class="sx-lbl">Alquiler</span><span class="sx-sit">Su contrato de alquiler vence o le proponen una subida de renta.</span></span><span class="sx-bar"><i></i></span></button>
-          <div class="sx-inline">
-              <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Rango de renta de mercado, puntos a negociar y alternativas.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Estrategia de alquiler</span></p>
+    <div class="zs" id="zs">
+      <div class="zs-tabs" role="tablist" aria-label="Servicios">
+        <button type="button" class="zt on" role="tab" id="zt0" aria-controls="zp0" aria-selected="true" data-i="0"><span class="zt-g" aria-hidden="true"><span class="zg zg-dot"></span></span><span class="zt-w">Evaluar</span><span class="zt-s">Una operación</span><span class="zt-bar" aria-hidden="true"><i></i></span></button>
+        <button type="button" class="zt" role="tab" id="zt1" aria-controls="zp1" aria-selected="false" data-i="1"><span class="zt-g" aria-hidden="true"><span class="zg zg-bld"><i></i><i></i><i></i><i></i></span></span><span class="zt-w">Optimizar</span><span class="zt-s">Un inmueble</span><span class="zt-bar" aria-hidden="true"><i></i></span></button>
+        <button type="button" class="zt" role="tab" id="zt2" aria-controls="zp2" aria-selected="false" data-i="2"><span class="zt-g" aria-hidden="true"><span class="zg zg-map"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span><span class="zt-w">Impulsar</span><span class="zt-s">Toda la cartera</span><span class="zt-bar" aria-hidden="true"><i></i></span></button>
+      </div>
+      <div class="zs-panels">
+        <div class="zp on" role="tabpanel" id="zp0" aria-labelledby="zt0">
+          <div class="zp-l">
+            <h3 class="zp-claim">La certeza de una buena operación, antes de firmar.</h3>
+            <p class="zp-txt">Antes de alquilar o comprar un inmueble, hay decenas de cifras y condiciones que revisar. Nosotros las analizamos y te decimos con claridad si la operación merece la pena.</p>
+            <p class="zp-k">¿Qué analizamos?</p>
+            <ul class="zp-list"><li>Si el precio o la renta es de mercado</li><li>Si la compra ofrece la rentabilidad esperada</li><li>Si el contrato esconde riesgos</li><li>Revisión del rent roll y estrategia</li></ul>
+            <div class="zp-card">
+              <p class="zp-k">¿Qué recibes?</p>
+              <p class="zp-rec">Una respuesta clara: firmar, negociar o descartar.</p>
+            </div>
           </div>
-        </li>
-        <li class="sx-item" data-i="1">
-          <button type="button" class="sx-btn" role="tab" aria-selected="false"><span class="sx-n">02</span><span class="sx-txt"><span class="sx-lbl">Nuevo contrato</span><span class="sx-sit">Va a firmar un nuevo contrato de alquiler.</span></span><span class="sx-bar"><i></i></span></button>
-          <div class="sx-inline">
-              <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Informe de riesgos por cláusula y propuesta de cambios.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Revisión de contrato</span></p>
+          <div class="zp-r">
+            <div class="zp-stage"><svg class="zp-art zp-hand" viewBox="0 0 300 300" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+<g class="zhg"><path class="zhs" style="--d:0.00s;--o:0.22" d="M162.3 265.7L156.9 265.1L151.6 264.4L146.5 263.4L141.4 261.9L136.6 259.8L132.0 257.0L127.7 253.4L123.7 249.3L120.2 245.0L117.0 240.8L114.0 237.1L111.0 234.1L107.8 232.0L104.4 230.9L100.5 230.4L96.2 230.3L91.6 230.4L86.8 230.2L82.1 229.6L77.5 228.4L73.2 226.8L69.0 224.8L64.8 222.5L60.4 220.1L55.7 217.7L50.7 215.3L45.3 212.8L39.7 210.0L34.2 206.7L29.3 202.8L25.4 198.3L22.6 193.2L21.2 187.7L21.2 181.9L22.2 176.1L24.0 170.4L26.2 164.9L28.3 159.6L30.2 154.5L31.9 149.5L33.4 144.7L34.9 139.8L36.7 135.1L39.2 130.7L42.4 126.7L46.3 123.1L50.8 120.0L55.6 117.4L60.2 115.1L64.5 112.8L68.1 110.3L71.1 107.4L73.5 104.0L75.5 100.2L77.4 96.1L79.6 92.0L82.3 88.3L85.5 85.2L89.3 82.9L93.5 81.3L97.9 80.3L102.2 79.5L106.5 78.6L110.6 77.3L114.5 75.5L118.4 73.1L122.4 70.2L126.6 67.3L131.1 64.6L135.8 62.6L140.6 61.5L145.5 61.3L150.4 61.9L155.1 63.2L159.8 64.6L164.4 65.9L169.3 66.7L174.4 67.1L179.8 67.1L185.5 67.0L191.5 67.1L197.3 67.9L202.8 69.5L207.7 72.2L211.8 76.0L215.1 80.6L217.5 85.8L219.3 91.3L220.8 96.8L222.2 102.2L223.6 107.2L225.2 112.1L226.7 116.9L227.9 121.7L228.6 126.6L228.5 131.7L227.5 136.8L225.4 142.0L222.6 146.9L219.4 151.6L216.2 155.9L213.5 159.9L211.6 163.6L210.8 167.2L210.9 170.9L211.8 174.7L213.3 178.9L214.8 183.2L216.1 187.8L217.0 192.5L217.2 197.2L217.0 201.9L216.5 206.6L215.8 211.4L215.2 216.5L214.7 222.0L214.3 227.9L213.8 234.3L213.0 240.8L211.6 247.3L209.4 253.3L206.2 258.6L202.1 262.9L197.1 266.0L191.5 267.8L185.5 268.6L179.3 268.6L173.2 268.0L167.3 267.3L161.6 266.4L156.2 265.5L150.9 264.6L145.7 263.3L140.7 261.7L135.8 259.4L131.3 256.5L127.0 253.0L123.1 249.2L119.5 245.3L116.2 241.6" pathLength="1"/><path class="zhs c" style="--d:0.32s;--o:0.25" d="M86.5 226.0L81.8 224.1L76.9 222.1L71.7 220.1L66.2 217.8L60.6 215.3L55.2 212.3L50.2 208.8L46.1 204.5L43.2 199.7L41.5 194.3L41.2 188.5L42.1 182.6L44.0 176.7L46.5 171.1L49.4 165.7L52.3 160.6L55.2 155.8L57.9 151.3L60.5 147.0L63.3 142.9L66.4 139.1L69.7 135.5L73.5 132.4L77.4 129.6L81.3 127.0L84.9 124.6L87.9 122.0L90.1 119.2L91.4 115.7L91.9 111.6L91.9 106.7L91.5 101.1L91.3 95.2L91.5 89.1L92.4 83.1L94.2 77.6L96.6 72.7L99.8 68.4L103.5 64.7L107.6 61.3L111.9 58.2L116.3 55.2L120.9 52.3L125.7 49.6L130.7 47.2L135.9 45.6L141.4 45.1L146.9 45.8L152.3 47.8L157.5 51.1L162.3 55.3L166.7 60.1L170.6 65.0L174.2 69.5L177.7 73.3L181.2 76.2L184.8 78.3L188.6 79.8L192.6 81.0L196.8 82.2L200.8 83.6L204.7 85.4L208.4 87.7L211.8 90.3L215.1 93.0L218.5 95.7L222.1 98.3L226.2 100.6L230.8 102.8L235.8 105.0L241.0 107.4L245.9 110.3L250.2 113.8L253.6 118.0L255.7 122.7L256.5 127.9L256.0 133.3L254.6 138.7L252.6 144.0L250.4 149.0L248.4 153.8L246.7 158.3L245.5 162.7L244.6 167.1L243.8 171.4L242.9 175.7L241.6 179.9L239.8 183.9L237.5 187.6L235.0 191.2L232.4 194.6L230.1 198.1L228.3 201.9L227.1 206.0L226.5 210.8L226.4 216.2L226.3 222.1L226.1 228.3L225.3 234.5L223.7 240.3L221.1 245.5L217.7 249.8L213.4 253.1L208.6 255.6L203.5 257.3L198.3 258.6L193.0 259.5L187.7 260.3L182.6 261.0L177.4 261.4L172.3 261.4L167.1 260.7L162.0 259.1L157.0 256.6L152.4 253.2L148.1 249.1L144.2 244.7L140.6 240.4L137.3 236.6L134.2 233.6L130.9 231.5L127.4 230.3L123.6 230.0L119.4 230.1L114.9 230.5L110.2 230.7L105.4 230.6L100.6 230.0L95.9 229.0L91.3 227.6L86.7 225.9L81.9 224.1L76.9 222.2L71.6 220.2L66.2 217.9L60.8 215.3L55.6 212.2L51.1 208.5L47.4 204.1L44.8 199.2" pathLength="1"/><path class="zhs" style="--d:0.64s;--o:0.29" d="M95.2 38.0L101.8 39.7L108.1 41.9L114.1 44.1L119.7 46.0L124.9 47.3L129.9 47.8L134.7 47.8L139.5 47.3L144.3 46.7L149.2 46.4L154.1 46.4L159.0 46.8L163.8 47.7L168.6 48.7L173.4 49.8L178.3 50.8L183.4 51.6L188.6 52.4L193.9 53.2L199.2 54.5L204.3 56.3L208.9 58.9L213.1 62.2L216.6 66.2L219.7 70.6L222.6 75.0L225.7 79.2L229.2 83.1L233.4 86.4L238.5 89.5L244.2 92.4L250.3 95.5L256.4 99.1L262.0 103.2L266.6 108.1L270.0 113.5L272.2 119.5L273.1 125.7L273.1 132.0L272.4 138.3L271.3 144.6L269.8 150.6L268.0 156.6L265.7 162.3L262.7 167.8L258.8 172.9L254.1 177.5L248.6 181.6L242.7 185.1L236.9 188.2L231.5 191.1L227.0 194.0L223.6 197.3L221.4 201.1L220.1 205.6L219.4 210.8L218.7 216.2L217.6 221.7L215.8 226.9L213.2 231.4L209.7 235.2L205.6 238.2L201.2 240.7L196.6 242.9L192.1 245.2L187.7 247.7L183.4 250.5L179.1 253.6L174.7 256.7L170.1 259.6L165.2 262.0L160.2 263.9L154.9 265.2L149.6 266.2L144.2 267.1L138.7 268.4L133.1 270.2L127.2 272.5L120.9 275.3L114.3 278.1L107.4 280.3L100.5 281.5L93.8 281.2L87.7 279.1L82.3 275.3L77.8 269.9L74.3 263.5L71.5 256.6L69.3 249.6L67.3 242.9L65.4 236.7L63.4 231.0L61.5 225.7L59.5 220.6L57.8 215.6L56.3 210.6L55.2 205.6L54.2 200.6L53.3 195.8L52.0 191.4L50.1 187.2L47.5 183.3L44.2 179.4L40.4 175.6L36.3 171.4L32.6 167.0L29.7 162.1L27.9 157.0L27.4 151.8L28.0 146.5L29.5 141.3L31.4 136.3L33.3 131.4L34.8 126.5L35.7 121.5L36.0 116.3L35.8 110.7L35.4 104.9L35.3 98.8L35.7 92.8L36.7 86.9L38.4 81.2L40.8 75.7L43.6 70.5L46.7 65.4L50.0 60.4L53.6 55.4L57.4 50.6L61.5 46.1L66.2 42.1L71.5 39.0L77.4 37.1L83.9 36.3L90.6 36.8L97.4 38.3L104.0 40.4L110.3 42.7L116.1 44.7L121.5 46.2L126.6 47.0" pathLength="1"/><path class="zhs" style="--d:0.96s;--o:0.32" d="M58.3 184.6L58.3 180.4L58.3 176.3L58.3 172.4L58.1 168.6L57.7 165.0L57.2 161.4L56.5 157.8L55.8 154.3L55.2 150.7L54.8 147.1L54.5 143.5L54.5 139.8L54.6 136.2L54.9 132.6L55.2 128.9L55.3 125.3L55.2 121.5L54.9 117.6L54.2 113.4L53.3 109.0L52.2 104.4L51.1 99.5L50.1 94.4L49.6 89.3L49.6 84.2L50.4 79.3L51.9 74.9L54.3 70.9L57.4 67.4L61.1 64.6L65.4 62.4L69.9 60.7L74.7 59.5L79.5 58.6L84.3 57.9L89.0 57.5L93.5 57.1L98.0 56.9L102.3 56.8L106.6 57.0L110.8 57.5L115.0 58.2L119.1 59.3L123.0 60.5L126.8 61.9L130.4 63.2L133.8 64.2L137.0 64.7L140.1 64.6L143.1 63.6L146.3 61.8L149.5 59.2L153.1 55.9L157.0 52.2L161.3 48.2L165.9 44.4L170.8 41.0L175.9 38.2L181.0 36.2L186.1 35.2L191.1 35.0L195.9 35.7L200.3 37.2L204.5 39.3L208.4 41.9L212.1 44.8L215.5 48.1L218.6 51.5L221.4 55.3L223.9 59.3L225.9 63.7L227.4 68.3L228.2 73.3L228.4 78.5L227.9 83.9L226.9 89.4L225.4 94.7L223.6 99.8L221.9 104.6L220.4 108.9L219.5 112.8L219.2 116.2L219.7 119.3L221.1 122.0L223.3 124.7L226.1 127.4L229.3 130.1L232.7 133.1L236.1 136.3L239.3 139.8L242.1 143.6L244.4 147.5L246.2 151.6L247.6 155.8L248.6 160.0L249.3 164.4L249.8 168.8L250.0 173.3L250.1 177.9L250.0 182.5L249.6 187.1L248.7 191.7L247.2 196.0L245.1 200.0L242.3 203.6L238.9 206.7L234.8 209.3L230.3 211.2L225.4 212.7L220.5 213.7L215.5 214.4L210.8 215.1L206.3 215.7L202.3 216.6L198.6 217.7L195.2 219.1L192.0 220.8L188.9 222.8L185.9 224.8L182.8 226.7L179.6 228.6L176.2 230.2L172.8 231.4L169.2 232.4L165.6 233.2L162.0 233.8L158.3 234.3L154.7 234.9L151.1 235.6L147.4 236.5L143.6 237.6L139.7 238.8L135.7 240.0L131.7 241.0L127.5 241.8L123.3 242.2L119.1 242.2L115.0 241.6L111.0 240.4L107.2 238.8" pathLength="1"/><path class="zhs c" style="--d:1.28s;--o:0.35" d="M186.9 245.3L182.3 248.3L177.5 251.0L172.4 253.3L167.2 255.3L161.8 256.8L156.2 257.9L150.6 258.7L144.9 259.2L139.2 259.6L133.3 259.9L127.4 260.1L121.3 260.1L115.2 259.8L109.0 259.1L102.9 257.8L97.1 255.8L91.6 253.0L86.6 249.4L82.2 244.9L78.6 239.7L75.6 234.0L73.4 228.0L71.6 221.9L70.3 215.8L69.1 209.9L68.1 204.3L67.1 198.9L65.9 193.8L64.8 188.9L63.6 184.0L62.6 179.2L61.8 174.4L61.4 169.6L61.2 164.8L61.4 160.0L61.9 155.2L62.4 150.6L63.0 146.0L63.4 141.4L63.5 136.8L63.5 132.1L63.2 127.2L62.8 122.1L62.6 116.9L62.6 111.5L63.2 106.2L64.5 101.0L66.5 96.1L69.2 91.7L72.6 87.7L76.6 84.2L80.9 81.1L85.3 78.4L89.7 75.8L94.0 73.2L98.1 70.4L102.1 67.3L106.0 64.0L110.0 60.5L114.1 56.8L118.4 53.2L122.9 49.9L127.8 46.9L133.0 44.4L138.4 42.5L143.9 41.0L149.6 39.9L155.4 39.1L161.2 38.5L167.2 38.0L173.3 37.5L179.5 37.2L185.9 37.1L192.3 37.4L198.7 38.4L204.9 40.1L210.7 42.8L215.9 46.4L220.5 51.0L224.3 56.4L227.2 62.4L229.4 68.8L231.0 75.4L232.1 81.9L232.9 88.2L233.7 94.1L234.5 99.6L235.5 104.9L236.6 109.9L237.7 114.7L238.8 119.5L239.7 124.2L240.3 129.0L240.6 133.8L240.6 138.6L240.3 143.3L239.9 148.0L239.4 152.6L239.1 157.1L239.0 161.7L239.1 166.4L239.4 171.3L239.8 176.3L240.1 181.5L240.2 186.8L239.8 192.2L238.8 197.4L237.0 202.4L234.5 207.1L231.4 211.2L227.7 215.0L223.6 218.3L219.3 221.2L214.9 224.0L210.6 226.8L206.4 229.6L202.4 232.5L198.4 235.7L194.4 239.1L190.2 242.5L185.9 245.8L181.3 249.0L176.5 251.8L171.4 254.2L166.1 256.0L160.6 257.4L155.1 258.4L149.4 259.1L143.7 259.5L138.0 259.7L132.1 259.8L126.2 259.8L120.2 259.5L114.2 258.9L108.2 257.9L102.3 256.2L96.7 253.7L91.5 250.6L86.8 246.7L82.7 242.1" pathLength="1"/><path class="zhs" style="--d:1.60s;--o:0.39" d="M81.5 219.3L77.8 217.4L74.2 215.4L70.6 213.0L67.3 210.4L64.1 207.6L61.0 204.7L57.9 201.6L54.8 198.5L51.5 195.3L48.2 192.0L44.7 188.6L41.3 185.1L37.9 181.3L34.9 177.3L32.3 173.0L30.4 168.4L29.2 163.7L28.9 158.8L29.3 153.9L30.5 149.1L32.2 144.3L34.2 139.8L36.4 135.4L38.6 131.1L40.6 126.9L42.4 122.8L44.0 118.7L45.6 114.5L47.1 110.4L48.7 106.4L50.6 102.4L52.9 98.6L55.4 95.1L58.2 91.7L61.3 88.6L64.5 85.6L67.7 82.8L70.8 79.9L73.8 77.0L76.8 73.9L79.7 70.8L82.6 67.6L85.7 64.6L89.0 61.8L92.7 59.5L96.7 57.8L101.0 56.9L105.5 56.7L110.2 57.2L114.8 58.3L119.4 59.8L123.7 61.5L127.9 63.2L131.8 64.6L135.4 65.6L139.0 66.1L142.5 66.3L145.9 66.1L149.4 65.7L153.0 65.3L156.6 65.1L160.2 65.0L163.9 65.2L167.5 65.6L171.2 66.1L174.9 66.7L178.6 67.2L182.6 67.5L186.8 67.7L191.3 67.7L196.0 67.7L200.8 67.9L205.8 68.3L210.6 69.2L215.2 70.7L219.3 72.8L222.9 75.6L225.9 79.1L228.3 83.0L230.1 87.2L231.6 91.5L232.9 95.9L234.2 100.1L235.6 104.3L237.3 108.2L239.2 112.1L241.4 115.9L243.6 119.8L245.9 123.7L247.9 127.9L249.7 132.1L251.0 136.5L251.9 141.0L252.3 145.6L252.5 150.2L252.5 154.8L252.4 159.4L252.3 164.0L252.3 168.7L252.3 173.5L252.1 178.4L251.8 183.3L251.1 188.1L249.8 192.8L247.8 197.2L245.1 201.3L241.7 204.9L237.6 207.9L233.0 210.5L228.1 212.5L223.1 214.2L218.2 215.6L213.6 217.0L209.2 218.4L205.1 219.9L201.4 221.5L197.8 223.3L194.4 225.2L191.0 227.1L187.5 228.9L184.0 230.4L180.4 231.8L176.7 232.9L172.9 233.8L169.2 234.5L165.4 235.3L161.8 236.2L158.1 237.2L154.4 238.4L150.6 239.7L146.8 241.1L142.9 242.4L138.8 243.5L134.7 244.1L130.6 244.2L126.6 243.8L122.6 242.7L118.8 241.1L115.2 239.1L111.7 236.8" pathLength="1"/><path class="zhs" style="--d:1.92s;--o:0.42" d="M56.3 142.0L57.3 137.7L58.2 133.5L59.0 129.2L59.8 124.8L60.5 120.5L61.2 116.0L61.9 111.4L62.6 106.8L63.5 102.1L64.6 97.3L65.9 92.6L67.4 87.8L69.3 83.2L71.4 78.5L73.8 74.1L76.5 69.7L79.6 65.6L83.0 61.7L86.7 58.2L90.8 55.1L95.2 52.4L99.9 50.3L104.8 48.8L110.0 47.9L115.3 47.8L120.7 48.3L126.0 49.4L131.2 51.0L136.3 53.0L141.1 55.3L145.7 57.5L150.0 59.5L154.1 61.1L158.1 62.2L162.0 62.7L166.0 62.5L170.2 61.6L174.6 60.2L179.3 58.3L184.3 56.3L189.6 54.3L195.2 52.5L200.9 51.2L206.6 50.6L212.2 50.8L217.5 51.9L222.4 53.8L226.8 56.6L230.7 60.1L234.1 64.1L236.9 68.6L239.4 73.3L241.5 78.1L243.4 83.0L245.1 87.7L246.9 92.3L248.6 96.9L250.4 101.3L252.2 105.6L253.9 110.0L255.5 114.4L256.8 118.8L257.9 123.4L258.6 128.0L258.9 132.6L258.8 137.3L258.3 141.9L257.5 146.5L256.5 150.9L255.3 155.3L254.1 159.6L252.9 163.8L251.9 167.9L251.1 172.1L250.4 176.3L250.0 180.7L249.6 185.1L249.4 189.7L249.1 194.4L248.7 199.2L248.1 204.1L247.4 209.1L246.3 214.1L244.9 219.0L243.2 223.9L241.1 228.7L238.6 233.3L235.8 237.7L232.6 241.8L229.0 245.6L225.1 249.0L220.8 251.9L216.1 254.3L211.2 256.1L206.0 257.1L200.6 257.5L195.1 257.1L189.6 256.1L184.2 254.6L179.0 252.6L174.0 250.4L169.3 248.1L164.8 245.9L160.6 244.1L156.6 242.8L152.6 242.1L148.7 242.1L144.6 242.7L140.4 243.9L135.8 245.5L131.0 247.4L125.9 249.3L120.5 251.1L115.0 252.4L109.4 253.2L103.9 253.2L98.6 252.4L93.6 250.8L89.1 248.5L84.9 245.4L81.3 241.7L78.2 237.6L75.4 233.1L73.0 228.5L70.9 223.9L68.8 219.3L66.9 214.8L65.0 210.3L63.1 205.9L61.3 201.6L59.4 197.3L57.7 192.9L56.2 188.5L54.8 184.1L53.8 179.5L53.1 174.9L52.7 170.3L52.7 165.7L52.9 161.0L53.5 156.5" pathLength="1"/><path class="zhs c" style="--d:2.24s;--o:0.45" d="M175.3 52.0L180.7 52.1L186.2 52.3L191.8 52.7L197.6 53.3L203.3 54.4L208.9 56.0L214.3 58.2L219.3 61.1L223.9 64.6L228.0 68.8L231.5 73.4L234.4 78.4L236.8 83.7L238.9 89.0L240.6 94.4L242.3 99.7L244.0 104.9L245.8 110.0L247.7 115.1L249.9 120.1L252.1 125.1L254.4 130.3L256.4 135.7L258.1 141.2L259.1 146.9L259.4 152.6L258.8 158.3L257.3 163.9L254.8 169.2L251.5 174.1L247.5 178.7L243.1 182.7L238.4 186.4L233.7 189.8L229.3 192.9L225.2 196.0L221.6 199.2L218.4 202.6L215.6 206.3L213.1 210.3L210.7 214.5L208.2 218.9L205.5 223.2L202.4 227.4L198.9 231.2L194.9 234.4L190.5 236.9L185.7 238.7L180.7 239.7L175.5 240.1L170.4 239.9L165.3 239.5L160.4 238.9L155.6 238.5L150.9 238.3L146.2 238.5L141.5 239.2L136.6 240.3L131.5 241.6L126.1 243.2L120.5 244.6L114.6 245.8L108.6 246.5L102.6 246.5L96.7 245.8L91.0 244.3L85.6 241.9L80.7 238.8L76.2 235.1L72.2 230.8L68.7 226.2L65.4 221.4L62.5 216.5L59.7 211.6L57.0 206.7L54.3 201.8L51.6 196.9L48.9 192.0L46.3 187.1L43.8 182.0L41.5 176.8L39.6 171.4L38.1 165.9L37.0 160.3L36.6 154.6L36.8 148.9L37.6 143.2L39.0 137.6L40.9 132.2L43.3 127.1L46.1 122.1L49.3 117.5L52.7 113.0L56.2 108.9L59.8 105.0L63.4 101.2L67.0 97.7L70.6 94.2L74.0 90.8L77.4 87.4L80.8 84.0L84.1 80.6L87.4 77.2L90.8 73.8L94.2 70.4L97.9 67.1L101.7 64.0L105.7 61.1L110.0 58.5L114.5 56.3L119.2 54.5L124.0 53.2L128.9 52.3L133.8 51.8L138.8 51.7L143.8 51.7L148.7 52.0L153.6 52.2L158.5 52.5L163.4 52.6L168.5 52.6L173.7 52.5L179.1 52.3L184.6 52.3L190.3 52.4L196.1 52.8L201.9 53.7L207.6 55.2L213.0 57.3L218.1 60.1L222.7 63.6L226.8 67.7L230.3 72.3L233.3 77.2L235.8 82.5L237.9 87.8L239.7 93.2L241.4 98.4L243.1 103.6L244.9 108.7" pathLength="1"/><path class="zhs" style="--d:2.56s;--o:0.49" d="M227.2 236.6L222.6 238.6L217.9 240.4L213.2 241.9L208.6 243.4L204.0 244.8L199.5 246.1L195.0 247.3L190.4 248.3L185.8 248.8L181.1 248.9L176.4 248.5L171.8 247.7L167.2 246.4L162.8 245.0L158.5 243.4L154.4 242.0L150.4 240.8L146.4 240.0L142.4 239.4L138.3 239.0L134.3 238.7L130.1 238.2L126.0 237.6L122.0 236.6L118.0 235.4L114.1 233.8L110.3 232.1L106.5 230.4L102.6 228.7L98.5 227.2L94.1 225.8L89.5 224.5L84.7 223.2L79.8 221.7L74.9 219.9L70.3 217.6L66.0 214.9L62.1 211.6L58.8 207.9L55.8 203.9L53.3 199.6L51.0 195.2L48.7 190.7L46.6 186.2L44.5 181.6L42.4 177.0L40.6 172.2L39.3 167.2L38.5 162.2L38.5 157.1L39.2 151.9L40.7 146.9L42.9 142.0L45.5 137.3L48.3 132.9L51.1 128.6L53.8 124.5L56.3 120.5L58.6 116.6L60.8 112.7L63.1 108.9L65.5 105.3L68.2 101.9L71.3 98.7L74.7 95.9L78.2 93.3L81.8 90.9L85.3 88.6L88.5 86.2L91.4 83.6L93.9 80.6L96.3 77.4L98.4 73.8L100.6 70.0L102.9 66.2L105.5 62.5L108.4 59.1L111.7 56.0L115.2 53.3L118.9 50.8L122.7 48.4L126.7 46.1L130.7 43.6L134.8 41.0L139.0 38.2L143.4 35.3L148.0 32.7L152.8 30.3L157.8 28.6L162.9 27.5L168.1 27.3L173.2 27.9L178.2 29.1L183.0 30.8L187.7 32.9L192.3 35.1L196.8 37.4L201.2 39.7L205.6 42.0L209.9 44.5L214.0 47.3L217.8 50.4L221.2 54.1L224.2 58.1L226.7 62.6L228.7 67.3L230.4 72.1L231.8 76.9L233.2 81.5L234.6 85.9L236.2 90.0L237.9 93.8L239.8 97.5L241.7 101.2L243.5 104.9L245.1 108.7L246.5 112.6L247.5 116.6L248.3 120.7L248.9 124.7L249.5 128.8L250.2 132.8L251.1 136.7L252.3 140.8L253.8 144.8L255.5 149.1L257.2 153.4L258.7 158.0L259.9 162.6L260.6 167.3L260.8 172.1L260.5 176.8L259.7 181.4L258.6 186.0L257.4 190.6L255.9 195.2L254.4 199.8L252.9 204.4L251.2 209.1L249.2 213.7" pathLength="1"/><path class="zhs" style="--d:2.88s;--o:0.52" d="M257.9 159.7L257.3 163.7L256.7 167.7L256.1 171.6L255.5 175.6L255.0 179.6L254.3 183.6L253.6 187.6L252.6 191.6L251.4 195.5L249.9 199.3L248.1 203.0L246.0 206.5L243.6 209.8L240.9 213.0L238.1 215.9L235.2 218.7L232.2 221.5L229.2 224.1L226.2 226.8L223.2 229.4L220.2 232.0L217.2 234.6L214.1 237.1L210.8 239.4L207.5 241.5L203.9 243.4L200.2 244.8L196.3 245.9L192.4 246.6L188.4 247.0L184.3 247.2L180.4 247.1L176.5 247.0L172.6 246.8L168.9 246.7L165.2 246.7L161.5 246.7L157.9 246.8L154.2 246.9L150.6 246.9L147.0 246.7L143.4 246.2L139.8 245.5L136.3 244.5L132.9 243.3L129.6 241.8L126.4 240.1L123.2 238.5L120.1 236.8L116.9 235.2L113.7 233.8L110.4 232.5L107.0 231.4L103.5 230.3L99.8 229.2L96.1 228.1L92.4 226.8L88.8 225.2L85.3 223.4L81.9 221.3L78.8 218.9L75.9 216.3L73.1 213.5L70.5 210.5L67.9 207.5L65.3 204.4L62.7 201.3L60.0 198.1L57.2 194.9L54.4 191.6L51.7 188.2L49.0 184.6L46.6 180.8L44.5 176.8L42.9 172.7L41.7 168.4L41.0 164.1L40.8 159.7L41.0 155.2L41.5 150.9L42.3 146.5L43.2 142.2L44.2 138.0L45.3 133.8L46.3 129.7L47.4 125.5L48.6 121.4L50.0 117.4L51.6 113.4L53.5 109.6L55.7 106.0L58.4 102.5L61.3 99.4L64.6 96.5L68.0 93.9L71.6 91.5L75.3 89.3L78.9 87.3L82.4 85.2L85.7 83.2L89.0 81.2L92.1 79.1L95.2 76.9L98.3 74.8L101.4 72.8L104.6 70.9L107.9 69.2L111.3 67.7L114.8 66.5L118.4 65.5L122.0 64.8L125.7 64.2L129.3 63.8L132.9 63.3L136.4 62.8L139.9 62.1L143.4 61.3L146.9 60.5L150.4 59.5L154.0 58.6L157.7 57.7L161.5 57.1L165.2 56.6L169.1 56.5L172.9 56.7L176.6 57.2L180.3 58.0L184.0 59.0L187.6 60.3L191.2 61.6L194.7 62.9L198.3 64.3L201.9 65.7L205.6 67.1L209.2 68.5L212.9 70.1L216.5 71.8L220.0 73.7L223.4 75.9L226.6 78.3" pathLength="1"/><path class="zhs c" style="--d:3.20s;--o:0.55" d="M161.4 250.6L157.2 251.5L152.9 252.4L148.5 253.3L144.1 254.2L139.6 254.8L135.0 255.2L130.4 255.3L125.8 255.1L121.3 254.4L116.8 253.4L112.5 251.9L108.2 250.1L104.2 248.0L100.2 245.6L96.5 243.0L92.8 240.3L89.2 237.5L85.8 234.6L82.4 231.6L79.1 228.5L76.0 225.4L73.0 222.0L70.1 218.6L67.5 215.0L65.2 211.2L63.0 207.3L61.2 203.2L59.5 199.2L58.1 195.0L56.7 190.9L55.4 186.8L54.0 182.7L52.7 178.6L51.2 174.6L49.5 170.6L47.8 166.5L46.1 162.4L44.4 158.1L42.9 153.7L41.6 149.3L40.6 144.7L39.9 140.1L39.7 135.4L40.0 130.7L40.7 126.1L41.8 121.6L43.3 117.2L45.0 112.9L47.0 108.7L49.2 104.6L51.5 100.6L53.9 96.7L56.4 92.9L59.1 89.3L61.9 85.7L65.0 82.4L68.2 79.3L71.7 76.4L75.3 73.8L79.2 71.5L83.2 69.5L87.2 67.7L91.3 66.1L95.4 64.6L99.3 63.2L103.1 61.6L106.8 59.9L110.4 58.0L114.0 55.9L117.5 53.6L121.0 51.2L124.6 48.6L128.4 46.0L132.3 43.6L136.3 41.3L140.6 39.3L145.0 37.6L149.5 36.2L154.1 35.3L158.8 34.7L163.5 34.4L168.2 34.4L173.0 34.6L177.7 35.1L182.5 35.8L187.2 36.8L191.8 38.0L196.4 39.5L200.9 41.3L205.1 43.5L209.2 46.2L212.9 49.3L216.3 52.8L219.3 56.6L222.0 60.8L224.3 65.1L226.3 69.6L228.0 74.1L229.6 78.5L231.0 82.9L232.5 87.0L234.0 91.1L235.6 94.9L237.3 98.6L239.2 102.2L241.1 105.8L243.0 109.4L245.0 113.0L246.9 116.7L248.6 120.5L250.3 124.4L251.8 128.3L253.1 132.4L254.4 136.5L255.5 140.7L256.6 144.9L257.7 149.3L258.6 153.7L259.6 158.2L260.4 162.8L261.0 167.6L261.4 172.3L261.5 177.2L261.2 182.0L260.4 186.7L259.2 191.4L257.5 195.8L255.3 200.1L252.7 204.1L249.6 207.8L246.3 211.3L242.8 214.5L239.1 217.5L235.3 220.4L231.5 223.0L227.7 225.6L223.9 228.1L220.1 230.5L216.2 232.8L212.4 235.0" pathLength="1"/><path class="zhs" style="--d:3.52s;--o:0.59" d="M193.0 243.8L188.0 246.4L182.8 248.7L177.4 250.6L171.9 251.9L166.2 252.7L160.6 253.1L154.9 253.1L149.2 252.9L143.6 252.4L137.9 251.8L132.3 251.1L126.6 250.3L120.9 249.4L115.2 248.3L109.5 246.9L103.9 245.2L98.3 243.1L92.9 240.5L87.8 237.5L82.9 234.1L78.3 230.2L74.1 226.0L70.2 221.5L66.6 216.7L63.4 211.7L60.4 206.6L57.9 201.3L55.7 195.8L54.0 190.2L52.7 184.6L51.9 178.8L51.6 173.0L51.7 167.3L52.2 161.7L52.9 156.1L53.8 150.7L54.6 145.5L55.3 140.2L55.8 135.1L56.0 129.8L56.1 124.4L56.0 118.9L55.9 113.2L56.1 107.4L56.5 101.4L57.5 95.5L59.0 89.7L61.1 84.1L63.9 78.8L67.3 73.8L71.1 69.3L75.4 65.0L80.0 61.2L84.8 57.6L89.7 54.3L94.8 51.3L100.1 48.4L105.4 45.9L110.9 43.7L116.5 41.8L122.2 40.4L128.0 39.4L133.9 38.8L139.7 38.6L145.5 38.8L151.3 39.3L157.0 39.9L162.6 40.7L168.1 41.7L173.7 42.8L179.1 44.0L184.6 45.5L189.9 47.4L195.1 49.6L200.0 52.2L204.7 55.3L209.1 58.8L213.2 62.6L216.9 66.7L220.5 70.8L223.9 75.1L227.2 79.2L230.7 83.3L234.3 87.2L238.1 91.1L242.1 95.0L246.2 99.1L250.3 103.3L254.3 107.9L258.0 112.7L261.3 117.9L264.0 123.4L266.0 129.2L267.4 135.2L268.1 141.3L268.2 147.4L267.7 153.5L266.7 159.5L265.3 165.5L263.4 171.2L261.2 176.9L258.6 182.3L255.6 187.5L252.3 192.4L248.7 197.1L244.7 201.4L240.6 205.5L236.3 209.2L231.9 212.8L227.5 216.2L223.2 219.5L218.9 222.8L214.7 226.2L210.6 229.6L206.5 233.2L202.2 236.7L197.8 240.1L193.1 243.2L188.2 246.1L183.1 248.5L177.7 250.4L172.2 251.8L166.5 252.7L160.9 253.1L155.2 253.1L149.5 252.9L143.8 252.4L138.2 251.8L132.6 251.1L126.9 250.3L121.2 249.4L115.5 248.3L109.9 246.8L104.3 245.1L98.8 242.9L93.5 240.3L88.4 237.2L83.6 233.7L79.1 229.8L74.9 225.6" pathLength="1"/><path class="zhs" style="--d:3.84s;--o:0.62" d="M124.7 52.3L129.1 51.5L133.5 50.8L137.9 50.0L142.3 49.5L146.8 49.1L151.2 49.0L155.7 49.2L160.2 49.8L164.6 50.7L168.9 51.8L173.2 53.0L177.4 54.3L181.7 55.7L185.9 57.1L190.2 58.5L194.5 59.9L198.7 61.6L202.8 63.5L206.9 65.7L210.7 68.2L214.3 71.0L217.6 74.1L220.8 77.4L223.8 80.8L226.7 84.3L229.5 87.9L232.4 91.4L235.2 95.0L238.1 98.6L240.7 102.4L243.2 106.3L245.4 110.4L247.2 114.7L248.7 119.1L249.8 123.6L250.6 128.2L251.2 132.8L251.8 137.3L252.3 141.9L252.8 146.5L253.3 151.1L253.8 155.7L254.2 160.4L254.2 165.2L254.0 169.9L253.3 174.6L252.3 179.2L250.9 183.7L249.2 188.1L247.3 192.5L245.3 196.7L243.2 201.0L241.2 205.2L239.1 209.5L236.9 213.8L234.6 218.0L232.0 222.0L229.1 225.9L225.8 229.4L222.2 232.6L218.3 235.5L214.2 238.1L210.0 240.4L205.7 242.5L201.5 244.6L197.2 246.6L193.0 248.6L188.7 250.5L184.3 252.2L179.9 253.7L175.3 254.8L170.7 255.4L166.0 255.6L161.3 255.4L156.6 254.9L152.1 254.1L147.6 253.3L143.2 252.4L138.8 251.6L134.5 250.8L130.2 250.1L125.9 249.2L121.6 248.2L117.4 246.9L113.4 245.3L109.4 243.4L105.6 241.2L102.0 238.9L98.4 236.4L94.9 233.9L91.4 231.5L87.8 229.1L84.2 226.9L80.5 224.6L76.7 222.2L73.1 219.6L69.5 216.8L66.2 213.7L63.2 210.4L60.4 206.9L57.8 203.1L55.4 199.3L53.1 195.3L50.8 191.4L48.5 187.3L46.2 183.2L44.0 179.0L41.9 174.7L40.0 170.2L38.5 165.6L37.4 160.9L36.8 156.1L36.6 151.2L36.8 146.4L37.3 141.6L38.1 136.8L38.9 132.1L39.8 127.3L40.9 122.6L42.0 117.9L43.4 113.3L45.0 108.7L47.0 104.3L49.4 100.0L52.1 96.0L55.1 92.2L58.5 88.7L61.9 85.3L65.5 82.2L69.1 79.1L72.7 76.1L76.3 73.1L79.9 70.3L83.6 67.5L87.4 64.8L91.3 62.5L95.4 60.3L99.6 58.5L104.0 57.0L108.4 55.7" pathLength="1"/><path class="zhs c" style="--d:4.16s;--o:0.65" d="M250.4 146.8L250.4 152.2L250.2 157.6L249.9 163.0L249.4 168.4L248.9 173.8L248.2 179.3L247.4 184.8L246.4 190.4L245.1 195.9L243.5 201.5L241.5 206.9L239.1 212.2L236.2 217.2L232.8 222.0L229.0 226.4L224.7 230.3L220.1 233.8L215.2 237.0L210.1 239.7L204.8 242.1L199.5 244.2L194.2 246.0L188.8 247.6L183.4 248.9L178.1 250.1L172.7 251.1L167.3 251.8L161.9 252.3L156.5 252.6L151.2 252.7L145.8 252.7L140.4 252.5L135.1 252.1L129.7 251.8L124.2 251.3L118.7 250.8L113.1 250.1L107.5 249.2L101.8 248.1L96.2 246.5L90.7 244.6L85.4 242.1L80.3 239.0L75.7 235.5L71.4 231.4L67.6 226.9L64.3 222.1L61.4 217.0L58.9 211.7L56.8 206.4L54.9 201.0L53.3 195.5L51.9 190.1L50.6 184.8L49.6 179.4L48.8 174.0L48.1 168.6L47.7 163.3L47.5 157.9L47.5 152.6L47.6 147.2L47.8 141.9L48.1 136.5L48.4 131.1L48.8 125.7L49.3 120.1L49.9 114.5L50.7 108.8L51.9 103.1L53.5 97.4L55.7 91.9L58.3 86.7L61.5 81.7L65.3 77.2L69.5 73.1L74.2 69.5L79.2 66.4L84.4 63.6L89.7 61.3L95.1 59.3L100.5 57.5L105.9 56.0L111.3 54.6L116.7 53.4L122.1 52.5L127.4 51.7L132.8 51.1L138.2 50.7L143.5 50.5L148.9 50.5L154.2 50.7L159.6 50.9L164.9 51.2L170.4 51.5L175.9 52.0L181.4 52.5L187.1 53.3L192.7 54.3L198.4 55.7L203.9 57.6L209.3 59.9L214.4 62.8L219.2 66.2L223.6 70.1L227.5 74.5L230.9 79.2L234.0 84.2L236.6 89.4L238.9 94.7L241.0 100.0L242.8 105.4L244.3 110.8L245.7 116.1L246.9 121.5L247.9 126.9L248.7 132.3L249.3 137.6L249.6 143.0L249.8 148.4L249.8 153.8L249.6 159.2L249.4 164.5L249.0 170.0L248.5 175.4L247.9 180.9L247.1 186.5L246.0 192.0L244.7 197.6L243.0 203.1L240.8 208.5L238.2 213.7L235.1 218.6L231.5 223.1L227.5 227.3L223.1 231.1L218.4 234.5L213.4 237.5L208.3 240.2L203.2 242.6L197.9 244.7" pathLength="1"/><path class="zhs c" style="--d:4.48s;--o:0.69" d="M50.2 111.4L52.0 107.4L54.0 103.6L56.2 99.9L58.5 96.2L61.0 92.7L63.7 89.3L66.4 86.1L69.4 83.0L72.4 80.0L75.6 77.2L78.9 74.5L82.3 72.0L85.8 69.6L89.3 67.4L92.9 65.3L96.6 63.3L100.2 61.4L103.9 59.6L107.6 57.8L111.4 56.1L115.2 54.4L119.0 52.8L122.8 51.2L126.8 49.6L130.7 48.2L134.8 46.9L139.0 45.8L143.2 44.8L147.4 44.1L151.8 43.6L156.1 43.4L160.5 43.5L164.8 43.8L169.1 44.5L173.4 45.4L177.6 46.5L181.8 47.8L185.9 49.4L189.9 51.1L193.8 52.9L197.7 54.9L201.4 57.0L205.1 59.3L208.8 61.6L212.3 64.1L215.8 66.8L219.1 69.5L222.3 72.5L225.3 75.5L228.2 78.7L231.0 82.1L233.5 85.5L235.9 89.1L238.2 92.8L240.2 96.6L242.1 100.4L243.8 104.4L245.4 108.3L246.9 112.3L248.2 116.4L249.4 120.4L250.4 124.6L251.3 128.7L251.9 132.9L252.4 137.1L252.7 141.3L252.8 145.5L252.7 149.7L252.3 153.9L251.8 158.1L251.0 162.2L250.1 166.3L249.1 170.3L247.9 174.3L246.7 178.2L245.4 182.2L244.1 186.1L242.7 190.0L241.3 193.9L239.8 197.8L238.3 201.7L236.7 205.7L234.9 209.6L233.0 213.5L231.0 217.3L228.7 221.1L226.2 224.7L223.5 228.2L220.5 231.5L217.3 234.6L213.9 237.4L210.4 240.1L206.6 242.4L202.7 244.6L198.7 246.5L194.6 248.1L190.5 249.6L186.3 250.9L182.0 252.0L177.7 252.9L173.4 253.6L169.1 254.1L164.8 254.5L160.5 254.7L156.2 254.7L151.9 254.5L147.6 254.1L143.4 253.6L139.2 252.9L135.1 252.0L131.0 251.0L126.9 249.9L122.9 248.7L119.0 247.4L115.1 246.0L111.2 244.5L107.3 242.9L103.5 241.3L99.7 239.5L95.9 237.7L92.2 235.7L88.6 233.5L85.0 231.2L81.6 228.7L78.3 226.0L75.1 223.2L72.1 220.2L69.3 217.0L66.6 213.6L64.1 210.2L61.8 206.6L59.7 202.9L57.7 199.2L55.8 195.4L54.0 191.5L52.3 187.6L50.8 183.7L49.3 179.7L47.9 175.6L46.7 171.5" pathLength="1"/><path class="zhs c" style="--d:4.80s;--o:0.72" d="M80.5 73.8L84.6 70.4L88.8 67.1L93.1 64.1L97.6 61.3L102.2 58.7L107.0 56.4L111.8 54.4L116.8 52.5L121.8 50.9L126.9 49.5L132.0 48.2L137.2 47.2L142.5 46.3L147.8 45.7L153.2 45.4L158.5 45.4L163.9 45.9L169.2 46.7L174.5 47.9L179.6 49.4L184.7 51.3L189.6 53.4L194.5 55.7L199.2 58.2L203.8 60.9L208.2 63.8L212.6 66.9L216.7 70.3L220.6 73.9L224.3 77.8L227.7 81.8L230.9 86.0L234.0 90.4L236.9 94.8L239.6 99.3L242.2 103.9L244.7 108.5L247.1 113.3L249.2 118.2L251.1 123.3L252.6 128.4L253.8 133.7L254.6 139.0L255.1 144.4L255.2 149.8L255.0 155.1L254.5 160.5L253.8 165.9L252.9 171.2L251.6 176.4L250.1 181.5L248.2 186.6L246.0 191.5L243.4 196.2L240.6 200.7L237.4 205.0L234.1 209.1L230.6 213.1L226.9 216.9L223.3 220.6L219.5 224.2L215.7 227.7L211.7 231.2L207.6 234.4L203.4 237.5L199.0 240.4L194.4 243.0L189.6 245.4L184.8 247.5L179.8 249.4L174.8 251.2L169.6 252.7L164.4 254.1L159.1 255.2L153.7 256.0L148.3 256.5L142.8 256.6L137.3 256.2L131.9 255.3L126.6 254.1L121.4 252.4L116.3 250.3L111.4 248.0L106.6 245.5L102.0 242.8L97.5 239.9L93.1 236.8L88.9 233.5L84.9 230.0L81.1 226.3L77.6 222.4L74.3 218.3L71.1 214.1L68.2 209.8L65.4 205.5L62.6 201.1L60.0 196.6L57.4 192.0L55.0 187.4L52.7 182.7L50.6 177.8L48.8 172.8L47.3 167.6L46.2 162.4L45.4 157.1L45.0 151.7L44.8 146.3L45.0 140.9L45.4 135.5L46.1 130.1L47.1 124.8L48.4 119.5L50.1 114.3L52.1 109.3L54.5 104.4L57.3 99.7L60.3 95.3L63.7 91.0L67.2 87.0L70.8 83.1L74.6 79.4L78.5 75.8L82.5 72.3L86.6 69.0L90.8 65.8L95.2 62.9L99.7 60.2L104.4 57.7L109.2 55.5L114.1 53.5L119.1 51.8L124.1 50.2L129.2 48.9L134.4 47.7L139.6 46.7L144.9 46.0L150.3 45.6L155.6 45.5L161.0 45.7L166.3 46.4" pathLength="1"/>
+<path class="zhx" style="--d:1.5s" d="M253.9 150.0Q200.5 134.7 150.2 154.0Q175.9 197.4 235.1 204.5" pathLength="1"/><path class="zhx c" style="--d:4.2s" d="M51.0 136.9Q107.0 139.2 154.5 145.5Q141.6 92.4 111.8 52.6" pathLength="1"/><circle class="zhf" cx="150" cy="150" r="104" pathLength="1"/></g>
+<circle class="zhd" cx="150" cy="150" r="5"/>
+</svg></div>
+            <div class="zp-act"><button type="button" class="btn frame zs-cta"><span>Evaluar una operación</span></button></div>
           </div>
-        </li>
-        <li class="sx-item" data-i="2">
-          <button type="button" class="sx-btn" role="tab" aria-selected="false"><span class="sx-n">03</span><span class="sx-txt"><span class="sx-lbl">Pre-compra</span><span class="sx-sit">Está valorando comprar un inmueble, o el que ya ocupa.</span></span><span class="sx-bar"><i></i></span></button>
-          <div class="sx-inline">
-              <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Recomendación de compra o no compra, con escenarios.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Análisis pre-compra</span></p>
+        </div>
+        <div class="zp" role="tabpanel" id="zp1" aria-labelledby="zt1" hidden>
+          <div class="zp-l">
+            <h3 class="zp-claim">Cada metro cuenta.</h3>
+            <p class="zp-txt">Si lo alquilas, puedes estar pagando de más. Si es tuyo, puede estar rindiendo menos que la media. Analizamos su coste, el uso real del espacio, tu contrato y su valor frente al mercado.</p>
+            <p class="zp-k">¿Qué analizamos?</p>
+            <ul class="zp-list"><li>Cuánto te cuesta hoy cada metro</li><li>Cuánto espacio usas realmente</li><li>Cuánto vale y cuánto rinde tu inmueble</li><li>Qué opciones tienes: renegociar, reducir, relocalizar, reposicionar o vender</li></ul>
+            <div class="zp-card">
+              <p class="zp-k">¿Qué recibes?</p>
+              <p class="zp-rec">Una recomendación de acción, con el impacto económico de cada alternativa.</p>
+            </div>
           </div>
-        </li>
-        <li class="sx-item" data-i="3">
-          <button type="button" class="sx-btn" role="tab" aria-selected="false"><span class="sx-n">04</span><span class="sx-txt"><span class="sx-lbl">Inmueble en propiedad</span><span class="sx-sit">Tiene un inmueble que rinde menos de lo esperado o duda si vender.</span></span><span class="sx-bar"><i></i></span></button>
-          <div class="sx-inline">
-              <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Medimos ingresos, gastos y valor frente al mercado.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Plan de acción: renegociar, reformar, alquilar o vender.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Estrategia de propiedad + comparación con el mercado</span></p>
+          <div class="zp-r">
+            <div class="zp-stage"><svg class="zp-art" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<path d="M40 222H360" stroke="rgba(245,244,239,.22)" vector-effect="non-scaling-stroke"/>
+<path d="M90 222V150H140V222M266 222V120H316V222" fill="none" stroke="rgba(245,244,239,.10)" vector-effect="non-scaling-stroke"/>
+<path class="zb" d="M152 222V40H250V222" fill="none" stroke="#DE9C63" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+<path d="M190 222V202H212V222" fill="none" stroke="rgba(222,156,99,.6)" vector-effect="non-scaling-stroke"/>
+<rect class="zw" style="animation-delay:0.00s" x="166" y="58" width="10" height="14"/><rect class="zw on" style="animation-delay:0.37s" x="186" y="58" width="10" height="14"/><rect class="zw" style="animation-delay:0.74s" x="206" y="58" width="10" height="14"/><rect class="zw" style="animation-delay:1.11s" x="226" y="58" width="10" height="14"/><rect class="zw on" style="animation-delay:1.48s" x="166" y="82" width="10" height="14"/><rect class="zw" style="animation-delay:1.85s" x="186" y="82" width="10" height="14"/><rect class="zw on" style="animation-delay:2.22s" x="206" y="82" width="10" height="14"/><rect class="zw" style="animation-delay:2.59s" x="226" y="82" width="10" height="14"/><rect class="zw" style="animation-delay:2.96s" x="166" y="106" width="10" height="14"/><rect class="zw on" style="animation-delay:3.33s" x="186" y="106" width="10" height="14"/><rect class="zw" style="animation-delay:3.70s" x="206" y="106" width="10" height="14"/><rect class="zw" style="animation-delay:4.07s" x="226" y="106" width="10" height="14"/><rect class="zw" style="animation-delay:4.44s" x="166" y="130" width="10" height="14"/><rect class="zw" style="animation-delay:4.81s" x="186" y="130" width="10" height="14"/><rect class="zw on" style="animation-delay:0.18s" x="206" y="130" width="10" height="14"/><rect class="zw" style="animation-delay:0.55s" x="226" y="130" width="10" height="14"/><rect class="zw" style="animation-delay:0.92s" x="166" y="154" width="10" height="14"/><rect class="zw on" style="animation-delay:1.29s" x="186" y="154" width="10" height="14"/><rect class="zw" style="animation-delay:1.66s" x="206" y="154" width="10" height="14"/><rect class="zw on" style="animation-delay:2.03s" x="226" y="154" width="10" height="14"/><rect class="zw" style="animation-delay:2.40s" x="166" y="178" width="10" height="14"/><rect class="zw" style="animation-delay:2.77s" x="186" y="178" width="10" height="14"/><rect class="zw on" style="animation-delay:3.14s" x="206" y="178" width="10" height="14"/><rect class="zw" style="animation-delay:3.51s" x="226" y="178" width="10" height="14"/>
+<path class="zscan" d="M146 0H256" stroke="#DE9C63" stroke-opacity=".7" vector-effect="non-scaling-stroke"/>
+</svg></div>
+            <div class="zp-act"><button type="button" class="btn frame zs-cta"><span>Optimizar mi inmueble</span></button></div>
           </div>
-        </li>
-        <li class="sx-item" data-i="4">
-          <button type="button" class="sx-btn" role="tab" aria-selected="false"><span class="sx-n">05</span><span class="sx-txt"><span class="sx-lbl">Eficiencia del espacio</span><span class="sx-sit">Su empresa necesita más espacio, o le sobra.</span></span><span class="sx-bar"><i></i></span></button>
-          <div class="sx-inline">
-              <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Calculamos el coste real del espacio actual y comparamos opciones.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Estrategia de espacio</span></p>
+        </div>
+        <div class="zp" role="tabpanel" id="zp2" aria-labelledby="zt2" hidden>
+          <div class="zp-l">
+            <h3 class="zp-claim">Una cartera preparada para crecer.</h3>
+            <p class="zp-txt">Con varios inmuebles, es difícil saber cuáles aportan y cuáles cuestan más de lo que deberían. Analizamos toda tu cartera con los mismos criterios y te decimos dónde actuar primero.</p>
+            <p class="zp-k">¿Qué analizamos?</p>
+            <ul class="zp-list"><li>Rendimiento por inmueble</li><li>Comparativa interna y de mercado</li><li>Vencimientos y decisiones clave</li><li>Revisión del rent roll y estrategia</li><li>Consolidación, reubicación y desinversión</li></ul>
+            <div class="zp-card">
+              <p class="zp-k">¿Qué recibes?</p>
+              <p class="zp-rec">Un mapa de tu cartera y un plan priorizado.</p>
+            </div>
           </div>
-        </li>
-      </ol>
-      <div class="sx-panel" aria-live="polite">
-        <div class="sx-imgs">
-          <img decoding="async" loading="lazy" class="on" src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&h=900&q=70" alt="">
-          <img decoding="async" loading="lazy" class="" src="https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1200&h=900&q=70" alt="">
-          <img decoding="async" loading="lazy" class="" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&h=900&q=70" alt="">
-          <img decoding="async" loading="lazy" class="" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&h=900&q=70" alt="">
-          <img decoding="async" loading="lazy" class="" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&h=900&q=70" alt="">
+          <div class="zp-r">
+            <div class="zp-stage"><svg class="zp-art zp-net" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+<path d="M412.5 130.0L410.9 138.3L408.3 146.5L405.4 154.6L402.0 162.6L398.0 170.5L393.0 178.2L386.6 185.4L378.4 192.0L368.4 197.8L357.0 202.6L344.7 206.4L332.0 209.5L319.5 212.1L307.7 214.6L296.7 217.2L286.4 220.1L276.3 223.2L266.2 226.2L255.6 228.7L244.6 230.3L233.2 230.6L221.8 229.5L210.6 227.2L200.0 224.1L190.1 220.9L180.7 218.5L171.1 217.5L160.7 218.3L148.6 221.1L134.3 225.5L117.5 230.7L98.5 235.8L78.3 239.6L58.2 241.2L39.8 240.0L24.6 235.6L13.8 228.3L8.0 218.7L7.0 207.6L10.2 196.0L16.2 184.6L23.4 174.1L30.4 164.7L36.1 156.4L39.7 149.2L41.4 142.6L41.4 136.3L40.5 130.0L39.7 123.7L39.5 117.3L40.5 110.9L42.7 104.6L45.8 98.5L49.4 92.4L53.0 86.3L56.2 80.0L59.1 73.3L61.9 66.2L65.0 58.7L68.9 51.1L74.3 43.7L81.3 36.8L90.1 30.9L100.4 26.1L111.8 22.3L123.8 19.2L136.1 16.6L148.4 13.9L160.7 10.9L173.2 7.4L186.2 3.7L200.0 0.1L214.4 -2.6L229.2 -3.6L243.7 -2.2L257.0 1.9L268.2 9.0L276.7 18.6L282.0 29.8L284.5 41.8L285.0 53.4L284.7 63.5L285.1 71.6L287.7 77.2L293.5 80.6L303.1 82.4L316.3 83.2L332.4 84.0L349.8 85.5L367.1 88.3L382.7 92.7L395.4 98.5L404.6 105.5L410.2 113.3L412.6 121.6L412.5 130.0Z" fill="none" stroke="rgba(245,244,239,0.050)" stroke-dasharray="2 5" vector-effect="non-scaling-stroke"/><path d="M353.0 130.0L351.8 136.0L350.0 141.9L347.9 147.7L345.4 153.5L342.6 159.1L339.0 164.7L334.3 169.9L328.4 174.7L321.3 178.8L313.1 182.2L304.2 185.0L295.0 187.2L286.1 189.1L277.6 190.9L269.6 192.8L262.2 194.8L254.9 197.1L247.6 199.2L240.1 201.1L232.1 202.2L223.9 202.4L215.7 201.7L207.6 200.0L200.0 197.8L192.9 195.5L186.1 193.7L179.2 193.0L171.7 193.6L163.0 195.6L152.7 198.8L140.6 202.5L127.0 206.2L112.4 208.9L97.9 210.1L84.7 209.2L73.7 206.0L65.9 200.8L61.7 193.9L61.1 185.9L63.3 177.5L67.6 169.3L72.8 161.7L77.9 155.0L82.0 149.0L84.6 143.8L85.8 139.1L85.8 134.5L85.2 130.0L84.6 125.4L84.5 120.8L85.2 116.2L86.7 111.7L89.0 107.3L91.5 102.9L94.1 98.6L96.5 94.0L98.6 89.2L100.6 84.1L102.8 78.7L105.6 73.2L109.5 67.8L114.5 62.9L120.8 58.7L128.3 55.2L136.5 52.4L145.1 50.2L154.0 48.3L162.8 46.4L171.7 44.3L180.7 41.8L190.1 39.0L200.0 36.5L210.4 34.5L221.0 33.8L231.5 34.8L241.0 37.8L249.1 42.9L255.2 49.8L259.1 57.9L260.9 66.5L261.2 74.8L261.0 82.1L261.3 87.9L263.1 92.0L267.3 94.5L274.2 95.7L283.8 96.3L295.3 96.9L307.8 98.0L320.3 100.0L331.5 103.1L340.7 107.3L347.3 112.4L351.3 118.0L353.0 124.0L353.0 130.0Z" fill="none" stroke="rgba(245,244,239,0.065)" stroke-dasharray="none" vector-effect="non-scaling-stroke"/><path d="M297.8 130.0L297.0 133.8L295.8 137.6L294.5 141.3L292.9 145.0L291.1 148.6L288.8 152.1L285.8 155.5L282.1 158.5L277.5 161.2L272.2 163.4L266.5 165.1L260.7 166.6L255.0 167.8L249.6 168.9L244.5 170.1L239.7 171.4L235.1 172.9L230.4 174.2L225.6 175.4L220.5 176.1L215.3 176.3L210.0 175.8L204.9 174.7L200.0 173.3L195.4 171.8L191.1 170.7L186.7 170.2L181.9 170.6L176.4 171.9L169.8 173.9L162.0 176.3L153.3 178.7L144.0 180.4L134.8 181.2L126.3 180.6L119.3 178.6L114.3 175.2L111.7 170.8L111.2 165.7L112.7 160.4L115.4 155.1L118.8 150.3L122.0 145.9L124.6 142.2L126.3 138.8L127.0 135.8L127.0 132.9L126.6 130.0L126.2 127.1L126.2 124.1L126.6 121.2L127.6 118.3L129.1 115.5L130.7 112.7L132.4 109.9L133.9 107.0L135.2 103.9L136.5 100.6L137.9 97.2L139.7 93.7L142.2 90.3L145.4 87.1L149.4 84.4L154.2 82.2L159.4 80.4L164.9 79.0L170.6 77.8L176.2 76.6L181.9 75.2L187.7 73.6L193.7 71.9L200.0 70.2L206.6 69.0L213.4 68.5L220.1 69.2L226.2 71.1L231.4 74.3L235.3 78.7L237.7 83.9L238.9 89.4L239.1 94.8L239.0 99.4L239.1 103.1L240.3 105.7L243.0 107.3L247.4 108.1L253.5 108.5L260.9 108.8L268.9 109.5L276.9 110.8L284.0 112.8L289.9 115.5L294.1 118.7L296.7 122.3L297.8 126.1L297.8 130.0Z" fill="none" stroke="rgba(245,244,239,0.080)" stroke-dasharray="none" vector-effect="non-scaling-stroke"/><circle class="zr" style="animation-delay:0.0s" cx="329.8" cy="130.0" r="26" fill="none" stroke="#DE9C63" vector-effect="non-scaling-stroke"/><circle class="zr" style="animation-delay:0.9s" cx="166.4" cy="34.8" r="26" fill="none" stroke="#DE9C63" vector-effect="non-scaling-stroke"/><circle class="zr" style="animation-delay:1.8s" cx="82.9" cy="222.8" r="26" fill="none" stroke="#DE9C63" vector-effect="non-scaling-stroke"/><circle class="zr" style="animation-delay:2.7s" cx="241.6" cy="137.6" r="26" fill="none" stroke="#DE9C63" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.30s" d="M329.8 130.0Q322.6 108.1 337.6 90.4" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.37s" d="M329.8 130.0Q351.8 134.4 373.8 129.9" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.44s" d="M187.5 148.0L241.6 137.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.51s" d="M187.5 148.0Q156.3 167.8 151.9 204.4" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.58s" d="M249.5 95.0Q250.2 117.2 241.6 137.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.65s" d="M249.5 95.0L284.6 133.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.72s" d="M99.7 123.5Q83.7 108.7 81.7 87.0" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.79s" d="M99.7 123.5Q67.3 143.0 47.8 175.3" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.86s" d="M225.9 205.9L264.0 175.9" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:0.93s" d="M187.5 148.0Q194.4 185.1 225.9 205.9" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.00s" d="M264.0 175.9Q248.1 159.5 241.6 137.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.07s" d="M264.0 175.9L284.6 133.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.14s" d="M81.7 87.0Q120.1 58.2 164.6 76.5" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.21s" d="M151.9 204.4Q115.5 206.4 82.9 222.8" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.28s" d="M284.6 133.6L241.6 137.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.35s" d="M329.8 130.0Q306.6 123.6 284.6 133.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.42s" d="M329.8 130.0Q327.9 155.2 317.9 178.4" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.49s" d="M264.0 175.9L317.9 178.4" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.56s" d="M166.4 34.8Q174.5 56.0 164.6 76.5" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.63s" d="M81.7 87.0Q130.6 71.4 166.4 34.8" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.70s" d="M373.8 129.9L337.6 90.4" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.77s" d="M82.9 222.8Q77.5 190.0 47.8 175.3" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt" style="--d:1.84s" d="M187.5 148.0Q166.4 115.3 164.6 76.5" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt hot" style="--d:1.40s" d="M82.9 222.8L166.4 34.8" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt hot" style="--d:1.65s" d="M166.4 34.8Q231.9 65.8 241.6 137.6" pathLength="1" vector-effect="non-scaling-stroke"/><path class="zrt hot" style="--d:1.90s" d="M241.6 137.6Q286.4 141.8 329.8 130.0" pathLength="1" vector-effect="non-scaling-stroke"/><circle class="zdot hub" style="--d:0.20" cx="329.8" cy="130.0" r="5.5"/><circle class="zdot-h" style="--d:0.28" cx="187.5" cy="148.0" r="6.4"/><circle class="zdot" style="--d:0.28" cx="187.5" cy="148.0" r="3.4"/><circle class="zdot-h" style="--d:0.36" cx="249.5" cy="95.0" r="6.0"/><circle class="zdot" style="--d:0.36" cx="249.5" cy="95.0" r="3.0"/><circle class="zdot-h" style="--d:0.44" cx="99.7" cy="123.5" r="6.0"/><circle class="zdot" style="--d:0.44" cx="99.7" cy="123.5" r="3.0"/><circle class="zdot-h" style="--d:0.52" cx="225.9" cy="205.9" r="6.4"/><circle class="zdot" style="--d:0.52" cx="225.9" cy="205.9" r="3.4"/><circle class="zdot-h" style="--d:0.60" cx="264.0" cy="175.9" r="6.6"/><circle class="zdot" style="--d:0.60" cx="264.0" cy="175.9" r="3.6"/><circle class="zdot-h" style="--d:0.68" cx="81.7" cy="87.0" r="6.3"/><circle class="zdot" style="--d:0.68" cx="81.7" cy="87.0" r="3.3"/><circle class="zdot-h" style="--d:0.76" cx="151.9" cy="204.4" r="6.1"/><circle class="zdot" style="--d:0.76" cx="151.9" cy="204.4" r="3.1"/><circle class="zdot-h" style="--d:0.84" cx="284.6" cy="133.6" r="6.4"/><circle class="zdot" style="--d:0.84" cx="284.6" cy="133.6" r="3.4"/><circle class="zdot-h" style="--d:0.92" cx="317.9" cy="178.4" r="6.4"/><circle class="zdot" style="--d:0.92" cx="317.9" cy="178.4" r="3.4"/><circle class="zdot hub" style="--d:1.00" cx="166.4" cy="34.8" r="5.5"/><circle class="zdot-h" style="--d:1.08" cx="373.8" cy="129.9" r="6.6"/><circle class="zdot" style="--d:1.08" cx="373.8" cy="129.9" r="3.6"/><circle class="zdot hub" style="--d:1.16" cx="82.9" cy="222.8" r="5.5"/><circle class="zdot-h" style="--d:1.24" cx="337.6" cy="90.4" r="6.4"/><circle class="zdot" style="--d:1.24" cx="337.6" cy="90.4" r="3.4"/><circle class="zdot-h" style="--d:1.32" cx="47.8" cy="175.3" r="6.5"/><circle class="zdot" style="--d:1.32" cx="47.8" cy="175.3" r="3.5"/><circle class="zdot hub" style="--d:1.40" cx="241.6" cy="137.6" r="5.5"/><circle class="zdot-h" style="--d:1.48" cx="164.6" cy="76.5" r="6.8"/><circle class="zdot" style="--d:1.48" cx="164.6" cy="76.5" r="3.8"/>
+</svg></div>
+            <div class="zp-act"><button type="button" class="btn frame zs-cta"><span>Analizar mi cartera</span></button></div>
+          </div>
         </div>
-        <div class="sx-card on" data-i="0">
-          <span class="sx-cn">01 · Alquiler</span>
-          <h3 class="sx-ct">Su contrato de alquiler vence o le proponen una subida de renta.</h3>
-          <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Rango de renta de mercado, puntos a negociar y alternativas.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Estrategia de alquiler</span></p>
-        </div>
-        <div class="sx-card" data-i="1">
-          <span class="sx-cn">02 · Nuevo contrato</span>
-          <h3 class="sx-ct">Va a firmar un nuevo contrato de alquiler.</h3>
-          <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Informe de riesgos por cláusula y propuesta de cambios.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Revisión de contrato</span></p>
-        </div>
-        <div class="sx-card" data-i="2">
-          <span class="sx-cn">03 · Pre-compra</span>
-          <h3 class="sx-ct">Está valorando comprar un inmueble, o el que ya ocupa.</h3>
-          <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Recomendación de compra o no compra, con escenarios.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Análisis pre-compra</span></p>
-        </div>
-        <div class="sx-card" data-i="3">
-          <span class="sx-cn">04 · Inmueble en propiedad</span>
-          <h3 class="sx-ct">Tiene un inmueble que rinde menos de lo esperado o duda si vender.</h3>
-          <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Medimos ingresos, gastos y valor frente al mercado.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Plan de acción: renegociar, reformar, alquilar o vender.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Estrategia de propiedad + comparación con el mercado</span></p>
-        </div>
-        <div class="sx-card" data-i="4">
-          <span class="sx-cn">05 · Eficiencia del espacio</span>
-          <h3 class="sx-ct">Su empresa necesita más espacio, o le sobra.</h3>
-          <p class="sx-k">Qué hacemos</p>
-              <p class="sx-p">Calculamos el coste real del espacio actual y comparamos opciones.</p>
-              <p class="sx-k">Qué recibe</p>
-              <p class="sx-p sx-rec">Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.</p>
-              <p class="sx-svc"><span class="sx-svl">Servicio</span> <span>Estrategia de espacio</span></p>
-        </div>
-        <button type="button" class="btn frame sx-cta"><span>Solicitar revisión</span></button>
       </div>
     </div>
   </section>
   <section id="resultados" class="rb">
-    <div class="rb-stage"><div class="rb-bg" aria-hidden="true"><img decoding="async" loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=60" alt=""></div><div class="wrap rb-wrap">
+    <div class="rb-stage"><div class="gm gm-bg" id="gm" aria-hidden="true">
+          <div class="gm-map" aria-label="Mapa: España, Italia, Estados Unidos, Argentina, Uruguay, Chile, Paraguay y Australia" role="img"><svg id="gmSvg" preserveAspectRatio="xMidYMid meet"></svg></div></div>
+<div class="rb-bg" aria-hidden="true"><img decoding="async" loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=60" alt=""></div><div class="wrap rb-wrap">
       <div class="rb-head">
         <p class="eyebrow rb-eyebrow">Resultados recientes</p>
-        <p class="rb-note"><span>Casos reales.</span> <a href="mailto:team@madcre.net?subject=Ejemplo%20de%20caso%20MADCRE">Puedes solicitarnos un ejemplo.</a></p>
       </div>
       <div class="rg">
         <div class="rg-main">
@@ -1427,7 +1644,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Tipos de inmueble</p>
-        <h2>Mismo método, comparables específicos para cada tipo de inmueble.</h2>
+        <h2>Estrategias a medida para cada tipología.</h2>
       </div>
       <div class="tiles">
         <div class="tile rv" data-d="1"><img decoding="async" class="tplx" data-speed="0.18" src="https://images.unsplash.com/photo-1554435493-93422e8220c8?auto=format&fit=crop&w=900&q=75" alt="Edificio de oficinas" loading="lazy"><span class="lab"><b>Oficinas</b><span class="lab-d">Renovaciones, reducción de superficie y cambio de sede.</span></span></div>
@@ -1460,13 +1677,13 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           </div>
           <div class="creds rv" data-d="3">
             <div><b>+15</b><small>años en análisis inmobiliario</small></div>
-            <div><b>España</b><small>cobertura directa</small></div>
-            <div><b>EU · APAC · LATAM · USA</b><small>cobertura con colaboradores</small></div>
+            <div><b>USA · España</b><small>base directa</small></div>
+            <div><b>EU · APAC · LATAM</b><small>cobertura con colaboradores</small></div>
           </div>
         </div>
         <div class="ph-grid">
-          <div class="ph sq"><img decoding="async" src="fer_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
-          <div class="ph sq"><img decoding="async" src="juan_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
+          <div class="ph sq"><img decoding="async" src="assets/fer_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
+          <div class="ph sq"><img decoding="async" src="assets/juan_bw.jpg" alt="Retrato del equipo MADCRE" loading="lazy"></div>
           <div class="ph sq wide"><img decoding="async" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&crop=faces,center&w=1200&h=1200&q=80" alt="Equipo de analistas trabajando en una reunión" loading="lazy"></div>
         </div>
       </div>
@@ -1486,7 +1703,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
       <h2 class="rv" data-d="1">Hablemos de tus activos</h2>
       <div class="ct-leadrow">
       <p class="ct-lead rv" data-d="2">Diez minutos para entender tu situación. Te diremos, sin compromiso, si podemos aportar valor, por dónde conviene empezar y qué esperar de un primer análisis de tus activos.</p>
-      <a class="btn frame ct-mail rv" data-d="3" href="mailto:team@madcre.net?subject=Consulta%20MADCRE"><span>Envíanos un correo</span></a>
+      <a class="btn frame ct-mail rv" data-d="3" href="mailto:team@madcre.net?subject=Consulta%20MADCRE" target="_top" rel="noopener"><span>Envíanos un correo</span></a>
       </div>
       
       <div class="faq rv" data-d="5">
@@ -1495,7 +1712,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         <details class="faq-i"><summary><span>¿Sustituyen a mi agente o a mi abogado?</span></summary><p>No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.</p></details>
         <details class="faq-i"><summary><span>¿Qué información necesitan?</span></summary><p>El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.</p></details>
         <details class="faq-i"><summary><span>¿Es confidencial?</span></summary><p>Sí. Firmamos un acuerdo de confidencialidad.</p></details>
-        <details class="faq-i"><summary><span>¿Merece la pena para una empresa pequeña?</span></summary><p>Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.</p></details>
+        <details class="faq-i"><summary><span>¿Merece la pena para una empresa pequeña?</span></summary><p>Sí, y suelen ser las que más se benefician. Sin un equipo inmobiliario propio, el margen de optimización puede llegar al 35%, y una pequeña diferencia de renta, multiplicada por los años del contrato, suele superar con creces los honorarios.</p></details>
       </div>
       
       
@@ -1530,7 +1747,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 
 <footer>
   <div class="wrap">
-    <a class="logo" href="#" data-tab="inicio"><img decoding="async" src="madcre-logo-copper.png" alt="MADCRE"></a>
+    <a class="logo" href="#" data-tab="inicio"><img decoding="async" src="assets/madcre-logo-copper.png" alt="MADCRE"></a>
     <span>Madrid · Barcelona — © 2026 MADCRE. Todos los derechos reservados.</span>
     <div class="legal-row">
       <button type="button" class="legal-btn" data-legal="cookies">Política de cookies</button>
@@ -1544,8 +1761,8 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   <div class="legal-scrim" data-close="1"></div>
   <div class="legal-card">
     <button type="button" class="legal-x" data-close="1" aria-label="Cerrar">×</button>
-    <span class="legal-eyebrow">Primera revisión</span>
-    <h2 id="revTitle">Solicitar revisión</h2>
+    <span class="legal-eyebrow">Primer análisis</span>
+    <h2 id="revTitle">Solicitar análisis</h2>
     <p class="rev-intro">Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.</p>
     <form id="revForm" name="revision" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" class="rev-form">
       <input type="hidden" name="form-name" value="revision">
@@ -1561,6 +1778,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
           <option>Compra de un inmueble</option>
           <option>Inmueble que rinde poco o posible venta</option>
           <option>Necesidad de más o menos espacio</option>
+          <option>Mejora ESG del inmueble</option>
         </select>
       </label>
       <label class="rf"><span>Adjunto (opcional)</span><input type="file" name="adjunto" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png"></label>
@@ -1839,7 +2057,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         }
         if(heroDim) heroDim.style.opacity=String(hp*0.5);
         heroContent.style.transform=`translateY(${hp*-16}vh)`;
-        heroContent.style.opacity=String(1-clamp(hp*1.8,0,1));
+        heroContent.style.opacity=String(1-clamp(hp*1.15,0,1));
         if(heroReadout){heroReadout.style.transform=`translateY(${hp*-0.3*vh}px)`;}
       }
 
@@ -2204,13 +2422,27 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
 <script>
 (function(){
   const btn=document.getElementById('langToggle'); if(!btn) return;
-  const DICT={"Inteligencia":"Real estate","Inmobiliaria":"Intelligence","aplicada a tus activos":"applied to your assets","Servicios":"Services","El análisis de tu activo":"The analysis of your asset","Ofrecemos servicios adaptados a cada situación: desde el diagnóstico de una cartera completa hasta la negociación de un solo contrato. Elegimos el alcance según lo que tu activo necesite hoy.":"We offer services tailored to each situation: from the diagnosis of an entire portfolio to the negotiation of a single lease. We set the scope according to what your asset needs today.","Diagnóstico patrimonial":"Portfolio diagnosis","Radiografía completa de activos y contratos: inventario, validación de datos y nivel de confianza de cada cifra.":"A full read of assets and contracts: inventory, data validation and a confidence level for every figure.","Análisis y benchmark":"Analysis and benchmark","Cada activo contrastado contra rentas, yields y costes de mercado por tipología y ubicación.":"Every asset benchmarked against market rents, yields and costs by asset class and location.","Estrategia de cartera":"Portfolio strategy","Escenarios cuantificados —mantener, consolidar, renegociar o vender— con su impacto en la cuenta.":"Quantified scenarios —hold, consolidate, renegotiate or sell— with their impact on the bottom line.","Negociación y contratos":"Negotiation and contracts","Preparamos la mesa: cláusulas, revisiones y ventanas de salida leídas desde el lado de la contraparte.":"We prepare the table: clauses, rent reviews and break options read from the other side's perspective.","Gestión de proyectos":"Project management","Solidez técnica de construcción y project management para ejecutar la decisión sin sorpresas.":"Technical construction expertise and project management to execute the decision without surprises.","Sectores":"Sectors","Cuatro tipologías":"Four asset classes","Aplicamos la misma metodología a cada clase de activo, con los comparables de mercado propios de cada una.":"We apply the same methodology to every asset class, with the market comparables specific to each one.","Oficinas":"Offices","Retail":"Retail","Logístico":"Logistics","Residencial":"Residential","Equipo":"Team","Inteligencia y estrategia":"Intelligence and strategy","En MADCRE ponemos el departamento de real estate al alcance de tus manos. Aportamos estrategia y asesoramiento inmobiliario que ayuda a propietarios y empresas a entender, proteger y rentabilizar su patrimonio.":"At MADCRE we put a real estate department within your reach. We provide the strategy and advice that helps owners and companies understand, protect and get a return on their assets.","Con más de 15 años de experiencia en el sector, trabajamos en España y Estados Unidos combinando diagnóstico patrimonial, análisis riguroso y visión estratégica para convertir cada activo en una decisión clara y bien fundamentada.":"With more than 15 years in the sector, we work across Spain and the United States combining portfolio diagnosis, rigorous analysis and strategic judgement to turn every asset into a clear, well-founded decision.","Unimos la solidez técnica de la construcción y la gestión de proyectos con un conocimiento profundo del mercado, para acompañarte en cada paso hacia la maximización del valor de tus activos.":"We combine the technical rigour of construction and project management with deep market knowledge, to guide you at every step towards maximising the value of your assets.","años en análisis inmobiliario":"years in real estate analysis","España":"Spain","cobertura directa":"direct coverage","cobertura con colaboradores":"coverage through partners","Contacto":"Contact","Hablemos de tus activos":"Let's talk about your assets","Diez minutos para entender tu situación. Te diremos, sin compromiso, si podemos aportar valor, por dónde conviene empezar y qué esperar de un primer análisis de tus activos.":"Ten minutes to understand your situation. We will tell you, with no commitment, whether we can add value, where it makes sense to start and what to expect from a first analysis of your assets.","Enviarnos un correo":"Send us an email","Envíenos un correo":"Send us an email","Envíanos un correo":"Send us an email","Dirección":"Address","28006 Madrid, España":"28006 Madrid, Spain","Email":"Email","Teléfonos":"Phones","Madrid · Barcelona — © 2026 MADCRE. Todos los derechos reservados.":"Madrid · Barcelona — © 2026 MADCRE. All rights reserved.","Política de cookies":"Cookie policy","Política de privacidad":"Privacy policy","Aviso legal":"Legal notice","Inicio":"Home","Contactanos":"Contact us","Contáctanos":"Contact us","Menú":"Menu","Cerrar":"Close","Cambiar idioma":"Switch language","Navegación":"Navigation"};
+  const DICT={"Inteligencia":"Real estate","Inmobiliaria":"Intelligence","aplicada a tus activos":"applied to your assets","Servicios":"Services","El análisis de tu activo":"The analysis of your asset","Ofrecemos servicios adaptados a cada situación: desde el diagnóstico de una cartera completa hasta la negociación de un solo contrato. Elegimos el alcance según lo que tu activo necesite hoy.":"We offer services tailored to each situation: from the diagnosis of an entire portfolio to the negotiation of a single lease. We set the scope according to what your asset needs today.","Diagnóstico patrimonial":"Portfolio diagnosis","Radiografía completa de activos y contratos: inventario, validación de datos y nivel de confianza de cada cifra.":"A full read of assets and contracts: inventory, data validation and a confidence level for every figure.","Análisis y benchmark":"Analysis and benchmark","Cada activo contrastado contra rentas, yields y costes de mercado por tipología y ubicación.":"Every asset benchmarked against market rents, yields and costs by asset class and location.","Estrategia de cartera":"Portfolio strategy","Escenarios cuantificados —mantener, consolidar, renegociar o vender— con su impacto en la cuenta.":"Quantified scenarios —hold, consolidate, renegotiate or sell— with their impact on the bottom line.","Negociación y contratos":"Negotiation and contracts","Preparamos la mesa: cláusulas, revisiones y ventanas de salida leídas desde el lado de la contraparte.":"We prepare the table: clauses, rent reviews and break options read from the other side's perspective.","Gestión de proyectos":"Project management","Solidez técnica de construcción y project management para ejecutar la decisión sin sorpresas.":"Technical construction expertise and project management to execute the decision without surprises.","Sectores":"Sectors","Cuatro tipologías":"Four asset classes","Aplicamos la misma metodología a cada clase de activo, con los comparables de mercado propios de cada una.":"We apply the same methodology to every asset class, with the market comparables specific to each one.","Oficinas":"Offices","Retail":"Retail","Logístico":"Logistics","Residencial":"Residential","Equipo":"Team","Inteligencia y estrategia":"Intelligence and strategy","Datos de mercado y criterio profesional para recomendarte la mejor decisión.":"Market data and professional judgement to recommend the best decision.","En MADCRE ponemos el departamento de real estate al alcance de tus manos. Aportamos estrategia y asesoramiento inmobiliario que ayuda a propietarios y empresas a entender, proteger y rentabilizar su patrimonio.":"At MADCRE we put a real estate department within your reach. We provide the strategy and advice that helps owners and companies understand, protect and get a return on their assets.","Con más de 15 años de experiencia en el sector, trabajamos en España y Estados Unidos combinando diagnóstico patrimonial, análisis riguroso y visión estratégica para convertir cada activo en una decisión clara y bien fundamentada.":"With more than 15 years in the sector, we work across Spain and the United States combining portfolio diagnosis, rigorous analysis and strategic judgement to turn every asset into a clear, well-founded decision.","Unimos la solidez técnica de la construcción y la gestión de proyectos con un conocimiento profundo del mercado, para acompañarte en cada paso hacia la maximización del valor de tus activos.":"We combine the technical rigour of construction and project management with deep market knowledge, to guide you at every step towards maximising the value of your assets.","años en análisis inmobiliario":"years in real estate analysis","España":"Spain","cobertura directa":"direct coverage","cobertura con colaboradores":"coverage through partners","Contacto":"Contact","Hablemos de tus activos":"Let's talk about your assets","Diez minutos para entender tu situación. Te diremos, sin compromiso, si podemos aportar valor, por dónde conviene empezar y qué esperar de un primer análisis de tus activos.":"Ten minutes to understand your situation. We will tell you, with no commitment, whether we can add value, where it makes sense to start and what to expect from a first analysis of your assets.","Enviarnos un correo":"Send us an email","Envíenos un correo":"Send us an email","Envíanos un correo":"Send us an email","Dirección":"Address","28006 Madrid, España":"28006 Madrid, Spain","Email":"Email","Teléfonos":"Phones","Madrid · Barcelona — © 2026 MADCRE. Todos los derechos reservados.":"Madrid · Barcelona — © 2026 MADCRE. All rights reserved.","Política de cookies":"Cookie policy","Política de privacidad":"Privacy policy","Aviso legal":"Legal notice","Inicio":"Home","Contactanos":"Contact us","Contáctanos":"Contact us","Menú":"Menu","Cerrar":"Close","Cambiar idioma":"Switch language","Navegación":"Navigation"};
   const norm=s=>s.replace(/\s+/g,' ').trim();
   Object.assign(DICT,{
+    "Comparamos tu inmueble con otros similares en la zona y así sabrás si estás por encima o por debajo de mercado.":"We compare your property with similar ones in the area, so you'll know whether you're above or below market.",
+    "Diagnóstico de mercado":"Market diagnosis","01 · Diagnóstico de mercado":"01 · Market diagnosis","¿Cómo podemos ayudarte?":"How can we help you?",
+    "Contrato en curso":"Current lease","01 · Contrato en curso":"01 · Current lease",
+    "Renovación de contrato":"Lease renewal","01 · Renovación de contrato":"01 · Lease renewal",
+    "¿En qué situación te encuentras?":"Which situation are you in?",
+    "¿En qué situación te posicionas?":"Which situation are you in?",
+    "¿En qué situación te posicionas mejor?":"Which situation fits you best?",
+    "¿En qué situación se encuentra tu inmueble?":"What situation is your property in?",
+    "¿Cómo podemos ayudarte?":"How can we help you?",
+    "En 48 horas te diremos qué puntos merece la pena analizar de tu inmueble y cuánto costaría hacerlo. Sin compromiso.":"Within 48 hours we'll tell you which points about your property are worth analysing and what it would cost. No commitment.",
+    "Inmueble en alquiler":"Leased property","05 · Inmueble en alquiler":"05 · Leased property",
+    "Eficiencia del espacio":"Space Efficiency","05 · Eficiencia del espacio":"05 · Space Efficiency",
+    "Mejora ESG del inmueble":"Property ESG improvement",
+    "ESG Performance":"ESG Performance","06 · ESG Performance":"06 · ESG Performance","Un banco, un comprador o un inquilino te pide mejorar el comportamiento ambiental de tu inmueble.":"A bank, buyer or tenant asks you to improve your property's environmental performance.","Junto a nuestro partner especializado, evaluamos el desempeño ESG de su inmueble y traducimos sus recomendaciones a impacto en coste, valor y renta.":"Together with our specialist partner, we assess your property's ESG performance and translate the recommendations into impact on cost, value and rent.","Diagnóstico ESG del inmueble, actuaciones propuestas y su impacto económico.":"Property ESG diagnosis, proposed actions and their economic impact.","Evaluación ESG del inmueble":"Property ESG assessment",
     "Inteligencia Inmobiliaria aplicada a tus activos":"Real estate intelligence|applied to your assets",
-    "Renovar un contrato, negociar una renta, comprar o vender un inmueble.":"Renewing a lease, negotiating rent, buying or selling a property.","Renovar un contrato":"Renewing a lease","Ahorro acumulado generado en nuestros clientes":"Cumulative savings generated for our clients","Ahorro acumulado en renta para nuestros clientes":"Cumulative rent savings for our clients","Algunas de las empresas que hemos asesorado":"Some of the companies we have advised","de ahorro acumulado en renta para nuestros clientes":"in cumulative rent savings for our clients","de renta mejorada o ahorrada al año para nuestros clientes":"in rent improved or saved each year for our clients","operaciones analizadas":"transactions analysed","m² analizados":"sq ft analysed","Arrendador · Renegociación":"Landlord · Renegotiation","Casos reales.":"Real cases.","Podemos enviarle un ejemplo.":"We can send you an example.","Puedes solicitarnos un ejemplo.":"Ask us for an example.","Arrendador · Nuevo contrato":"Landlord · New lease","Cláusulas mejoradas para el arrendador antes de firmar.":"Improved terms for the landlord before signing.","Resultados recientes":"Recent results","Casos reales. Clientes anónimos por confidencialidad.":"Real cases. Clients kept anonymous for confidentiality.","Propietario":"Owner","Inversor":"Investor","Renta renegociada con el inquilino actual.":"Rent renegotiated with the existing tenant.","Cláusulas mejoradas antes de firmar.":"Improved clauses before signing.","Rentabilidad por debajo de la media del sector. Recomendamos no comprar.":"Yield below the sector average. We advised against buying.","Renta anterior":"Previous rent","Renta con MADCRE":"Rent with MADCRE","Propuesta inicial":"Initial offer","Contrato firmado":"Signed lease","Media del sector":"Sector average","Inmueble analizado":"Property analysed","No comprar":"Don't buy","Eficiencia del espacio":"Space efficiency","Inmueble en propiedad":"Owned property","Nuevo contrato":"New Lease","Escríbanos":"Write to us","CP 28045, Madrid, España":"28045 Madrid, Spain","Fachada de un edificio de oficinas corporativo":"Corporate office building façade","Preguntas frecuentes":"Frequently asked questions","¿Cuánto cuesta?":"How much does it cost?","Honorarios fijos según el alcance, que conoce antes de empezar. En la mayoría de los casos, el ahorro que generan nuestras recomendaciones recupera el coste en menos de un año.":"Fixed fees based on scope, agreed before we start. In most cases, the savings from our recommendations recover the cost in under a year.","¿Sustituyen a mi agente o a mi abogado?":"Do you replace my agent or my lawyer?","No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.":"No. We give them the financial analysis, and you can work with them or with our partners.","¿Qué información necesitan?":"What information do you need?","El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.":"The lease, the property address and its floor areas, among other details. We source the rest.","¿Es confidencial?":"Is it confidential?","Sí. Firmamos un acuerdo de confidencialidad.":"Yes. We sign a non-disclosure agreement.","¿Merece la pena para una empresa pequeña?":"Is it worth it for a small company?","Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.":"Yes. A small difference in rent, multiplied by the years of the lease, usually exceeds the fees.","Las grandes corporaciones cuentan con un equipo inmobiliario propio en cada decisión. Ponemos ese mismo criterio a disposición de su empresa en cinco momentos clave.":"Large corporations have an in-house real estate team behind every decision. We bring that same judgement to your company at five key moments.","Asesoramiento inmobiliario independiente para empresas y propietarios. Cada encargo termina en una recomendación concreta, lista para presentar a la dirección o tomar acción.":"Independent real estate advice for companies and owners. Every engagement ends in a concrete recommendation, ready to present to management or act on.","Con más de 15 años de experiencia en el sector, hemos gestionado inmuebles de empresas internacionales en más de 40 países y proyectos de arquitectura y construcción. Aplicamos ese mismo método a empresas que no tienen un equipo inmobiliario propio.":"With more than 15 years in the sector, we have managed real estate for international companies in more than 40 countries, alongside architecture and construction projects. We apply that same method to companies without an in-house real estate team.","Tipos de inmueble":"Property types","Inmuebles":"Properties","Mismo método, comparables específicos para cada tipo de inmueble.":"Same method, specific comparables for each property type.","Oficinas":"Offices","Naves logísticas e industriales":"Logistics & industrial","Locales comerciales":"Retail units","Renovaciones, reducción de superficie y cambio de sede.":"Renewals, downsizing and relocation.","Renta frente a mercado, ampliación y compra frente a alquiler.":"Rent vs. market, expansion and buy vs. lease.","Renta frente a ventas, ubicación y renegociación.":"Rent vs. sales, location and renegotiation.","Rentabilidad, reforma y venta.":"Yield, refurbishment and sale.","Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.":"Side-by-side options with total cost and a recommendation: expand, downsize or relocate.","Estrategia de espacio":"Space strategy","¿En qué situación se encuentra?":"What situation are you in?","La mayoría de empresas toma sus decisiones inmobiliarias sin nadie que la represente en exclusiva. Intervenimos en estos cinco momentos.":"Most companies make real estate decisions with no one representing them exclusively. We step in at these five moments.","Qué hacemos":"What we do","Qué recibe":"What you get","Servicio":"Service","Contrato":"Lease","Espacio":"Space","Su contrato de alquiler vence o le proponen una subida de renta.":"Your lease is expiring or you've been offered a rent increase.","Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.":"We compare your rent and terms with today's market and prepare the negotiation.","Rango de renta de mercado, puntos a negociar y alternativas.":"Market rent range, points to negotiate and alternatives.","Estrategia de alquiler":"Leasing strategy","Va a firmar un nuevo contrato de alquiler.":"You're about to sign a new lease.","Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.":"We review the financial clauses: rent, indexation, term, guarantees and exit.","Informe de riesgos por cláusula y propuesta de cambios.":"Clause-by-clause risk report and proposed changes.","Revisión de contrato":"Lease review","Está valorando comprar un inmueble, o el que ya ocupa.":"You're considering buying a property, or the one you already occupy.","Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.":"We analyse price, expected return, risks and the alternative of continuing to rent.","Recomendación de compra o no compra, con escenarios.":"A buy or don't-buy recommendation, with scenarios.","Tiene un inmueble que rinde menos de lo esperado o duda si vender.":"You own a property that underperforms, or you're unsure whether to sell.","Medimos ingresos, gastos y valor frente al mercado.":"We measure income, costs and value against the market.","Plan de acción: renegociar, reformar, alquilar o vender.":"Action plan: renegotiate, refurbish, let or sell.","Estrategia de propiedad + comparación con el mercado":"Ownership strategy + market comparison","Su empresa necesita más espacio, o le sobra.":"Your company needs more space, or has too much.","Calculamos el coste real del espacio actual y comparamos opciones.":"We calculate the true cost of your current space and compare options.","Renovación o subida de renta":"Lease renewal or rent increase","Firma de un nuevo contrato":"Signing a new lease","Compra de un inmueble":"Buying a property","Inmueble que rinde poco o posible venta":"Underperforming property or possible sale","Necesidad de más o menos espacio":"Needing more or less space","Empiece por una primera revisión.":"Start with an initial review.","Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.":"Send us your lease or your property details. Within 48 hours we'll tell you which points are worth analysing and what it would cost. No commitment.","Solicitar revisión":"Request a review","Primera revisión":"Initial review","Nombre":"Name","Empresa":"Company","Email de contacto":"Contact email","Situación":"Situation","Seleccione una opción":"Select an option","Adjunto (opcional)":"Attachment (optional)","Enviar solicitud":"Send request","Negociar una renta":"Negotiating rent","Comprar o vender un inmueble":"Buying or selling a property","Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.":"We analyse every decision with market data and deliver a clear recommendation.",
-    "Somos el departamento inmobiliario externo de tu empresa":"Your company's external|real estate department",
-    "Inteligencia y estrategia":"Intelligence and strategy",
+    "Renovar un contrato, negociar una renta, comprar o vender un inmueble.":"Renewing a lease, negotiating rent, buying or selling a property.","¿Quieres renovar un contrato, negociar una renta, comprar o vender un inmueble?":"Want to renew a lease, negotiate rent, buy or sell a property?","Renovar un contrato":"Renewing a lease","Empieza por un primer análisis.":"Start with an initial analysis.","Solicitar análisis":"Request an analysis","Primer análisis":"Initial analysis","Ahorro acumulado generado en nuestros clientes":"Cumulative savings generated for our clients","Ahorro acumulado en renta para nuestros clientes":"Cumulative rent savings for our clients","Algunas de las empresas que hemos asesorado":"Some of the companies we have advised","de ahorro acumulado en renta para nuestros clientes":"in cumulative rent savings for our clients","de renta mejorada o ahorrada al año para nuestros clientes":"in rent improved or saved each year for our clients","operaciones analizadas":"transactions analysed","m² analizados":"sq ft analysed","Arrendador · Renegociación":"Landlord · Renegotiation","Casos reales.":"Real cases.","Podemos enviarle un ejemplo.":"We can send you an example.","Puedes solicitarnos un ejemplo.":"Ask us for an example.","Arrendador · Nuevo contrato":"Landlord · New lease","Cláusulas mejoradas para el arrendador antes de firmar.":"Improved terms for the landlord before signing.","Resultados recientes":"Recent results","Casos reales. Clientes anónimos por confidencialidad.":"Real cases. Clients kept anonymous for confidentiality.","Propietario":"Owner","Inversor":"Investor","Renta renegociada con el inquilino actual.":"Rent renegotiated with the existing tenant.","Cláusulas mejoradas antes de firmar.":"Improved clauses before signing.","Rentabilidad por debajo de la media del sector. Recomendamos no comprar.":"Yield below the sector average. We advised against buying.","Renta anterior":"Previous rent","Renta con MADCRE":"Rent with MADCRE","Propuesta inicial":"Initial offer","Contrato firmado":"Signed lease","Media del sector":"Sector average","Inmueble analizado":"Property analysed","No comprar":"Don't buy","Eficiencia del espacio":"Space efficiency","Inmueble en propiedad":"Owned property","Nuevo contrato":"New Lease","Escríbanos":"Write to us","CP 28045, Madrid, España":"28045 Madrid, Spain","Fachada de un edificio de oficinas corporativo":"Corporate office building façade","Preguntas frecuentes":"Frequently asked questions","¿Cuánto cuesta?":"How much does it cost?","Honorarios fijos según el alcance, que conoce antes de empezar. En la mayoría de los casos, el ahorro que generan nuestras recomendaciones recupera el coste en menos de un año.":"Fixed fees based on scope, agreed before we start. In most cases, the savings from our recommendations recover the cost in under a year.","¿Sustituyen a mi agente o a mi abogado?":"Do you replace my agent or my lawyer?","No. Les damos el análisis económico, pueden trabajar con ellos o con colaboradores nuestros.":"No. We give them the financial analysis, and you can work with them or with our partners.","¿Qué información necesitan?":"What information do you need?","El contrato, la dirección del inmueble y sus superficies, entre otros datos. El resto lo obtenemos nosotros.":"The lease, the property address and its floor areas, among other details. We source the rest.","¿Es confidencial?":"Is it confidential?","Sí. Firmamos un acuerdo de confidencialidad.":"Yes. We sign a non-disclosure agreement.","¿Merece la pena para una empresa pequeña?":"Is it worth it for a small company?","Sí. Una diferencia pequeña de renta, multiplicada por los años del contrato, suele superar los honorarios.":"Yes. A small difference in rent, multiplied by the years of the lease, usually exceeds the fees.","Desde una sola operación hasta toda su cartera. Un mismo método, con datos del mercado de su zona y una recomendación clara al final.":"Large corporations have an in-house real estate team behind every decision. We bring that same judgement to your company at five key moments.","Asesoramiento inmobiliario independiente para empresas y propietarios. Cada encargo termina en una recomendación concreta, lista para presentar a la dirección o tomar acción.":"Independent real estate advice for companies and owners. Every engagement ends in a concrete recommendation, ready to present to management or act on.","Con más de 15 años de experiencia en el sector, hemos gestionado inmuebles de empresas internacionales en más de 40 países y proyectos de arquitectura y construcción. Aplicamos ese mismo método a empresas que no tienen un equipo inmobiliario propio.":"With more than 15 years in the sector, we have managed real estate for international companies in more than 40 countries, alongside architecture and construction projects. We apply that same method to companies without an in-house real estate team.","Tipos de inmueble":"Property types","Inmuebles":"Properties","Mismo método, comparables específicos para cada tipo de inmueble.":"Same method, specific comparables for each property type.","Oficinas":"Offices","Naves logísticas e industriales":"Logistics & industrial","Locales comerciales":"Retail units","Renovaciones, reducción de superficie y cambio de sede.":"Renewals, downsizing and relocation.","Renta frente a mercado, ampliación y compra frente a alquiler.":"Rent vs. market, expansion and buy vs. lease.","Renta frente a ventas, ubicación y renegociación.":"Rent vs. sales, location and renegotiation.","Rentabilidad, reforma y venta.":"Yield, refurbishment and sale.","Comparativa de opciones con coste total y recomendación: ampliar, reducir o trasladarse.":"Side-by-side options with total cost and a recommendation: expand, downsize or relocate.","Eficiencia del espacio":"Space efficiency","¿En qué situación se encuentra?":"What situation are you in?","La mayoría de empresas toma sus decisiones inmobiliarias sin nadie que la represente en exclusiva. Intervenimos en estos seis momentos.":"Most companies make real estate decisions with no one representing them exclusively. We step in at these five moments.","Qué hacemos":"What we do","Qué recibe":"What you get","Servicio":"Service","Contrato":"Lease","Espacio":"Space","Tu contrato de alquiler vence o te proponen una subida de renta.":"Your lease is expiring or you've been offered a rent increase.","Comparamos su renta y condiciones con el mercado actual y preparamos la negociación.":"We compare your rent and terms with today's market and prepare the negotiation.","Rango de renta de mercado, puntos a negociar y alternativas.":"Market rent range, points to negotiate and alternatives.","Estrategia de alquiler":"Leasing strategy","Vas a firmar un nuevo contrato de alquiler.":"You're about to sign a new lease.","Revisamos las cláusulas económicas: renta, actualizaciones, plazos, garantías y salida.":"We review the financial clauses: rent, indexation, term, guarantees and exit.","Informe de riesgos por cláusula y propuesta de cambios.":"Clause-by-clause risk report and proposed changes.","Revisión de contrato":"Lease review","Estás valorando comprar un inmueble.":"You're considering buying a property, or the one you already occupy.","Analizamos precio, rentabilidad esperada, riesgos y alternativa de seguir alquilando.":"We analyse price, expected return, risks and the alternative of continuing to rent.","Recomendación de compra o no compra, con escenarios.":"A buy or don't-buy recommendation, with scenarios.","Tienes un inmueble y no sabes si rinde lo que debería, o dudas si vender.":"You own a property and aren't sure it's performing as it should, or you're considering selling.","Medimos ingresos, gastos y valor frente al mercado.":"We measure income, costs and value against the market.","Plan de acción: renegociar, reformar, alquilar o vender.":"Action plan: renegotiate, refurbish, let or sell.","Estrategia de propiedad + comparación con el mercado":"Ownership strategy + market comparison","¿Sabes si tu inmueble actual se adapta a lo que necesitas?":"Do you know if your current property fits what you need?","Calculamos el coste real del espacio actual y comparamos opciones.":"We calculate the true cost of your current space and compare options.","Renovación o subida de renta":"Lease renewal or rent increase","Firma de un nuevo contrato":"Signing a new lease","Compra de un inmueble":"Buying a property","Inmueble que rinde poco o posible venta":"Underperforming property or possible sale","Necesidad de más o menos espacio":"Needing more or less space","Empiece por una primera revisión.":"Start with an initial review.","Envíenos su contrato o los datos de su inmueble. En 48 horas le diremos qué puntos merece la pena analizar y cuánto costaría hacerlo. Sin compromiso.":"Send us your lease or your property details. Within 48 hours we'll tell you which points are worth analysing and what it would cost. No commitment.","Solicitar revisión":"Request a review","Primera revisión":"Initial review","Nombre":"Name","Empresa":"Company","Email de contacto":"Contact email","Situación":"Situation","Seleccione una opción":"Select an option","Adjunto (opcional)":"Attachment (optional)","Enviar solicitud":"Send request","Negociar una renta":"Negotiating rent","Comprar o vender un inmueble":"Buying or selling a property","Analizamos cada decisión con datos de mercado y le entregamos una recomendación clara.":"We analyse every decision with market data and deliver a clear recommendation.",
+    "Somos el departamento inmobiliario externo de tu empresa":"Your company's external|real estate department","Somos el equipo inmobiliario que necesitas":"The real estate team|you need","Somos tu equipo inmobiliario":"Your Real Estate Team","Somos tu Equipo Inmobiliario":"Your Real Estate Team",
+    "Inteligencia y estrategia":"Intelligence and strategy","Datos de mercado y criterio profesional para recomendarte la mejor decisión.":"Market data and professional judgement to recommend the best decision.",
     "Redes":"Social",
     "Revisión de contrato de arrendamiento":"Lease Review",
     "Entiende el contrato que vas a firmar.":"Know exactly what you're signing.",
@@ -2250,6 +2482,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
     "Comparamos tu activo con inmuebles similares en renta, ocupación, gastos operativos (OPEX) y valor. Sabrás si tus condiciones y tu rendimiento están por encima, por debajo o en línea con la referencia real del mercado.":"We benchmark your asset against comparable properties across rent, occupancy, operating expenses (OPEX) and value. You will know whether your terms and performance are above, below or in line with the real market reference.",
     "Antes de invertir, analizamos riesgos y rentabilidad esperada para que tomes tu decisión con la información completa. Ningún inversor profesional compra sin estudiar el inmueble a fondo: te damos esa misma mirada antes de que firmes.":"Before you invest, we analyse risks and expected returns so you decide with all the facts in hand. No professional investor buys without studying the property in depth: we give you that same scrutiny before you sign."
   });
+  Object.assign(DICT,{"Desde una sola operación hasta toda su cartera. Un mismo método, con datos del mercado de su zona y una recomendación clara al final.":"From a single deal to your entire portfolio. One method, with data from your local market and a clear recommendation at the end.","Una operación":"One deal","Un inmueble":"One property","Toda la cartera":"The whole portfolio","Evaluar":"Evaluate","Optimizar":"Optimize","Impulsar":"Elevate","La certeza de una buena operación, antes de firmar.":"The certainty of a good deal, before you sign.","Antes de alquilar o comprar un inmueble, hay decenas de cifras y condiciones que revisar. Nosotros las analizamos y te decimos con claridad si la operación merece la pena.":"Before leasing or buying a property, there are dozens of figures and terms to review. We analyse them and tell you clearly whether the deal is worth it.","Qué analizamos":"What we analyse","Qué recibe":"What you receive","Renta o precio frente a operaciones comparables de la zona":"Rent or price against comparable local deals","Coste total de ocupación: renta, gastos, impuestos y actualizaciones":"Total occupancy cost: rent, service charges, taxes and indexation","Cláusulas clave: plazo, permanencia, garantías y salida":"Key clauses: term, lock-in, guarantees and exit","Si conviene más alquilar o comprar":"Whether leasing or buying makes more sense","Precio o renta frente al mercado":"Price or rent against the market","Si el precio o la renta es de mercado":"Whether the purchase price or rent is at market level","La rentabilidad esperada de la compra":"The expected return on the purchase","Los riesgos ocultos del contrato":"The hidden risks in the contract","Si la compra ofrece la rentabilidad esperada":"Whether purchasing delivers the expected return","Si el contrato esconde riesgos":"Whether the contract hides any risks","Revisión del rent roll y estrategia":"Rent roll review and strategy","Rentabilidad de la compra":"Return on the purchase","Coste real de ocupación":"Real occupancy cost","Condiciones del contrato":"Contract terms","Un veredicto claro (Firmar, Negociar o Descartar), el rango de precio justo y los puntos concretos que conviene negociar.":"A clear verdict (Sign, Negotiate or Walk away), the fair price range and the specific points worth negotiating.","Evaluar una operación":"Evaluate a deal","Veredicto":"Verdict","Firmar":"Sign","Negociar":"Negotiate","Descartar":"Walk away","Precio o renta · €/m²":"Price or rent · €/m²","Rango justo":"Fair range","Precio pedido":"Asking price","En una nave de 2.000 m² a 6 €/m² al mes, pagar un 5% por encima del mercado son 7.200 € al año: 36.000 € en un contrato de 5 años.":"On a 2,000 m² warehouse at €6/m² per month, paying 5% above market is €7,200 a year: €36,000 over a 5-year lease.","36.000 €":"€36,000","Ejemplo ilustrativo":"Illustrative example","Que cada metro trabaje para su empresa.":"Make every square metre work for you.","Cada metro cuenta.":"Every square metre counts.","Sí, y suelen ser las que más se benefician. Sin un equipo inmobiliario propio, el margen de optimización puede llegar al 35%, y una pequeña diferencia de renta, multiplicada por los años del contrato, suele superar con creces los honorarios.":"Yes, and they are often the ones that benefit most. Without an in-house real estate team, the room for optimisation can reach 35%, and a small difference in rent, multiplied over the years of the lease, usually far outweighs our fees.","Estrategias a medida para cada tipología.":"Tailored strategies for every property type.","Revisión del rent roll y estrategia":"Rent roll review and strategy","Las grandes corporaciones cuentan con un equipo inmobiliario propio para cada decisión.":"Large corporations have an in-house real estate team for every decision.","Ponemos ese mismo criterio a tu disposición en momentos clave.":"We put that same judgement at your disposal at key moments.","USA · España":"USA · Spain","base directa":"direct base","Dónde hemos trabajado":"Where we have worked","Mercados en los que hemos asesorado a nuestros clientes":"Markets where we have advised our clients","España":"Spain","Italia":"Italy","Estados Unidos":"United States","Paraguay":"Paraguay","Australia":"Australia","Argentina":"Argentina","Chile":"Chile","Uruguay":"Uruguay","Un mapa de tu cartera y un plan priorizado.":"A map of your portfolio and a prioritised plan.","¿Qué recibes?":"What do you get?","¿Qué analizamos?":"What do we analyse?","Rendimiento por inmueble":"Performance by property","Comparativa interna y de mercado":"Internal and market benchmarking","Vencimientos y decisiones clave":"Expiries and key decisions","Consolidación, reubicación y desinversión":"Consolidation, relocation and divestment","Una cartera preparada para crecer.":"A portfolio ready to grow.","Con varios inmuebles, es difícil saber cuáles aportan y cuáles cuestan más de lo que deberían. Analizamos toda tu cartera con los mismos criterios y te decimos dónde actuar primero.":"With several properties, it is hard to know which ones contribute and which cost more than they should. We analyse your whole portfolio with the same criteria and tell you where to act first.","Cuánto te cuesta hoy cada metro":"What each square metre costs you today","Cuánto espacio usas realmente":"How much space you really use","Cuánto vale y cuánto rinde tu inmueble":"What your property is worth and what it returns","Qué opciones tienes: renegociar, reducir, relocalizar, reposicionar o vender":"Your options: renegotiate, downsize, relocate, reposition or sell","Coste frente al mercado":"Cost against the market","Uso del espacio":"Space use","Rentabilidad y valor":"Return and value","Margen de renegociación":"Room to renegotiate","Si lo alquilas, puedes estar pagando de más. Si es tuyo, puede estar rindiendo menos que la media. Analizamos su coste, el uso real del espacio, tu contrato y su valor frente al mercado.":"If you lease it, you may be overpaying. If you own it, it may be returning less than average. We analyse its cost, the real use of the space, your lease and its value against the market.","El inmueble que ocupa hoy, en alquiler o en propiedad, es uno de sus mayores costes o de sus mayores activos. Medimos cuánto le cuesta, cómo lo usa y cuánto rinde, lo comparamos con nuestra referencia de mercado de la zona y le recomendamos qué hacer con él.":"The property you occupy today, leased or owned, is one of your largest costs or one of your largest assets. We measure what it costs, how you use it and what it returns, compare it with our local market benchmark and recommend what to do with it.","Coste real por m², frente al mercado":"Real cost per m², against the market","Utilización del espacio de oficinas":"Office space utilisation","Rentabilidad y valor, si es propietario":"Return and value, if you own it","Condiciones del contrato y margen de renegociación, si es inquilino":"Lease terms and room to renegotiate, if you lease","Una recomendación de acción, con el impacto económico de cada alternativa.":"A recommended action, with the financial impact of each alternative.","Acción":"Action","Cuándo suele convenir":"When it usually makes sense","Mantener y renegociar":"Stay and renegotiate","Buena ubicación, renta por encima de mercado":"Good location, rent above market","Reducir superficie":"Downsize","Espacio infrautilizado":"Underused space","Ampliar o reubicar":"Expand or relocate","La empresa ha crecido o la ubicación ya no encaja":"The company has grown or the location no longer fits","Vender y seguir como inquilino":"Sell and lease back","Mucho capital inmovilizado en un inmueble que se sigue necesitando":"A lot of capital tied up in a property you still need","Vender o desinvertir":"Sell or divest","El inmueble ya no aporta al negocio":"The property no longer adds to the business","Optimizar mi inmueble":"Optimize my property","Su coste €/m²":"Your cost €/m²","Sobrecoste":"Overpaying","Mercado de la zona":"Local market","Acción recomendada":"Recommended action","Reducir superficie · −18% coste":"Downsize · −18% cost","Vea toda su cartera y sepa dónde actuar primero.":"See your whole portfolio. Know where to act first.","Cuando una empresa tiene varios inmuebles, rara vez sabe cuáles le hacen ganar dinero y cuáles se lo hacen perder. Analizamos la cartera completa con los mismos criterios, identificamos qué inmuebles rinden por encima y por debajo de lo esperado, y trazamos el plan para mejorar el conjunto.":"When a company holds several properties, it rarely knows which ones make money and which ones lose it. We analyse the entire portfolio with the same criteria, identify which properties perform above and below expectations, and draw up the plan to improve the whole.","Cada inmueble medido con los mismos indicadores: coste, rendimiento, uso y riesgo":"Every property measured on the same indicators: cost, performance, use and risk","Comparación con la referencia de mercado de cada zona":"Comparison with each local market benchmark","Calendario de vencimientos de contratos y decisiones pendientes":"Lease expiry calendar and pending decisions","Oportunidades de agrupar, reubicar o vender":"Opportunities to consolidate, relocate or sell","Un mapa de la cartera que clasifica cada inmueble en cuatro grupos (Mantener, Optimizar, Reposicionar, Salir) y un plan de acción priorizado a 12–36 meses.":"A portfolio map that places each property in one of four groups (Hold, Optimize, Reposition, Exit) and a prioritised 12–36 month action plan.","Opcional: seguimiento anual con cuadro de mando.":"Optional: annual monitoring with a dashboard.","Analizar mi cartera":"Analyse my portfolio","Rendimiento →":"Performance →","Coste frente a mercado →":"Cost vs market →","Mantener":"Hold","Reposicionar":"Reposition","Salir":"Exit","¿No sabe por cuál empezar? Le orientamos en una primera revisión sin compromiso.":"Not sure where to start? We'll guide you in an initial review, with no commitment.","Solicitar una primera revisión":"Request an initial review","Una respuesta clara: firmar, negociar o descartar.":"A clear answer: sign, negotiate or walk away.","Las grandes corporaciones cuentan con un equipo inmobiliario propio para cada decisión. Ponemos ese mismo criterio a tu disposición en momentos clave.":"Large corporations have an in-house real estate team for every decision. We put that same judgement at your disposal at key moments.","Firmar, Negociar o Descartar":"Sign, Negotiate or Walk away"});
   delete DICT["Inteligencia"];delete DICT["Inmobiliaria"];delete DICT["aplicada a tus activos"];
   const skip=new Set(['SCRIPT','STYLE','CANVAS','SVG','NOSCRIPT','VIDEO','IMG','BR']);
   const headEls=new Set([...document.querySelectorAll('.hero h1, .sec-head h2, #contacto h2, #quienes h2, .scan-title h2')]);
@@ -2278,8 +2511,9 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
         if(o.line){
           let a,b;
           if(o.en.includes('|')){[a,b]=o.en.split('|');}
+          else if(o.el.querySelectorAll('.line').length<2){a=o.en;b='';}
           else{const w=o.en.split(' '),mid=Math.ceil(w.length/2);a=w.slice(0,mid).join(' ');b=w.slice(mid).join(' ');}
-          o.el.innerHTML='<span class="line"><span>'+a.trim()+'</span></span><span class="line"><span>'+b.trim()+'</span></span>';
+          o.el.innerHTML='<span class="line"><span>'+a.trim()+'</span></span>'+(b.trim()?'<span class="line"><span>'+b.trim()+'</span></span>':'');
         }else{o.el.textContent=o.en.replace('|',' ');}
       }else{o.el.innerHTML=o.es;}
       if(o.head){
@@ -2332,7 +2566,7 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&m.classList.contains('open'))close();});
   const mailto=fd=>{
     const body=['Nombre: '+fd.get('nombre'),'Empresa: '+fd.get('empresa'),'Email: '+fd.get('email'),'Situación: '+fd.get('situacion'),'','(Adjuntaré el documento a este correo.)'].join('\n');
-    location.href='mailto:team@madcre.net?subject='+encodeURIComponent('Solicitud de revisión — '+fd.get('empresa'))+'&body='+encodeURIComponent(body);
+    location.href='mailto:team@madcre.net?subject='+encodeURIComponent('Solicitud de análisis — '+fd.get('empresa'))+'&body='+encodeURIComponent(body);
   };
   f.addEventListener('submit',async e=>{
     e.preventDefault();
@@ -2536,6 +2770,116 @@ body.sm-open .lang-toggle{opacity:0;pointer-events:none;transition:opacity .3s}
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{visible=e.isIntersecting;loop();}),{threshold:.35}).observe(sx);
   if(!desk.matches)items.forEach(el=>el.classList.remove('on')),items[0].classList.add('on');
   desk.addEventListener&&desk.addEventListener('change',loop);
+})();
+</script>
+<script>
+(function(){
+  const zs=document.getElementById('zs');if(!zs)return;
+  const tabs=[...zs.querySelectorAll('.zt')],panels=[...zs.querySelectorAll('.zp')];
+  const show=i=>{tabs.forEach((t,k)=>{t.classList.toggle('on',k===i);t.setAttribute('aria-selected',k===i);t.tabIndex=k===i?0:-1;});
+    panels.forEach((p,k)=>{const on=k===i;p.classList.toggle('on',on);if(on)p.removeAttribute('hidden');else p.setAttribute('hidden','');});};
+  const canHover=matchMedia('(hover:hover) and (pointer:fine)').matches;let cur=0;const go=i=>{if(i===cur)return;cur=i;show(i);};
+  tabs.forEach((t,i)=>{t.addEventListener('click',()=>{cur=i;show(i);});if(canHover)t.addEventListener('mouseenter',()=>go(i));
+    t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;show(n);tabs[n].focus();}});});
+  show(0);
+  zs.querySelectorAll('.zs-cta').forEach(b=>b.addEventListener('click',()=>{const o=document.getElementById('revOpen');if(o)o.click();}));
+})();
+</script>
+<script>
+(function(){
+  const box=document.getElementById('gm');if(!box)return;
+  const HIT={'724':1,'380':1,'840':1,'032':1,'152':1,'600':1,'036':1,'858':1};
+  const PINS=[[-87.63,41.88],[-80.19,25.76],[-56.16,-34.90],[-64.18,-31.42],[144.96,-37.81],[-3.70,40.42],[2.17,41.39],[9.19,45.46]];
+  function draw(){
+    if(!window.d3||!window.topojson){return setTimeout(draw,150);}
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(r=>r.json()).then(topo=>{
+      const W=1350,H=500,svg=d3.select('#gmSvg').attr('viewBox','0 0 '+W+' '+H);
+      const feats=topojson.feature(topo,topo.objects.countries).features.filter(f=>f.id!=='010');
+      const proj=d3.geoNaturalEarth1().fitExtent([[0,0],[W,H]],{type:'MultiPoint',coordinates:[[-170,62],[0,62],[179,62],[-170,-57],[0,-57],[179,-57]]});
+      const defs=svg.append('defs');
+      const lg=defs.append('linearGradient').attr('id','gmFade').attr('x1',0).attr('y1',0).attr('x2',0).attr('y2',1);
+      [[0,0],[.12,1],[.94,1],[1,0]].forEach(([o,a])=>lg.append('stop').attr('offset',o).attr('stop-color','#fff').attr('stop-opacity',a));
+      defs.append('mask').attr('id','gmClip').attr('maskUnits','userSpaceOnUse').attr('x',0).attr('y',0).attr('width',W).attr('height',H).append('rect').attr('width',W).attr('height',H).attr('fill','url(#gmFade)');
+      feats.forEach(f=>{if(f.id==='840'&&f.geometry.type==='MultiPolygon'){
+        const ak=f.geometry.coordinates.filter(p=>p[0].some(c=>(c[1]>50&&c[0]<-129)||c[0]<-140));
+        f.geometry.coordinates=f.geometry.coordinates.filter(p=>!ak.includes(p));
+        if(ak.length)feats.push({type:'Feature',id:'AK',geometry:{type:'MultiPolygon',coordinates:ak}});}});
+      const path=d3.geoPath(proj);
+      const gg=svg.append('g').attr('mask','url(#gmClip)').attr('class','grat');
+      gg.append('path').datum({type:'Sphere'}).attr('class','sph').attr('d',path);
+      gg.append('path').datum(d3.geoGraticule().step([15,15])()).attr('class','gl').attr('d',path);
+      gg.append('path').datum(d3.geoGraticule().step([45,30])()).attr('class','gl2').attr('d',path);
+      svg.append('g').attr('mask','url(#gmClip)').selectAll('path').data(feats).join('path').attr('d',path).attr('class',f=>HIT[f.id]?'hit':'land');
+      const g=svg.append('g');
+      PINS.forEach((p,i)=>{const [x,y]=proj(p);
+        g.append('circle').attr('class','ring').attr('cx',x).attr('cy',y).attr('r',7).style('animation-delay',(i*.45)+'s');
+        g.append('circle').attr('class','pin').attr('cx',x).attr('cy',y).attr('r',2.6);});
+      svg.selectAll('.hit').raise();g.raise();
+      const tipXY=proj([-67.3,-55.9]);
+      const rl=document.querySelector('#resultados .rl');
+      const align=()=>{const gb=document.querySelector('#resultados .gm-bg');if(gb)gb.style.transform='';const rgx=rl&&rl.closest('.rg');if(rgx)rgx.style.removeProperty('padding-top');if(!rl||!matchMedia('(min-width:761px) and (min-height:620px)').matches){if(rl)rl.style.marginTop='';return;}
+        const svgEl=document.getElementById('gmSvg');const sb=svgEl.getBoundingClientRect();
+        const vb=svgEl.viewBox.baseVal;const sc=Math.min(sb.width/vb.width,sb.height/vb.height);
+        const oy=sb.top+(sb.height-vb.height*sc)/2;const tipY=oy+tipXY[1]*sc;
+        const rg=rl.closest('.rg');const stage=document.querySelector('#resultados .rb-stage');
+        const prevT=rg?rg.style.transform:'';if(rg)rg.style.transform='none';
+        if(rg)rg.style.setProperty('padding-top','0px','important');rl.style.setProperty('margin-top','0px','important');const base=rl.getBoundingClientRect().top;
+        const gmBg=document.querySelector('#resultados .gm-bg');
+        const maxMt=stage.getBoundingClientRect().bottom-16-(base+rl.offsetHeight);
+        let want=tipY-base;let shift=0;
+        if(want>maxMt){shift=want-maxMt;want=maxMt;}
+        let mt=Math.max(8,want);
+        const L=base+mt;const head=document.querySelector('#resultados .rb-head');
+        const els=[rg.querySelector('.rg-main'),rg.querySelector('.rg-side')].filter(Boolean);
+        if(head&&els.length){
+          const hb=head.getBoundingClientRect().bottom;
+          const rs=els.map(e=>e.getBoundingClientRect());const top=Math.min(...rs.map(r=>r.top)),bot=Math.max(...rs.map(r=>r.bottom));
+          const p=Math.max(0,((L-bot)-(top-hb))/2);
+          rg.style.setProperty('padding-top',p+'px','important');
+          mt=Math.max(8,mt-p);
+        }
+        rl.style.setProperty('margin-top',mt+'px','important');
+        if(gmBg)gmBg.style.transform=shift?'translateY(-'+shift+'px)':'';
+        if(rg)rg.style.transform=prevT;};
+      align();addEventListener('resize',align);setTimeout(align,600);
+    }).catch(()=>{});
+  }
+  draw();
+  if(!('IntersectionObserver' in window)){box.classList.add('in');return;}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){box.classList.add('in');io.disconnect();}}),{threshold:.3});
+  io.observe(box);
+})();
+</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="container-glass" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence"/><feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"/><feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced"/><feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur"/><feComposite in="finalBlur" in2="finalBlur" operator="over"/></filter></defs></svg>
+<script>
+(function(){
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
+    a.addEventListener('click',()=>{
+      const mail=a.getAttribute('href').replace('mailto:','').split('?')[0];
+      try{navigator.clipboard&&navigator.clipboard.writeText(mail);}catch(e){}
+      let t=document.getElementById('mailToast');
+      if(!t){t=document.createElement('div');t.id='mailToast';t.setAttribute('role','status');t.style.cssText='position:fixed;left:50%;bottom:2rem;transform:translateX(-50%);z-index:9999;background:rgba(3,8,15,.92);border:1px solid rgba(222,156,99,.5);color:#F5F4EF;font:500 .8rem/1.4 "IBM Plex Mono",monospace;letter-spacing:.08em;padding:.8rem 1.2rem;border-radius:999px;backdrop-filter:blur(10px);opacity:0;transition:opacity .4s ease;pointer-events:none';document.body.appendChild(t);}
+      t.textContent=(document.documentElement.lang==='en'?'Email copied: ':'Correo copiado: ')+mail;
+      t.style.opacity='1';clearTimeout(t._h);t._h=setTimeout(()=>t.style.opacity='0',3200);
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  const lbl=document.querySelector('#resultados .rg-main .rg-lbl'),num=document.querySelector('#resultados .rg-main .rg-num');
+  if(!lbl||!num)return;
+  const fit=()=>{
+    const tw=document.createTreeWalker(num,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('svg')?NodeFilter.FILTER_REJECT:(n.textContent.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)});
+    const t=tw.nextNode();if(!t)return;
+    const i=t.textContent.search(/\S/);const r=document.createRange();r.setStart(t,i);r.setEnd(t,i+1);
+    const gl=r.getBoundingClientRect().left;
+    lbl.style.marginLeft='0px';const ll=lbl.getBoundingClientRect().left;
+    const fs=parseFloat(getComputedStyle(num).fontSize);
+    lbl.style.marginLeft=Math.max(0,gl-ll+fs*0.045)+'px';
+  };
+  addEventListener('load',fit);addEventListener('resize',fit);setTimeout(fit,800);setTimeout(fit,3000);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
 })();
 </script>
 </body>
